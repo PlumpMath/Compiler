@@ -83,26 +83,8 @@ Return_Statement : T_RETURN Expression';'
 
 
 Num : T_DEC {
-    list<Func_ptr> *li;
-    li = new list<Func_ptr>() ;
-
-
-    list<Decl_ptr> * d1;
-    d1 = new list<Decl_ptr>();
-    list<Func_ptr> *f1; 
-    f1 = new list<Func_ptr>();
-    list<Stat_ptr>* s1;
-    s1 = new list<Stat_ptr>();
-
     $$.u_expr = new IntLit(new Primitive($1.u_base_int));
-    ReturnImpl *ret;
-    ret  = new ReturnImpl($$.u_expr);
-    li->push_back(new FuncImpl(new TBoolean(),new SymName("hello"),d1
-   ,new Function_blockImpl(d1,f1,s1,ret)));
-    Program_ptr a = new ProgramImpl(li);
-
-    ast = a;
-
+    
     
     } 
     |T_HEX
@@ -154,6 +136,32 @@ Expression    : Expression '*' Expression
         | Expression '<' Expression
         | '(' Expression ')'
         | Num 
+        {
+            list<Func_ptr> *li;
+            li = new list<Func_ptr>() ;
+
+
+            list<Decl_ptr> * d1;
+            d1 = new list<Decl_ptr>();
+            list<Func_ptr> *f1; 
+            f1 = new list<Func_ptr>();
+            list<Stat_ptr>* s1;
+            s1 = new list<Stat_ptr>();
+            ReturnImpl *ret;
+            ret  = new ReturnImpl($1.u_expr);
+#if 0 
+            if(ret)
+                cout<<"FUCK";
+            li->push_back(new FuncImpl(new TBoolean(),new SymName("hello"),d1
+                        ,new Function_blockImpl(d1,f1,s1,ret)));
+
+            Program_ptr a = new ProgramImpl(li);
+
+            ast = a;
+#endif
+
+
+        }
         | T_TRUE
         | T_FALSE
         | T_ID {}
