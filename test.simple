@@ -1,0 +1,9 @@
+function foo() : int
+        {
+            x = 210;
+            return 0;
+        }
+
+
+
+

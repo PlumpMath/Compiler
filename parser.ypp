@@ -1,0 +1,202 @@
+%{
+	#include <stdio.h>
+    #include <iostream>
+    	#include "ast.hpp"
+    	#include "primitive.hpp"
+    	#include "symtab.hpp"
+	#define YYDEBUG 1
+
+    	extern Program_ptr ast;
+	int yylex(void);
+	void yyerror(const char *);
+%}
+
+/* Enables verbose error messages */
+%error-verbose
+
+
+
+
+/*********************************************************
+	Replace with your code from project 2
+*********************************************************/
+%token  T_RETURN
+%token  T_HEX
+%token  T_DEC
+%token  T_OCT
+%token  T_BIN
+%token  T_OR
+%token  T_AND
+%token  T_EQ
+%token  T_NEQ
+%token  T_LEQ
+%token  T_GEQ
+%token  T_INTARRAY
+%token  T_FUNCTION
+%token  T_VAR
+%token  T_FOR
+%token  T_TYPE_INT
+%token  T_IF
+%token  T_ELSE
+%token  T_TYPE_BOOL
+%token  T_TRUE
+%token  T_FALSE     
+%token  T_ID     
+
+/* WRITE ME: put all your type definitions here*/
+/* WRITE ME: put all your precedence/associativity rules here*/
+%left T_NEQ T_EQ T_GEQ T_LEQ '<' '>'
+%left '+' '-'
+%left '*' '/'
+%left T_ID
+%left T_AND
+%left T_OR
+%right '!' U_MINUS
+
+
+
+%%
+Program : Function Function_List
+
+;
+Function_List :  Function_List Function
+    |
+;
+Function : Function_Signature Function_Body
+;
+Function_Signature : T_FUNCTION T_ID '(' Param_List ')' ':' Type
+;
+Function_Body : '{' Code_Block Return_Statement '}'
+;
+
+Param_List : T_ID ':' Type More_Parms
+    |
+;
+More_Parms : More_Parms',' T_ID ':' Type 
+    |
+    ;
+Type : T_TYPE_INT
+    |T_TYPE_BOOL
+    |T_INTARRAY'['Num']'
+    ;
+Return_Statement : T_RETURN Expression';'
+
+
+Num : T_DEC {
+    list<Func_ptr> *li;
+    li = new list<Func_ptr>() ;
+
+
+    list<Decl_ptr> * d1;
+    d1 = new list<Decl_ptr>();
+    list<Func_ptr> *f1; 
+    f1 = new list<Func_ptr>();
+    list<Stat_ptr>* s1;
+    s1 = new list<Stat_ptr>();
+
+    $$.u_expr = new IntLit(new Primitive($1.u_base_int));
+    ReturnImpl *ret;
+    ret  = new ReturnImpl($$.u_expr);
+    li->push_back(new FuncImpl(new TBoolean(),new SymName("hello"),d1
+   ,new Function_blockImpl(d1,f1,s1,ret)));
+    Program_ptr a = new ProgramImpl(li);
+
+    ast = a;
+
+    
+    } 
+    |T_HEX
+    |T_OCT
+    |T_BIN
+    ;
+
+ 
+Code_Block: Var_List Function_List Stm_List
+;
+Var_List: Var_List Var_Declaration 
+    |
+    ;
+Stm_List : Stm_List Stm_Declaration 
+    |
+;
+
+Var_Declaration : T_VAR T_ID Id_List ':' Type ';'
+;
+
+
+Id_List : Id_List ','  T_ID
+|
+;
+
+
+
+Stm_Declaration : Assign ';'
+    |T_IF '(' Expression ')' '{'Stm_List'}'
+    |T_IF '(' Expression ')' '{'Stm_List'}'
+    T_ELSE '{'Stm_List'}'
+    |T_FOR '(' Optional_Assign '('Expression')'Optional_Assign ')' 
+    '{'Stm_List'}'
+
+;
+
+
+Expression    : Expression '*' Expression 
+        | Expression '/' Expression
+        | Expression '+' Expression 
+        | Expression '-' Expression
+        | Expression T_NEQ Expression
+        | Expression T_EQ Expression
+        | Expression T_LEQ Expression
+        | Expression T_GEQ Expression
+        | Expression T_AND Expression
+        | Expression T_OR Expression
+        | Expression '>' Expression
+        | Expression '<' Expression
+        | '(' Expression ')'
+        | Num 
+        | T_TRUE
+        | T_FALSE
+        | T_ID {}
+        |Array_Call
+        |'-'T_ID %prec U_MINUS 
+        |'-'Num %prec U_MINUS 
+        |'!' Expression
+        |'|'Expression'|'
+        ;
+Call_List : Expression Call_Prime
+|
+;
+
+Call_Prime : Call_Prime ',' Expression
+|
+;
+Function_Call : T_ID '('Call_List')'
+;
+
+Array_Call: T_ID '['Num']';
+
+
+Optional_Assign :  Assign ';'
+|
+;
+
+Assign : T_ID  '=' Expression
+|T_ID '='  Function_Call
+|T_ID '['Expression']' '=' Expression
+|T_ID '['Expression']' '=' Function_Call
+
+
+%%
+/*********************************************************
+	Stop here
+*********************************************************/
+
+
+
+
+extern int yylineno;
+
+void yyerror(const char *s) {
+	fprintf(stderr, "%s at line %d\n", s, yylineno);
+	return;
+}
