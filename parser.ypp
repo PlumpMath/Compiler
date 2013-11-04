@@ -79,17 +79,23 @@ Type : T_TYPE_INT
     |T_TYPE_BOOL
     |T_INTARRAY'['Num']'
     ;
-Return_Statement : T_RETURN Expression';'
+Return_Statement : T_RETURN Expression';'{
+            ast = exprTest($2.u_expr);
+}
 
 
 Num : T_DEC {
     $$.u_expr = new IntLit(new Primitive($1.u_base_int));
-    
-    
     } 
-    |T_HEX
-    |T_OCT
-    |T_BIN
+    |T_HEX{
+    $$.u_expr = new IntLit(new Primitive($1.u_base_int));
+    }
+    |T_OCT{
+    $$.u_expr = new IntLit(new Primitive($1.u_base_int));
+    }
+    |T_BIN{
+    $$.u_expr = new IntLit(new Primitive($1.u_base_int));
+    }
     ;
 
  
@@ -122,52 +128,58 @@ Stm_Declaration : Assign ';'
 ;
 
 
-Expression    : Expression '*' Expression 
-        | Expression '/' Expression
-        | Expression '+' Expression 
-        | Expression '-' Expression
-        | Expression T_NEQ Expression
-        | Expression T_EQ Expression
-        | Expression T_LEQ Expression
-        | Expression T_GEQ Expression
-        | Expression T_AND Expression
-        | Expression T_OR Expression
-        | Expression '>' Expression
-        | Expression '<' Expression
+Expression    : Expression '*' Expression {
+
+                    $$.u_expr = new Times($1.u_expr, $3.u_expr);
+                }
+        | Expression '/' Expression{
+            $$.u_expr = new Div($1.u_expr, $3.u_expr);
+        }
+        | Expression '+' Expression { 
+            $$.u_expr = new Plus($1.u_expr, $3.u_expr);
+        }
+        | Expression '-' Expression{
+            $$.u_expr = new Minus($1.u_expr, $3.u_expr);
+        }
+        | Expression T_NEQ Expression{
+            $$.u_expr = new Noteq($1.u_expr, $3.u_expr);
+        }
+        | Expression T_EQ Expression{
+            $$.u_expr = new Compare($1.u_expr, $3.u_expr);
+        }
+        | Expression T_LEQ Expression{
+            $$.u_expr = new Lteq($1.u_expr, $3.u_expr);
+        }
+        | Expression T_GEQ Expression{
+            $$.u_expr = new Gteq($1.u_expr, $3.u_expr);
+        }
+        | Expression T_AND Expression{
+            $$.u_expr = new And($1.u_expr, $3.u_expr);
+        }
+        | Expression T_OR Expression{
+            $$.u_expr = new Or($1.u_expr, $3.u_expr);
+        }
+        | Expression '>' Expression{
+            $$.u_expr = new Gt($1.u_expr, $3.u_expr);
+        }
+        | Expression '<' Expression{
+            $$.u_expr = new Lt($1.u_expr, $3.u_expr);
+        }
         | '(' Expression ')'
+        {
+            //TODO FIGURE OUT WHAT GOES HERE!!!!!!!!!
+        }
         | Num 
         {
-            list<Func_ptr> *li;
-            li = new list<Func_ptr>() ;
-
-
-            list<Decl_ptr> * d1;
-            d1 = new list<Decl_ptr>();
-            list<Func_ptr> *f1; 
-            f1 = new list<Func_ptr>();
-            list<Stat_ptr>* s1;
-            s1 = new list<Stat_ptr>();
-            ReturnImpl *ret;
-            ret  = new ReturnImpl($1.u_expr);
-#if 0 
-            if(ret)
-                cout<<"FUCK";
-            li->push_back(new FuncImpl(new TBoolean(),new SymName("hello"),d1
-                        ,new Function_blockImpl(d1,f1,s1,ret)));
-
-            Program_ptr a = new ProgramImpl(li);
-
-            ast = a;
-#endif
-
-
+            $$.u_expr=$1.u_expr;
         }
         | T_TRUE
         | T_FALSE
-        | T_ID {}
+        | T_ID {
+            $$.u_expr = new Ident(new SymName($1.u_base_charptr));
+        }
         |Array_Call
-        |'-'T_ID %prec U_MINUS 
-        |'-'Num %prec U_MINUS 
+        |'-'Expression %prec U_MINUS 
         |'!' Expression
         |'|'Expression'|'
         ;

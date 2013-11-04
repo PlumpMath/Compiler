@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "ast.hpp"
+#include <ctype.h>
 #include "parser.hpp"
 
 void yyerror(const char *);
@@ -33,12 +34,17 @@ else                      {return T_ELSE      ;}
 bool                      {return T_TYPE_BOOL ;}  
 true                      {return T_TRUE      ;}  
 false                     {return T_FALSE     ;}  
-[a-zA-Z][a-zA-Z0-9]*      {return T_ID        ;}  
+[a-zA-Z][a-zA-Z0-9]*      {
+
+    yylval.u_base_charptr = strdup(yytext);
+
+return T_ID        ;}  
 [\=\,\:\;\|\{\}\[\]\!\<\>\*\(\),\+\-\*\/]   {return *yytext     ;}   
-0[0-7]*                   {return T_OCT       ;}
-[1-9][0-9]*               {yylval.u_base_int = atoi(yytext); return T_DEC ;}
-(0x|0X)[0-9A-F][0-9A-F]*  {return T_HEX       ;}
-0[0-1]*b                  {return T_BIN       ;}
+
+[1-9][0-9]*|0             {yylval.u_base_int = strtol(yytext, NULL, 10); return T_DEC ;}
+0[0-7]*                   {yylval.u_base_int = strtol(yytext, NULL, 8);return T_OCT       ;}
+(0x|0X)[0-9A-F][0-9A-F]*  {yylval.u_base_int = strtol(yytext, NULL, 16);return T_HEX       ;}
+0[0-1]*b                  {yylval.u_base_int = strtol(yytext, NULL, 2);return T_BIN       ;}
 [ \t\n]                   ; /* skip whitespace */
 
 (\[\$([^$]|[\r\n]|(\$+([^*\]]|[\r\n])))*\$+\])  ;/*skip comments the carraige symbol is for windows only, but I included it becuase the regex tester I was useing complained*/                      
