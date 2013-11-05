@@ -12,7 +12,15 @@ digraph G {
 "5" -> "6"
 "6" [label="Return"]
 "6" -> "7"
-"7" [label="Ident"]
+"7" [label="Magnitude"]
 "7" -> "8"
-"8" [label="SymName\n\"x\""]
+"8" [label="Plus"]
+"8" -> "9"
+"9" [label="IntLit"]
+"9" -> "10"
+"10" [label="Primitive\n1"]
+"8" -> "11"
+"11" [label="IntLit"]
+"11" -> "12"
+"12" [label="Primitive\n1"]
 }; 

@@ -3,7 +3,7 @@ function foo() : int
             [$
             x = 210;
             $]
-            return x;
+            return  |1 + 1|;
         }
 
 

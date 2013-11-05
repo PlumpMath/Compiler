@@ -80,7 +80,7 @@ Type : T_TYPE_INT
     |T_INTARRAY'['Num']'
     ;
 Return_Statement : T_RETURN Expression';'{
-            ast = exprTest($2.u_expr);
+            //ast = exprTest($2.u_expr);
 }
 
 
@@ -173,15 +173,21 @@ Expression    : Expression '*' Expression {
         {
             $$.u_expr=$1.u_expr;
         }
-        | T_TRUE
-        | T_FALSE
+        | T_TRUE {
+            $$.u_expr = new BoolLit(new Primitive(1));
+        }
+        | T_FALSE{
+            $$.u_expr = new BoolLit(new Primitive(0));
+        }
         | T_ID {
             $$.u_expr = new Ident(new SymName($1.u_base_charptr));
         }
         |Array_Call
-        |'-'Expression %prec U_MINUS 
-        |'!' Expression
-        |'|'Expression'|'
+        |'-'Expression{$$.u_expr = new Uminus($2.u_expr);} %prec U_MINUS 
+        |'!' Expression {
+            $$.u_expr = new Not($2.u_expr);
+        }
+        |'|'Expression'|' {$$.u_expr = new Magnitude($2.u_expr);}
         ;
 Call_List : Expression Call_Prime
 |
@@ -190,6 +196,7 @@ Call_List : Expression Call_Prime
 Call_Prime : Call_Prime ',' Expression
 |
 ;
+
 Function_Call : T_ID '('Call_List')'
 ;
 
