@@ -1,9 +1,8 @@
 function foo() : int
         {
-            [$
+            for ((i != 9)) { x = x+ 1;}
             x = 210;
-            $]
-            return  |1 + 1|;
+            return  |1 + 1*3|;
         }
 
 

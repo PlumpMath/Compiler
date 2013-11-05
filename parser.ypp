@@ -80,7 +80,8 @@ Type : T_TYPE_INT
     |T_INTARRAY'['Num']'
     ;
 Return_Statement : T_RETURN Expression';'{
-            //ast = exprTest($2.u_expr);
+    $$.u_return = new ReturnImpl($2.u_expr);
+    //ast = retTest($$.u_return);
 }
 
 
@@ -105,7 +106,17 @@ Var_List: Var_List Var_Declaration
     |
     ;
 Stm_List : Stm_List Stm_Declaration 
+{
+    $1.u_stat_list -> push_back(($2.u_stat));
+    $$.u_stat_list=$1.u_stat_list;
+    Return *  ret;
+    ret = new ReturnImpl(new BoolLit(new Primitive(1)));
+    ast = statTest($$.u_stat_list, ret);
+}
     |
+{
+    $$.u_stat_list = new list<Stat_ptr>();
+}
 ;
 
 Var_Declaration : T_VAR T_ID Id_List ':' Type ';'
@@ -119,11 +130,22 @@ Id_List : Id_List ','  T_ID
 
 
 Stm_Declaration : Assign ';'
-    |T_IF '(' Expression ')' '{'Stm_List'}'
-    |T_IF '(' Expression ')' '{'Stm_List'}'
-    T_ELSE '{'Stm_List'}'
+{
+    $$.u_stat = $1.u_stat;
+}
+    |T_IF '(' Expression ')' '{'Stm_List'}'{
+    $$.u_stat = new IfNoElse($3.u_expr,new Nested_blockImpl($6.u_stat_list));
+        }
+    |T_IF '(' Expression ')' '{'Stm_List'}'    
+    T_ELSE '{'Stm_List'}'{
+        $$.u_stat = new IfWithElse($3.u_expr,new Nested_blockImpl($6.u_stat_list)
+                ,new Nested_blockImpl($10.u_stat_list));
+    }
     |T_FOR '(' Optional_Assign '('Expression')'Optional_Assign ')' 
-    '{'Stm_List'}'
+    '{'Stm_List'}'{
+       $$.u_stat =  new ForLoop($3.u_stat,$5.u_expr, $7.u_stat
+        ,new Nested_blockImpl($10.u_stat_list));
+    }
 
 ;
 
@@ -203,11 +225,11 @@ Function_Call : T_ID '('Call_List')'
 Array_Call: T_ID '['Num']';
 
 
-Optional_Assign :  Assign ';'
-|
+Optional_Assign :  Assign ';'{$$.u_stat_list = $1.u_stat_list};
+| {$$.u_stat = new None();}
 ;
 
-Assign : T_ID  '=' Expression
+Assign : T_ID  '=' Expression {$$.u_stat = new Assignment(new SymName($1.u_base_charptr), $3.u_expr);}
 |T_ID '='  Function_Call
 |T_ID '['Expression']' '=' Expression
 |T_ID '['Expression']' '=' Function_Call
