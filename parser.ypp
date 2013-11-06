@@ -59,14 +59,28 @@
 Program : Function Function_List
 
 ;
-Function_List :  Function_List Function
-    |
+Function_List :  Function_List Function{
+#if 0
+$1.u_func_list-> push_back(($2.u_func));
+    $$.u_func_list=$1.u_func_list;
+    Return *  ret;
+    ret = new ReturnImpl(new BoolLit(new Primitive(1)));
+    list<Func_ptr> *li;
+    li = new list<Func_ptr>() ;
+   // ast = statTest($$.u_stat_list,li,  ret);
+#endif
+}
+    |{
+        $$.u_func_list = new list<Func_ptr>();
+    }
 ;
-Function : Function_Signature Function_Body
+Function : Function_Signature Function_Body {}
 ;
 Function_Signature : T_FUNCTION T_ID '(' Param_List ')' ':' Type
 ;
+
 Function_Body : '{' Code_Block Return_Statement '}'
+
 ;
 
 Param_List : T_ID ':' Type More_Parms
@@ -107,11 +121,15 @@ Var_List: Var_List Var_Declaration
     ;
 Stm_List : Stm_List Stm_Declaration 
 {
+#if 1
     $1.u_stat_list -> push_back(($2.u_stat));
     $$.u_stat_list=$1.u_stat_list;
     Return *  ret;
     ret = new ReturnImpl(new BoolLit(new Primitive(1)));
-    ast = statTest($$.u_stat_list, ret);
+    list<Func_ptr> *li;
+    li = new list<Func_ptr>() ;
+    ast = statTest($$.u_stat_list,li,  ret);
+#endif
 }
     |
 {
@@ -205,24 +223,46 @@ Expression    : Expression '*' Expression {
             $$.u_expr = new Ident(new SymName($1.u_base_charptr));
         }
         |Array_Call
-        |'-'Expression{$$.u_expr = new Uminus($2.u_expr);} %prec U_MINUS 
+        |'-'Expression {$$.u_expr = new Uminus($2.u_expr);} %prec U_MINUS 
         |'!' Expression {
             $$.u_expr = new Not($2.u_expr);
         }
         |'|'Expression'|' {$$.u_expr = new Magnitude($2.u_expr);}
         ;
 Call_List : Expression Call_Prime
+{
+    $$.u_expr_list = $1.u_expr_list;
+
+}
 |
 ;
 
-Call_Prime : Call_Prime ',' Expression
-|
+Call_Prime : Call_Prime ',' Expression{
+#if 0
+    THIS IS SOMETHING
+    $1.u_expr_list-> push_back(($2.u_expr));
+    $$.u_expr_list = $1.u_expr_list;
+#endif
+}
+|{
+//TODO
+    //$$.u_expr_list= new list<Expr_ptr>();
+}
+
 ;
 
 Function_Call : T_ID '('Call_List')'
+{
+    //$$.u_expr_list = new SymName($1.u_base_charptr),  ;
+}
 ;
 
-Array_Call: T_ID '['Num']';
+Array_Call: T_ID '['Num']'{
+    $$.u_expr = new ArrayAccess(new SymName($1.u_base_charptr),
+    $3.u_expr);
+  
+}
+;
 
 
 Optional_Assign :  Assign ';'{$$.u_stat_list = $1.u_stat_list};
@@ -230,8 +270,13 @@ Optional_Assign :  Assign ';'{$$.u_stat_list = $1.u_stat_list};
 ;
 
 Assign : T_ID  '=' Expression {$$.u_stat = new Assignment(new SymName($1.u_base_charptr), $3.u_expr);}
-|T_ID '='  Function_Call
-|T_ID '['Expression']' '=' Expression
+|T_ID '='  Function_Call {
+    $$.u_stat = new 
+}
+|T_ID '['Expression']' '=' Expression {
+    $$.u_stat = new ArrayAssignment(new SymName($1.u_base_charptr)
+    ,$3.u_expr, $6.u_expr);
+}
 |T_ID '['Expression']' '=' Function_Call
 
 
