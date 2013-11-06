@@ -121,14 +121,32 @@ Var_List: Var_List Var_Declaration
     ;
 Stm_List : Stm_List Stm_Declaration 
 {
-#if 1
-    $1.u_stat_list -> push_back(($2.u_stat));
-    $$.u_stat_list=$1.u_stat_list;
     Return *  ret;
     ret = new ReturnImpl(new BoolLit(new Primitive(1)));
+    SymName * name;
+
+    $1.u_stat_list -> push_back(($2.u_stat));
+    $$.u_stat_list=$1.u_stat_list;
+    
+    list<Decl_ptr> *decl;
+    decl = new list<Decl_ptr>();
+    list<Stat_ptr> *stats;
+    stats = new list<Stat_ptr>();
     list<Func_ptr> *li;
     li = new list<Func_ptr>() ;
-    ast = statTest($$.u_stat_list,li,  ret);
+    list<Func_ptr> *li2;
+    li2 = new list<Func_ptr>() ;
+    Func * fb;
+#if 1
+    li2->push_back(
+    new FuncImpl(
+    new TBoolean(),
+    new SymName("hello"),
+    decl,
+    new Function_blockImpl(decl, li, $$.u_stat_list, ret)));
+
+   ast  = new ProgramImpl(li2);
+   
 #endif
 }
     |
@@ -271,7 +289,6 @@ Optional_Assign :  Assign ';'{$$.u_stat_list = $1.u_stat_list};
 
 Assign : T_ID  '=' Expression {$$.u_stat = new Assignment(new SymName($1.u_base_charptr), $3.u_expr);}
 |T_ID '='  Function_Call {
-    $$.u_stat = new 
 }
 |T_ID '['Expression']' '=' Expression {
     $$.u_stat = new ArrayAssignment(new SymName($1.u_base_charptr)
