@@ -1,0 +1,74 @@
+digraph G { 
+"0" -> "1"
+"1" [label="ProgramImpl"]
+"1" -> "2"
+"2" [label="FuncImpl"]
+"2" -> "3"
+"3" [label="TInteger"]
+"2" -> "4"
+"4" [label="SymName\n\"yeees\""]
+"2" -> "5"
+"5" [label="DeclImpl"]
+"5" -> "6"
+"6" [label="TInteger"]
+"5" -> "7"
+"7" [label="SymName\n\"i\""]
+"2" -> "8"
+"8" [label="DeclImpl"]
+"8" -> "9"
+"9" [label="TInteger"]
+"8" -> "10"
+"10" [label="SymName\n\"j\""]
+"2" -> "11"
+"11" [label="DeclImpl"]
+"11" -> "12"
+"12" [label="TInteger"]
+"11" -> "13"
+"13" [label="SymName\n\"z\""]
+"2" -> "14"
+"14" [label="FunctionBlockImpl"]
+"14" -> "15"
+"15" [label="DeclImpl"]
+"15" -> "16"
+"16" [label="TIntArray"]
+"16" -> "17"
+"17" [label="Primitive\n100"]
+"15" -> "18"
+"18" [label="SymName\n\"o\""]
+"14" -> "19"
+"19" [label="Assignment"]
+"19" -> "20"
+"20" [label="SymName\n\"x\""]
+"19" -> "21"
+"21" [label="IntLit"]
+"21" -> "22"
+"22" [label="Primitive\n9"]
+"14" -> "23"
+"23" [label="Assignment"]
+"23" -> "24"
+"24" [label="SymName\n\"x\""]
+"23" -> "25"
+"25" [label="Magnitude"]
+"25" -> "26"
+"26" [label="Ident"]
+"26" -> "27"
+"27" [label="SymName\n\"x\""]
+"14" -> "28"
+"28" [label="Return"]
+"28" -> "29"
+"29" [label="Plus"]
+"29" -> "30"
+"30" [label="Plus"]
+"30" -> "31"
+"31" [label="IntLit"]
+"31" -> "32"
+"32" [label="Primitive\n1"]
+"30" -> "33"
+"33" [label="IntLit"]
+"33" -> "34"
+"34" [label="Primitive\n2"]
+"29" -> "35"
+"35" [label="IntLit"]
+"35" -> "36"
+"36" [label="Primitive\n4"]
+}; 

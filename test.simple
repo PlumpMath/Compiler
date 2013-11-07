@@ -1,4 +1,4 @@
-function foo() : int
+function yeees(i:int, j:int, z:int) : int
         {
             var o : intarray[100];
 
