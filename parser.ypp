@@ -61,34 +61,69 @@ Program : Function Function_List
 
 ;
 Function_List :  Function_List Function{
-#if 0
-$1.u_func_list-> push_back(($2.u_func));
-    $$.u_func_list=$1.u_func_list;
-    Return *  ret;
-    ret = new ReturnImpl(new BoolLit(new Primitive(1)));
-    list<Func_ptr> *li;
-    li = new list<Func_ptr>() ;
-   // ast = statTest($$.u_stat_list,li,  ret);
-#endif
+    //$1.u_func_list -> push_back(($2.u_func));
+    //$$.u_func_list=$1.u_func_list;
+    
 }
     |{
-        $$.u_func_list = new list<Func_ptr>();
+        //$$.u_func_list = new list<Func_ptr>();
     }
 ;
-Function : Function_Signature Function_Body 
-;
-Function_Signature : T_FUNCTION T_ID '(' Param_List ')' ':' Type
+Function : T_FUNCTION T_ID '(' Param_List ')' ':' Type Function_Body
+{
+    $$.u_func = new FuncImpl($7.u_type
+    , new SymName($2.u_base_charptr) 
+    ,$4.u_decl_list 
+    ,$8.u_function_block);
+    list<Func_ptr> *li2;
+    li2 = new list<Func_ptr>() ;
+    li2->push_back($$.u_func);
+#if VERBOSE
+    cout<<"Function Def";
+#endif
+
+    //ast = new ProgramImpl(li2);
+}
 ;
 
 Function_Body : '{' Code_Block '}'
-
+{
+#if VERBOSE
+    cout<<"Function body";
+#endif
+$$.u_function_block = $2.u_function_block;
+}
 ;
 
-Param_List : T_ID ':' Type More_Parms
-    |
+Param_List : T_ID ':' Type More_Parms {$$.u_decl_list = new list<Decl_ptr>(); 
+#if VERBOSE
+    cout<<"Function paramlist";
+#endif
+    }
+    | {$$.u_decl_list = new list<Decl_ptr>();
+#if VERBOSE
+    cout<<"Function paramlistempty";
+#endif
+    }
 ;
-More_Parms : More_Parms',' T_ID ':' Type 
-    |
+More_Parms : More_Parms',' T_ID ':' Type {
+    list<SymName_ptr> * li;
+    li=new list<SymName_ptr>();
+    li->push_back(new SymName($3.u_base_charptr));
+
+    $1.u_decl_list->push_back(new DeclImpl($5.u_type, li));
+    $$=$1;
+    
+#if VERBOSE
+    cout<<"Function moreParams";
+#endif
+    }
+    |{
+        $$.u_decl_list = new list<Decl_ptr>();
+#if VERBOSE
+    cout<<"Function moreParams emtpy";
+#endif
+}
     ;
 Type : T_TYPE_INT {$$.u_type = new TInteger();}
     |T_TYPE_BOOL {$$.u_type = new TBoolean();}
@@ -96,6 +131,10 @@ Type : T_TYPE_INT {$$.u_type = new TInteger();}
     }
     ;
 Return_Statement : T_RETURN Expression';'{
+#if VERBOSE
+    cout<<"return STATEMENT\n";
+#endif
+
     $$.u_return = new ReturnImpl($2.u_expr);
     //ast = retTest($$.u_return);
 }
@@ -118,14 +157,14 @@ Num : T_DEC {
  
 Code_Block: Var_List Function_List Stm_List Return_Statement
 {
- //   $$.u_function_block = new Function_blockImpl($1.u_decl_list, $2.u_func_list, $3.u_stat_list, $4.u_return);
+    $$.u_function_block = new Function_blockImpl($1.u_decl_list, $2.u_func_list, $3.u_stat_list, $4.u_return);
 }
 ;
 Var_List: Var_List Var_Declaration 
 {
     $1.u_decl_list-> push_back(($2.u_decl));
     $$.u_decl_list=$1.u_decl_list;
-#if 1
+#if 0
     Return *  ret;
     ret = new ReturnImpl(new BoolLit(new Primitive(1)));
     SymName * name;
