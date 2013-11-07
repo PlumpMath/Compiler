@@ -1,13 +1,82 @@
+function array(ax: int) : bool
+{
+  var a: intarray[12];
+  var b: intarray[12];
+  var x: int;
+  var z: int;
+
+  a[2+3] = b[0];
+    
+  a[0] = x*7 + b[1];
+
+  z = array(ax);
+
+  return false;
+}
+
+function Main() : int
+{
+    var x: int;
+    var k,j :int ;
+    var t: bool;
+
+    x = 5;
+    if (x < 3) {
+        x = 7;
+    }
+    if (x <3) {
+        x = 9;
+    }
+    else {
+        if (t == true) {
+            x = 12;
+        }
+    }
+   
+    return 0;
+}
+function f(ax: int) : int
+{
+    var d: bool;
+
+    function nested() : bool
+    {
+        var  i, a : int;
+    return j-a == 12;
+    }
+
+    return -(---k+j*k/x);
+}
+function main(a: int) : bool
+{
+    var i : int;
+
+    function  tain(integer: int) : bool
+    {
+        return false || true;
+    }
+    return (2+2*4) < 3;
+}
+
+function main1(ax: int) : bool
+{
+    var i: int;
+    return (2+2*4) < 3;
+}
+
+
 function yeees(i:int, j:int, z:int) : int
         {
             var o : intarray[100];
+            function yeees(i:int, j:int, z:int) : int
+            {
+                return 1;
+            }
 
             x = 9;
             x=|x|;
             return   1+2+4;
 
         }
-
-
 
 

@@ -57,13 +57,16 @@
 
 
 %%
-Program : Function Function_List
-
+Program : Function Function_List{
+    $2.u_func_list->push_front($1.u_func);
+    ast = new ProgramImpl($2.u_func_list);
+}
 ;
 Function_List :  Function_List Function{
-    //$1.u_func_list -> push_back(($2.u_func));
-    //$$.u_func_list=$1.u_func_list;
+    $1.u_func_list -> push_back(($2.u_func));
+    $$.u_func_list=$1.u_func_list;
     
+
 }
     |{
         $$.u_func_list = new list<Func_ptr>();
@@ -82,7 +85,6 @@ Function : T_FUNCTION T_ID '(' Param_List ')' ':' Type Function_Body
     cout<<"Function Def";
 #endif
 
-    ast = new ProgramImpl(li2);
 }
 ;
 
@@ -325,6 +327,7 @@ Expression    : Expression '*' Expression {
 }
 | '(' Expression ')'
 {
+    $$.u_expr = $2.u_expr;
     //TODO FIGURE OUT WHAT GOES HERE!!!!!!!!!
 }
 | Num 
