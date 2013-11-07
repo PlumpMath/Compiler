@@ -5,6 +5,7 @@
     	#include "primitive.hpp"
     	#include "symtab.hpp"
 	#define YYDEBUG 1
+#define VERBOSE 0
 
     	extern Program_ptr ast;
 	int yylex(void);
@@ -89,9 +90,10 @@ Param_List : T_ID ':' Type More_Parms
 More_Parms : More_Parms',' T_ID ':' Type 
     |
     ;
-Type : T_TYPE_INT
-    |T_TYPE_BOOL
-    |T_INTARRAY'['Num']'
+Type : T_TYPE_INT {$$.u_type = new TInteger();}
+    |T_TYPE_BOOL {$$.u_type = new TBoolean();}
+    |T_INTARRAY'['Num']'  {//$$.u_type = new TIntArray($3);
+    }
     ;
 Return_Statement : T_RETURN Expression';'{
     $$.u_return = new ReturnImpl($2.u_expr);
@@ -117,17 +119,13 @@ Num : T_DEC {
 Code_Block: Var_List Function_List Stm_List
 ;
 Var_List: Var_List Var_Declaration 
-    |
-    ;
-Stm_List : Stm_List Stm_Declaration 
 {
+    $1.u_decl_list-> push_back(($2.u_decl));
+    $$.u_decl_list=$1.u_decl_list;
+#if 1
     Return *  ret;
     ret = new ReturnImpl(new BoolLit(new Primitive(1)));
     SymName * name;
-
-    $1.u_stat_list -> push_back(($2.u_stat));
-    $$.u_stat_list=$1.u_stat_list;
-    
     list<Decl_ptr> *decl;
     decl = new list<Decl_ptr>();
     list<Stat_ptr> *stats;
@@ -137,30 +135,84 @@ Stm_List : Stm_List Stm_Declaration
     list<Func_ptr> *li2;
     li2 = new list<Func_ptr>() ;
     Func * fb;
-#if 1
+#if VERBOSE
+    cout<<" StatLiSt"<<endl;
+#endif
+    li2->push_back(
+    new FuncImpl(
+    new TBoolean(),
+    new SymName("hello"),
+    decl,
+    new Function_blockImpl($$.u_decl_list, li, stats, ret)));
+    ast  = new ProgramImpl(li2);
+   
+#endif
+}
+
+    |
+{
+#if VERBOSE
+    cout<<"Empty StatLiSt"<<endl;
+#endif
+
+    $$.u_decl_list= new list<Decl_ptr>();
+}
+
+    ;
+Stm_List : Stm_List Stm_Declaration 
+{
+
+    $1.u_stat_list -> push_back(($2.u_stat));
+    $$.u_stat_list=$1.u_stat_list;
+    
+#if 0
+    Return *  ret;
+    ret = new ReturnImpl(new BoolLit(new Primitive(1)));
+    SymName * name;
+    list<Decl_ptr> *decl;
+    decl = new list<Decl_ptr>();
+    list<Stat_ptr> *stats;
+    stats = new list<Stat_ptr>();
+    list<Func_ptr> *li;
+    li = new list<Func_ptr>() ;
+    list<Func_ptr> *li2;
+    li2 = new list<Func_ptr>() ;
+    Func * fb;
+#if VERBOSE
+    cout<<" StatLiSt"<<endl;
+#endif
     li2->push_back(
     new FuncImpl(
     new TBoolean(),
     new SymName("hello"),
     decl,
     new Function_blockImpl(decl, li, $$.u_stat_list, ret)));
-
-   ast  = new ProgramImpl(li2);
+    ast  = new ProgramImpl(li2);
    
 #endif
 }
     |
 {
+#if VERBOSE
+    cout<<"Empty StatLiSt"<<endl;
+#endif
+
     $$.u_stat_list = new list<Stat_ptr>();
 }
 ;
 
 Var_Declaration : T_VAR T_ID Id_List ':' Type ';'
+{
+    $3.u_symname_list->push_front(new SymName($2.u_base_charptr));
+    $$.u_decl = new DeclImpl($5.u_type, $3.u_symname_list );
+}
 ;
 
 
 Id_List : Id_List ','  T_ID
+{ ($1.u_symname_list -> push_back(new SymName($3.u_base_charptr))); $$ = $1;}
 |
+{$$.u_symname_list = new list<SymName_ptr>(); }
 ;
 
 
@@ -169,19 +221,19 @@ Stm_Declaration : Assign ';'
 {
     $$.u_stat = $1.u_stat;
 }
-    |T_IF '(' Expression ')' '{'Stm_List'}'{
-    $$.u_stat = new IfNoElse($3.u_expr,new Nested_blockImpl($6.u_stat_list));
-        }
-    |T_IF '(' Expression ')' '{'Stm_List'}'    
-    T_ELSE '{'Stm_List'}'{
-        $$.u_stat = new IfWithElse($3.u_expr,new Nested_blockImpl($6.u_stat_list)
-                ,new Nested_blockImpl($10.u_stat_list));
-    }
-    |T_FOR '(' Optional_Assign '('Expression')'Optional_Assign ')' 
-    '{'Stm_List'}'{
-       $$.u_stat =  new ForLoop($3.u_stat,$5.u_expr, $7.u_stat
+|T_IF '(' Expression ')' '{'Stm_List'}'{
+$$.u_stat = new IfNoElse($3.u_expr,new Nested_blockImpl($6.u_stat_list));
+}
+|T_IF '(' Expression ')' '{'Stm_List'}'    
+T_ELSE '{'Stm_List'}'{
+$$.u_stat = new IfWithElse($3.u_expr,new Nested_blockImpl($6.u_stat_list)
         ,new Nested_blockImpl($10.u_stat_list));
     }
+|T_FOR '(' Optional_Assign '('Expression')'Optional_Assign ')' 
+'{'Stm_List'}'{
+$$.u_stat =  new ForLoop($3.u_stat,$5.u_expr, $7.u_stat
+        ,new Nested_blockImpl($10.u_stat_list));
+}
 
 ;
 
@@ -190,112 +242,137 @@ Expression    : Expression '*' Expression {
 
                     $$.u_expr = new Times($1.u_expr, $3.u_expr);
                 }
-        | Expression '/' Expression{
-            $$.u_expr = new Div($1.u_expr, $3.u_expr);
-        }
-        | Expression '+' Expression { 
-            $$.u_expr = new Plus($1.u_expr, $3.u_expr);
-        }
-        | Expression '-' Expression{
-            $$.u_expr = new Minus($1.u_expr, $3.u_expr);
-        }
-        | Expression T_NEQ Expression{
-            $$.u_expr = new Noteq($1.u_expr, $3.u_expr);
-        }
-        | Expression T_EQ Expression{
-            $$.u_expr = new Compare($1.u_expr, $3.u_expr);
-        }
-        | Expression T_LEQ Expression{
-            $$.u_expr = new Lteq($1.u_expr, $3.u_expr);
-        }
-        | Expression T_GEQ Expression{
-            $$.u_expr = new Gteq($1.u_expr, $3.u_expr);
-        }
-        | Expression T_AND Expression{
-            $$.u_expr = new And($1.u_expr, $3.u_expr);
-        }
-        | Expression T_OR Expression{
-            $$.u_expr = new Or($1.u_expr, $3.u_expr);
-        }
-        | Expression '>' Expression{
-            $$.u_expr = new Gt($1.u_expr, $3.u_expr);
-        }
-        | Expression '<' Expression{
-            $$.u_expr = new Lt($1.u_expr, $3.u_expr);
-        }
-        | '(' Expression ')'
-        {
-            //TODO FIGURE OUT WHAT GOES HERE!!!!!!!!!
-        }
-        | Num 
-        {
-            $$.u_expr=$1.u_expr;
-        }
-        | T_TRUE {
-            $$.u_expr = new BoolLit(new Primitive(1));
-        }
-        | T_FALSE{
-            $$.u_expr = new BoolLit(new Primitive(0));
-        }
-        | T_ID {
-            $$.u_expr = new Ident(new SymName($1.u_base_charptr));
-        }
-        |Array_Call
-        |'-'Expression {$$.u_expr = new Uminus($2.u_expr);} %prec U_MINUS 
-        |'!' Expression {
-            $$.u_expr = new Not($2.u_expr);
-        }
-        |'|'Expression'|' {$$.u_expr = new Magnitude($2.u_expr);}
-        ;
+| Expression '/' Expression{
+    $$.u_expr = new Div($1.u_expr, $3.u_expr);
+}
+| Expression '+' Expression { 
+    $$.u_expr = new Plus($1.u_expr, $3.u_expr);
+}
+| Expression '-' Expression{
+    $$.u_expr = new Minus($1.u_expr, $3.u_expr);
+}
+| Expression T_NEQ Expression{
+    $$.u_expr = new Noteq($1.u_expr, $3.u_expr);
+}
+| Expression T_EQ Expression{
+    $$.u_expr = new Compare($1.u_expr, $3.u_expr);
+}
+| Expression T_LEQ Expression{
+    $$.u_expr = new Lteq($1.u_expr, $3.u_expr);
+}
+| Expression T_GEQ Expression{
+    $$.u_expr = new Gteq($1.u_expr, $3.u_expr);
+}
+| Expression T_AND Expression{
+    $$.u_expr = new And($1.u_expr, $3.u_expr);
+}
+| Expression T_OR Expression{
+    $$.u_expr = new Or($1.u_expr, $3.u_expr);
+}
+| Expression '>' Expression{
+    $$.u_expr = new Gt($1.u_expr, $3.u_expr);
+}
+| Expression '<' Expression{
+    $$.u_expr = new Lt($1.u_expr, $3.u_expr);
+}
+| '(' Expression ')'
+{
+    //TODO FIGURE OUT WHAT GOES HERE!!!!!!!!!
+}
+| Num 
+{
+    $$.u_expr=$1.u_expr;
+}
+| T_TRUE {
+    $$.u_expr = new BoolLit(new Primitive(1));
+}
+| T_FALSE{
+    $$.u_expr = new BoolLit(new Primitive(0));
+}
+| T_ID {
+    $$.u_expr = new Ident(new SymName($1.u_base_charptr));
+}
+|Array_Call
+|'-'Expression {$$.u_expr = new Uminus($2.u_expr);} %prec U_MINUS 
+|'!' Expression {
+    $$.u_expr = new Not($2.u_expr);
+}
+|'|'Expression'|' {$$.u_expr = new Magnitude($2.u_expr);}
+;
 Call_List : Expression Call_Prime
 {
-    $$.u_expr_list = $1.u_expr_list;
-
-}
-|
-;
-
-Call_Prime : Call_Prime ',' Expression{
-#if 0
-    THIS IS SOMETHING
-    $1.u_expr_list-> push_back(($2.u_expr));
-    $$.u_expr_list = $1.u_expr_list;
+#if VERBOSE
+    cout<<"Call_list\n";
 #endif
+
+    $$.u_expr_list = $2.u_expr_list;
+    $$.u_expr_list->push_front($1.u_expr);
+
 }
 |{
-//TODO
-    //$$.u_expr_list= new list<Expr_ptr>();
+    #if VERBOSE
+    cout<<"empty Call_List\n";
+    #endif
+    //$$.u_expr_list = new list<Expr_ptr>();
+
+}
+;
+
+Call_Prime:Call_Prime ',' Expression{
+    #if VERBOSE
+    cout<<"Call_Prime\n";
+    #endif
+
+    $1.u_expr_list-> push_back(($3.u_expr));
+    $$.u_expr_list = $1.u_expr_list;
+
+}
+|{
+#if VERBOSE
+    cout<<"empty Call_Prime\n";
+#endif
+    $$.u_expr_list= new list<Expr_ptr>();
 }
 
 ;
 
-Function_Call : T_ID '('Call_List')'
-{
-    //$$.u_expr_list = new SymName($1.u_base_charptr),  ;
-}
-;
 
 Array_Call: T_ID '['Num']'{
     $$.u_expr = new ArrayAccess(new SymName($1.u_base_charptr),
     $3.u_expr);
+    #if VERBOSE
+    cout<<"Array_Call";
+    #endif
   
 }
 ;
 
 
-Optional_Assign :  Assign ';'{$$.u_stat_list = $1.u_stat_list};
+Optional_Assign :  Assign ';'{$$.u_stat_list = $1.u_stat_list;};
 | {$$.u_stat = new None();}
 ;
 
 Assign : T_ID  '=' Expression {$$.u_stat = new Assignment(new SymName($1.u_base_charptr), $3.u_expr);}
-|T_ID '='  Function_Call {
+|T_ID '='  T_ID '('Call_List ')'{ 
+    #if VERBOSE
+    cout<<"Assign statement FUNCTION_CALL";
+    #endif
+    $$.u_stat = new Call( 
+    new SymName($1.u_base_charptr), new SymName($3.u_base_charptr), $5.u_expr_list);  
 }
 |T_ID '['Expression']' '=' Expression {
     $$.u_stat = new ArrayAssignment(new SymName($1.u_base_charptr)
     ,$3.u_expr, $6.u_expr);
 }
-|T_ID '['Expression']' '=' Function_Call
+|T_ID '['Expression']' '='T_ID '('Call_List ')' 
+{
+    #if VERBOSE
+    cout<<"Assign statement ARRAY = FUNCTIONCALL ";
+    #endif
+    $$.u_stat =new ArrayCall( 
+    new SymName($1.u_base_charptr), $3.u_expr,  new SymName($6.u_base_charptr), $8.u_expr_list);  
 
+}
 
 %%
 /*********************************************************

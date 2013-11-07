@@ -1,7 +1,9 @@
 function foo() : int
         {
-            a[x] = 1*4*6*3;
+           var total ,x, y, z: intarray[5]; 
+            a[1] = a(fuck, fuck, dadasda, yo, 1 ,2);
             return   1*3;
+
         }
 
 
