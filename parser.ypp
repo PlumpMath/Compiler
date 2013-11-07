@@ -75,12 +75,12 @@ $1.u_func_list-> push_back(($2.u_func));
         $$.u_func_list = new list<Func_ptr>();
     }
 ;
-Function : Function_Signature Function_Body {}
+Function : Function_Signature Function_Body 
 ;
 Function_Signature : T_FUNCTION T_ID '(' Param_List ')' ':' Type
 ;
 
-Function_Body : '{' Code_Block Return_Statement '}'
+Function_Body : '{' Code_Block '}'
 
 ;
 
@@ -92,7 +92,7 @@ More_Parms : More_Parms',' T_ID ':' Type
     ;
 Type : T_TYPE_INT {$$.u_type = new TInteger();}
     |T_TYPE_BOOL {$$.u_type = new TBoolean();}
-    |T_INTARRAY'['Num']'  {//$$.u_type = new TIntArray($3);
+    |T_INTARRAY'['Num']'  {$$.u_type = new TIntArray($3.u_primitive);
     }
     ;
 Return_Statement : T_RETURN Expression';'{
@@ -102,21 +102,24 @@ Return_Statement : T_RETURN Expression';'{
 
 
 Num : T_DEC {
-    $$.u_expr = new IntLit(new Primitive($1.u_base_int));
+    $$.u_primitive = new Primitive($1.u_base_int);
     } 
     |T_HEX{
-    $$.u_expr = new IntLit(new Primitive($1.u_base_int));
+    $$.u_primitive = new Primitive($1.u_base_int);
     }
     |T_OCT{
-    $$.u_expr = new IntLit(new Primitive($1.u_base_int));
+    $$.u_primitive = new Primitive($1.u_base_int);
     }
     |T_BIN{
-    $$.u_expr = new IntLit(new Primitive($1.u_base_int));
+    $$.u_primitive= new Primitive($1.u_base_int);
     }
     ;
 
  
-Code_Block: Var_List Function_List Stm_List
+Code_Block: Var_List Function_List Stm_List Return_Statement
+{
+ //   $$.u_function_block = new Function_blockImpl($1.u_decl_list, $2.u_func_list, $3.u_stat_list, $4.u_return);
+}
 ;
 Var_List: Var_List Var_Declaration 
 {
@@ -281,7 +284,7 @@ Expression    : Expression '*' Expression {
 }
 | Num 
 {
-    $$.u_expr=$1.u_expr;
+    $$.u_expr=new IntLit($1.u_primitive);
 }
 | T_TRUE {
     $$.u_expr = new BoolLit(new Primitive(1));
@@ -339,7 +342,7 @@ Call_Prime:Call_Prime ',' Expression{
 
 Array_Call: T_ID '['Num']'{
     $$.u_expr = new ArrayAccess(new SymName($1.u_base_charptr),
-    $3.u_expr);
+    new IntLit($3.u_primitive));
     #if VERBOSE
     cout<<"Array_Call";
     #endif
