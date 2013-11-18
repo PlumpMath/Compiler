@@ -1,0 +1,58 @@
+digraph G { 
+"1" [label="Program"]
+"0" -> "1"
+"2" [label="Func"]
+"1" -> "2"
+"3" [label="TInteger"]
+"2" -> "3"
+"4" [label="SymName\n\"foo\""]
+"2" -> "4"
+"5" [label="FunctionBlock"]
+"2" -> "5"
+"6" [label="Return"]
+"5" -> "6"
+"7" [label="IntLit\n<0>"]
+"6" -> "7"
+"8" [label="Primitive\n0"]
+"7" -> "8"
+"9" [label="Func"]
+"1" -> "9"
+"10" [label="TInteger"]
+"9" -> "10"
+"11" [label="SymName\n\"Main\""]
+"9" -> "11"
+"12" [label="FunctionBlock"]
+"9" -> "12"
+"13" [label="Decl"]
+"12" -> "13"
+"14" [label="TIntArray"]
+"13" -> "14"
+"15" [label="Primitive\n100"]
+"14" -> "15"
+"16" [label="SymName\n\"o\""]
+"13" -> "16"
+"17" [label="Decl"]
+"12" -> "17"
+"18" [label="TBoolean"]
+"17" -> "18"
+"19" [label="SymName\n\"a\""]
+"17" -> "19"
+"20" [label="ArrayAssignment"]
+"12" -> "20"
+"21" [label="SymName\n\"o\""]
+"20" -> "21"
+"22" [label="IntLit\n<2>"]
+"20" -> "22"
+"23" [label="Primitive\n2"]
+"22" -> "23"
+"24" [label="IntLit\n<1>"]
+"20" -> "24"
+"25" [label="Primitive\n1"]
+"24" -> "25"
+"26" [label="Return"]
+"12" -> "26"
+"27" [label="IntLit\n<0>"]
+"26" -> "27"
+"28" [label="Primitive\n0"]
+"27" -> "28"
+}; 

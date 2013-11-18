@@ -1,0 +1,13 @@
+function foo() : int
+        {
+            return 0;
+        }
+
+        function Main() : int
+        {
+            var o : intarray[100];
+            var a : bool;
+            o[2]  = 1;
+            return 0;
+        }
+

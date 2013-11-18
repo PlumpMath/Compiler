@@ -1,0 +1,2232 @@
+Terminals unused in grammar
+
+   ILLEGAL
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: functions
+
+    2 functions: functions function
+    3          | /* empty */
+
+    4 function: KEY_FUNC IDENT PAREN_O f_params PAREN_C COLON type CURLY_O body CURLY_C
+
+    5 body: var_decls func_decls stmts ret_stmt
+
+    6 nest_block: stmts
+
+    7 f_params: f_params_
+    8         | /* empty */
+
+    9 f_params_: f_params_ COMMA param
+   10          | param
+
+   11 param: IDENT COLON type
+
+   12 var_decls: var_decls var_decl
+   13          | /* empty */
+
+   14 var_decl: KEY_VAR var_list COLON atype SEMI
+
+   15 var_list: var_list COMMA IDENT
+   16         | IDENT
+
+   17 type: KEY_BOOL
+   18     | KEY_INT
+
+   19 atype: type
+   20      | KEY_INTARRAY ANGLE_O integer ANGLE_C
+
+   21 func_decls: func_decls function
+   22           | /* empty */
+
+   23 stmts: stmts stmt
+   24      | /* empty */
+
+   25 stmt: assignment
+   26     | fct_call
+   27     | KEY_IF PAREN_O expr PAREN_C CURLY_O nest_block CURLY_C
+   28     | KEY_IF PAREN_O expr PAREN_C CURLY_O nest_block CURLY_C KEY_ELSE CURLY_O nest_block CURLY_C
+   29     | KEY_FOR PAREN_O opt_assign PAREN_O expr PAREN_C opt_assign PAREN_C CURLY_O nest_block CURLY_C
+
+   30 opt_assign: assignment
+   31           | /* empty */
+
+   32 ret_stmt: KEY_RET expr SEMI
+
+   33 assignment: IDENT ASSIGN expr SEMI
+   34           | IDENT ANGLE_O expr ANGLE_C ASSIGN expr SEMI
+
+   35 fct_call: IDENT ASSIGN IDENT PAREN_O expr_list PAREN_C SEMI
+   36         | IDENT ANGLE_O expr ANGLE_C ASSIGN IDENT PAREN_O expr_list PAREN_C SEMI
+
+   37 expr_list: expr_list_ expr
+   38          | /* empty */
+
+   39 expr_list_: expr_list_ expr COMMA
+   40           | /* empty */
+
+   41 expr: expr PLUS expr
+   42     | expr MINUS expr
+   43     | expr MULT expr
+   44     | expr DIV expr
+   45     | expr OP_AND expr
+   46     | expr OP_OR expr
+   47     | expr OP_NE expr
+   48     | expr OP_EQ expr
+   49     | expr OP_GT expr
+   50     | expr OP_GE expr
+   51     | expr OP_LT expr
+   52     | expr OP_LE expr
+   53     | OP_NOT expr
+   54     | MINUS expr
+   55     | literal
+   56     | IDENT
+   57     | IDENT ANGLE_O expr ANGLE_C
+   58     | PAREN_O expr PAREN_C
+   59     | BAR expr BAR
+
+   60 literal: integer
+   61        | TRUE
+   62        | FALSE
+
+   63 integer: INT
+   64        | HEX
+   65        | BIN
+   66        | OCT
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+SEMI (258) 14 32 33 34 35 36
+COLON (259) 4 11 14
+COMMA (260) 9 15 39
+CURLY_O (261) 4 27 28 29
+CURLY_C (262) 4 27 28 29
+PAREN_O (263) 4 27 28 29 35 36 58
+PAREN_C (264) 4 27 28 29 35 36 58
+ANGLE_O (265) 20 34 36 57
+ANGLE_C (266) 20 34 36 57
+BAR (267) 59
+KEY_BOOL (268) 17
+KEY_ELSE (269) 28
+KEY_IF (270) 27 28
+KEY_INT (271) 18
+KEY_FOR (272) 29
+KEY_VAR (273) 14
+KEY_FUNC (274) 4
+KEY_INTARRAY (275) 20
+KEY_RET (276) 32
+INT (277) 63
+OCT (278) 66
+HEX (279) 64
+BIN (280) 65
+IDENT (281) 4 11 15 16 33 34 35 36 56 57
+ILLEGAL (282)
+TRUE (283) 61
+FALSE (284) 62
+ASSIGN (285) 33 34 35 36
+OP_LE (286) 52
+OP_LT (287) 51
+OP_GE (288) 50
+OP_GT (289) 49
+OP_EQ (290) 48
+OP_NE (291) 47
+OP_AND (292) 45
+OP_OR (293) 46
+MINUS (294) 42 54
+PLUS (295) 41
+DIV (296) 44
+MULT (297) 43
+OP_NOT (298) 53
+
+
+Nonterminals, with rules where they appear
+
+$accept (44)
+    on left: 0
+program (45)
+    on left: 1, on right: 0
+functions (46)
+    on left: 2 3, on right: 1 2
+function (47)
+    on left: 4, on right: 2 21
+body (48)
+    on left: 5, on right: 4
+nest_block (49)
+    on left: 6, on right: 27 28 29
+f_params (50)
+    on left: 7 8, on right: 4
+f_params_ (51)
+    on left: 9 10, on right: 7 9
+param (52)
+    on left: 11, on right: 9 10
+var_decls (53)
+    on left: 12 13, on right: 5 12
+var_decl (54)
+    on left: 14, on right: 12
+var_list (55)
+    on left: 15 16, on right: 14 15
+type (56)
+    on left: 17 18, on right: 4 11 19
+atype (57)
+    on left: 19 20, on right: 14
+func_decls (58)
+    on left: 21 22, on right: 5 21
+stmts (59)
+    on left: 23 24, on right: 5 6 23
+stmt (60)
+    on left: 25 26 27 28 29, on right: 23
+opt_assign (61)
+    on left: 30 31, on right: 29
+ret_stmt (62)
+    on left: 32, on right: 5
+assignment (63)
+    on left: 33 34, on right: 25 30
+fct_call (64)
+    on left: 35 36, on right: 26
+expr_list (65)
+    on left: 37 38, on right: 35 36
+expr_list_ (66)
+    on left: 39 40, on right: 37 39
+expr (67)
+    on left: 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58
+    59, on right: 27 28 29 32 33 34 36 37 39 41 42 43 44 45 46 47 48
+    49 50 51 52 53 54 57 58 59
+literal (68)
+    on left: 60 61 62, on right: 55
+integer (69)
+    on left: 63 64 65 66, on right: 20 60
+
+
+state 0
+
+    0 $accept: . program $end
+
+    $default  reduce using rule 3 (functions)
+
+    program    go to state 1
+    functions  go to state 2
+
+
+state 1
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 3
+
+
+state 2
+
+    1 program: functions .
+    2 functions: functions . function
+
+    KEY_FUNC  shift, and go to state 4
+
+    $default  reduce using rule 1 (program)
+
+    function  go to state 5
+
+
+state 3
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+state 4
+
+    4 function: KEY_FUNC . IDENT PAREN_O f_params PAREN_C COLON type CURLY_O body CURLY_C
+
+    IDENT  shift, and go to state 6
+
+
+state 5
+
+    2 functions: functions function .
+
+    $default  reduce using rule 2 (functions)
+
+
+state 6
+
+    4 function: KEY_FUNC IDENT . PAREN_O f_params PAREN_C COLON type CURLY_O body CURLY_C
+
+    PAREN_O  shift, and go to state 7
+
+
+state 7
+
+    4 function: KEY_FUNC IDENT PAREN_O . f_params PAREN_C COLON type CURLY_O body CURLY_C
+
+    IDENT  shift, and go to state 8
+
+    $default  reduce using rule 8 (f_params)
+
+    f_params   go to state 9
+    f_params_  go to state 10
+    param      go to state 11
+
+
+state 8
+
+   11 param: IDENT . COLON type
+
+    COLON  shift, and go to state 12
+
+
+state 9
+
+    4 function: KEY_FUNC IDENT PAREN_O f_params . PAREN_C COLON type CURLY_O body CURLY_C
+
+    PAREN_C  shift, and go to state 13
+
+
+state 10
+
+    7 f_params: f_params_ .
+    9 f_params_: f_params_ . COMMA param
+
+    COMMA  shift, and go to state 14
+
+    $default  reduce using rule 7 (f_params)
+
+
+state 11
+
+   10 f_params_: param .
+
+    $default  reduce using rule 10 (f_params_)
+
+
+state 12
+
+   11 param: IDENT COLON . type
+
+    KEY_BOOL  shift, and go to state 15
+    KEY_INT   shift, and go to state 16
+
+    type  go to state 17
+
+
+state 13
+
+    4 function: KEY_FUNC IDENT PAREN_O f_params PAREN_C . COLON type CURLY_O body CURLY_C
+
+    COLON  shift, and go to state 18
+
+
+state 14
+
+    9 f_params_: f_params_ COMMA . param
+
+    IDENT  shift, and go to state 8
+
+    param  go to state 19
+
+
+state 15
+
+   17 type: KEY_BOOL .
+
+    $default  reduce using rule 17 (type)
+
+
+state 16
+
+   18 type: KEY_INT .
+
+    $default  reduce using rule 18 (type)
+
+
+state 17
+
+   11 param: IDENT COLON type .
+
+    $default  reduce using rule 11 (param)
+
+
+state 18
+
+    4 function: KEY_FUNC IDENT PAREN_O f_params PAREN_C COLON . type CURLY_O body CURLY_C
+
+    KEY_BOOL  shift, and go to state 15
+    KEY_INT   shift, and go to state 16
+
+    type  go to state 20
+
+
+state 19
+
+    9 f_params_: f_params_ COMMA param .
+
+    $default  reduce using rule 9 (f_params_)
+
+
+state 20
+
+    4 function: KEY_FUNC IDENT PAREN_O f_params PAREN_C COLON type . CURLY_O body CURLY_C
+
+    CURLY_O  shift, and go to state 21
+
+
+state 21
+
+    4 function: KEY_FUNC IDENT PAREN_O f_params PAREN_C COLON type CURLY_O . body CURLY_C
+
+    $default  reduce using rule 13 (var_decls)
+
+    body       go to state 22
+    var_decls  go to state 23
+
+
+state 22
+
+    4 function: KEY_FUNC IDENT PAREN_O f_params PAREN_C COLON type CURLY_O body . CURLY_C
+
+    CURLY_C  shift, and go to state 24
+
+
+state 23
+
+    5 body: var_decls . func_decls stmts ret_stmt
+   12 var_decls: var_decls . var_decl
+
+    KEY_VAR  shift, and go to state 25
+
+    $default  reduce using rule 22 (func_decls)
+
+    var_decl    go to state 26
+    func_decls  go to state 27
+
+
+state 24
+
+    4 function: KEY_FUNC IDENT PAREN_O f_params PAREN_C COLON type CURLY_O body CURLY_C .
+
+    $default  reduce using rule 4 (function)
+
+
+state 25
+
+   14 var_decl: KEY_VAR . var_list COLON atype SEMI
+
+    IDENT  shift, and go to state 28
+
+    var_list  go to state 29
+
+
+state 26
+
+   12 var_decls: var_decls var_decl .
+
+    $default  reduce using rule 12 (var_decls)
+
+
+state 27
+
+    5 body: var_decls func_decls . stmts ret_stmt
+   21 func_decls: func_decls . function
+
+    KEY_FUNC  shift, and go to state 4
+
+    $default  reduce using rule 24 (stmts)
+
+    function  go to state 30
+    stmts     go to state 31
+
+
+state 28
+
+   16 var_list: IDENT .
+
+    $default  reduce using rule 16 (var_list)
+
+
+state 29
+
+   14 var_decl: KEY_VAR var_list . COLON atype SEMI
+   15 var_list: var_list . COMMA IDENT
+
+    COLON  shift, and go to state 32
+    COMMA  shift, and go to state 33
+
+
+state 30
+
+   21 func_decls: func_decls function .
+
+    $default  reduce using rule 21 (func_decls)
+
+
+state 31
+
+    5 body: var_decls func_decls stmts . ret_stmt
+   23 stmts: stmts . stmt
+
+    KEY_IF   shift, and go to state 34
+    KEY_FOR  shift, and go to state 35
+    KEY_RET  shift, and go to state 36
+    IDENT    shift, and go to state 37
+
+    stmt        go to state 38
+    ret_stmt    go to state 39
+    assignment  go to state 40
+    fct_call    go to state 41
+
+
+state 32
+
+   14 var_decl: KEY_VAR var_list COLON . atype SEMI
+
+    KEY_BOOL      shift, and go to state 15
+    KEY_INT       shift, and go to state 16
+    KEY_INTARRAY  shift, and go to state 42
+
+    type   go to state 43
+    atype  go to state 44
+
+
+state 33
+
+   15 var_list: var_list COMMA . IDENT
+
+    IDENT  shift, and go to state 45
+
+
+state 34
+
+   27 stmt: KEY_IF . PAREN_O expr PAREN_C CURLY_O nest_block CURLY_C
+   28     | KEY_IF . PAREN_O expr PAREN_C CURLY_O nest_block CURLY_C KEY_ELSE CURLY_O nest_block CURLY_C
+
+    PAREN_O  shift, and go to state 46
+
+
+state 35
+
+   29 stmt: KEY_FOR . PAREN_O opt_assign PAREN_O expr PAREN_C opt_assign PAREN_C CURLY_O nest_block CURLY_C
+
+    PAREN_O  shift, and go to state 47
+
+
+state 36
+
+   32 ret_stmt: KEY_RET . expr SEMI
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 59
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 37
+
+   33 assignment: IDENT . ASSIGN expr SEMI
+   34           | IDENT . ANGLE_O expr ANGLE_C ASSIGN expr SEMI
+   35 fct_call: IDENT . ASSIGN IDENT PAREN_O expr_list PAREN_C SEMI
+   36         | IDENT . ANGLE_O expr ANGLE_C ASSIGN IDENT PAREN_O expr_list PAREN_C SEMI
+
+    ANGLE_O  shift, and go to state 62
+    ASSIGN   shift, and go to state 63
+
+
+state 38
+
+   23 stmts: stmts stmt .
+
+    $default  reduce using rule 23 (stmts)
+
+
+state 39
+
+    5 body: var_decls func_decls stmts ret_stmt .
+
+    $default  reduce using rule 5 (body)
+
+
+state 40
+
+   25 stmt: assignment .
+
+    $default  reduce using rule 25 (stmt)
+
+
+state 41
+
+   26 stmt: fct_call .
+
+    $default  reduce using rule 26 (stmt)
+
+
+state 42
+
+   20 atype: KEY_INTARRAY . ANGLE_O integer ANGLE_C
+
+    ANGLE_O  shift, and go to state 64
+
+
+state 43
+
+   19 atype: type .
+
+    $default  reduce using rule 19 (atype)
+
+
+state 44
+
+   14 var_decl: KEY_VAR var_list COLON atype . SEMI
+
+    SEMI  shift, and go to state 65
+
+
+state 45
+
+   15 var_list: var_list COMMA IDENT .
+
+    $default  reduce using rule 15 (var_list)
+
+
+state 46
+
+   27 stmt: KEY_IF PAREN_O . expr PAREN_C CURLY_O nest_block CURLY_C
+   28     | KEY_IF PAREN_O . expr PAREN_C CURLY_O nest_block CURLY_C KEY_ELSE CURLY_O nest_block CURLY_C
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 66
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 47
+
+   29 stmt: KEY_FOR PAREN_O . opt_assign PAREN_O expr PAREN_C opt_assign PAREN_C CURLY_O nest_block CURLY_C
+
+    IDENT  shift, and go to state 67
+
+    $default  reduce using rule 31 (opt_assign)
+
+    opt_assign  go to state 68
+    assignment  go to state 69
+
+
+state 48
+
+   58 expr: PAREN_O . expr PAREN_C
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 70
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 49
+
+   59 expr: BAR . expr BAR
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 71
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 50
+
+   63 integer: INT .
+
+    $default  reduce using rule 63 (integer)
+
+
+state 51
+
+   66 integer: OCT .
+
+    $default  reduce using rule 66 (integer)
+
+
+state 52
+
+   64 integer: HEX .
+
+    $default  reduce using rule 64 (integer)
+
+
+state 53
+
+   65 integer: BIN .
+
+    $default  reduce using rule 65 (integer)
+
+
+state 54
+
+   56 expr: IDENT .
+   57     | IDENT . ANGLE_O expr ANGLE_C
+
+    ANGLE_O  shift, and go to state 72
+
+    $default  reduce using rule 56 (expr)
+
+
+state 55
+
+   61 literal: TRUE .
+
+    $default  reduce using rule 61 (literal)
+
+
+state 56
+
+   62 literal: FALSE .
+
+    $default  reduce using rule 62 (literal)
+
+
+state 57
+
+   54 expr: MINUS . expr
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 73
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 58
+
+   53 expr: OP_NOT . expr
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 74
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 59
+
+   32 ret_stmt: KEY_RET expr . SEMI
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    SEMI    shift, and go to state 75
+    OP_LE   shift, and go to state 76
+    OP_LT   shift, and go to state 77
+    OP_GE   shift, and go to state 78
+    OP_GT   shift, and go to state 79
+    OP_EQ   shift, and go to state 80
+    OP_NE   shift, and go to state 81
+    OP_AND  shift, and go to state 82
+    OP_OR   shift, and go to state 83
+    MINUS   shift, and go to state 84
+    PLUS    shift, and go to state 85
+    DIV     shift, and go to state 86
+    MULT    shift, and go to state 87
+
+
+state 60
+
+   55 expr: literal .
+
+    $default  reduce using rule 55 (expr)
+
+
+state 61
+
+   60 literal: integer .
+
+    $default  reduce using rule 60 (literal)
+
+
+state 62
+
+   34 assignment: IDENT ANGLE_O . expr ANGLE_C ASSIGN expr SEMI
+   36 fct_call: IDENT ANGLE_O . expr ANGLE_C ASSIGN IDENT PAREN_O expr_list PAREN_C SEMI
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 88
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 63
+
+   33 assignment: IDENT ASSIGN . expr SEMI
+   35 fct_call: IDENT ASSIGN . IDENT PAREN_O expr_list PAREN_C SEMI
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 89
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 90
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 64
+
+   20 atype: KEY_INTARRAY ANGLE_O . integer ANGLE_C
+
+    INT  shift, and go to state 50
+    OCT  shift, and go to state 51
+    HEX  shift, and go to state 52
+    BIN  shift, and go to state 53
+
+    integer  go to state 91
+
+
+state 65
+
+   14 var_decl: KEY_VAR var_list COLON atype SEMI .
+
+    $default  reduce using rule 14 (var_decl)
+
+
+state 66
+
+   27 stmt: KEY_IF PAREN_O expr . PAREN_C CURLY_O nest_block CURLY_C
+   28     | KEY_IF PAREN_O expr . PAREN_C CURLY_O nest_block CURLY_C KEY_ELSE CURLY_O nest_block CURLY_C
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    PAREN_C  shift, and go to state 92
+    OP_LE    shift, and go to state 76
+    OP_LT    shift, and go to state 77
+    OP_GE    shift, and go to state 78
+    OP_GT    shift, and go to state 79
+    OP_EQ    shift, and go to state 80
+    OP_NE    shift, and go to state 81
+    OP_AND   shift, and go to state 82
+    OP_OR    shift, and go to state 83
+    MINUS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    DIV      shift, and go to state 86
+    MULT     shift, and go to state 87
+
+
+state 67
+
+   33 assignment: IDENT . ASSIGN expr SEMI
+   34           | IDENT . ANGLE_O expr ANGLE_C ASSIGN expr SEMI
+
+    ANGLE_O  shift, and go to state 93
+    ASSIGN   shift, and go to state 94
+
+
+state 68
+
+   29 stmt: KEY_FOR PAREN_O opt_assign . PAREN_O expr PAREN_C opt_assign PAREN_C CURLY_O nest_block CURLY_C
+
+    PAREN_O  shift, and go to state 95
+
+
+state 69
+
+   30 opt_assign: assignment .
+
+    $default  reduce using rule 30 (opt_assign)
+
+
+state 70
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+   58     | PAREN_O expr . PAREN_C
+
+    PAREN_C  shift, and go to state 96
+    OP_LE    shift, and go to state 76
+    OP_LT    shift, and go to state 77
+    OP_GE    shift, and go to state 78
+    OP_GT    shift, and go to state 79
+    OP_EQ    shift, and go to state 80
+    OP_NE    shift, and go to state 81
+    OP_AND   shift, and go to state 82
+    OP_OR    shift, and go to state 83
+    MINUS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    DIV      shift, and go to state 86
+    MULT     shift, and go to state 87
+
+
+state 71
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+   59     | BAR expr . BAR
+
+    BAR     shift, and go to state 97
+    OP_LE   shift, and go to state 76
+    OP_LT   shift, and go to state 77
+    OP_GE   shift, and go to state 78
+    OP_GT   shift, and go to state 79
+    OP_EQ   shift, and go to state 80
+    OP_NE   shift, and go to state 81
+    OP_AND  shift, and go to state 82
+    OP_OR   shift, and go to state 83
+    MINUS   shift, and go to state 84
+    PLUS    shift, and go to state 85
+    DIV     shift, and go to state 86
+    MULT    shift, and go to state 87
+
+
+state 72
+
+   57 expr: IDENT ANGLE_O . expr ANGLE_C
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 98
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 73
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+   54     | MINUS expr .
+
+    $default  reduce using rule 54 (expr)
+
+
+state 74
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+   53     | OP_NOT expr .
+
+    $default  reduce using rule 53 (expr)
+
+
+state 75
+
+   32 ret_stmt: KEY_RET expr SEMI .
+
+    $default  reduce using rule 32 (ret_stmt)
+
+
+state 76
+
+   52 expr: expr OP_LE . expr
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 99
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 77
+
+   51 expr: expr OP_LT . expr
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 100
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 78
+
+   50 expr: expr OP_GE . expr
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 101
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 79
+
+   49 expr: expr OP_GT . expr
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 102
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 80
+
+   48 expr: expr OP_EQ . expr
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 103
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 81
+
+   47 expr: expr OP_NE . expr
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 104
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 82
+
+   45 expr: expr OP_AND . expr
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 105
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 83
+
+   46 expr: expr OP_OR . expr
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 106
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 84
+
+   42 expr: expr MINUS . expr
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 107
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 85
+
+   41 expr: expr PLUS . expr
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 108
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 86
+
+   44 expr: expr DIV . expr
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 109
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 87
+
+   43 expr: expr MULT . expr
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 110
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 88
+
+   34 assignment: IDENT ANGLE_O expr . ANGLE_C ASSIGN expr SEMI
+   36 fct_call: IDENT ANGLE_O expr . ANGLE_C ASSIGN IDENT PAREN_O expr_list PAREN_C SEMI
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    ANGLE_C  shift, and go to state 111
+    OP_LE    shift, and go to state 76
+    OP_LT    shift, and go to state 77
+    OP_GE    shift, and go to state 78
+    OP_GT    shift, and go to state 79
+    OP_EQ    shift, and go to state 80
+    OP_NE    shift, and go to state 81
+    OP_AND   shift, and go to state 82
+    OP_OR    shift, and go to state 83
+    MINUS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    DIV      shift, and go to state 86
+    MULT     shift, and go to state 87
+
+
+state 89
+
+   35 fct_call: IDENT ASSIGN IDENT . PAREN_O expr_list PAREN_C SEMI
+   56 expr: IDENT .
+   57     | IDENT . ANGLE_O expr ANGLE_C
+
+    PAREN_O  shift, and go to state 112
+    ANGLE_O  shift, and go to state 72
+
+    $default  reduce using rule 56 (expr)
+
+
+state 90
+
+   33 assignment: IDENT ASSIGN expr . SEMI
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    SEMI    shift, and go to state 113
+    OP_LE   shift, and go to state 76
+    OP_LT   shift, and go to state 77
+    OP_GE   shift, and go to state 78
+    OP_GT   shift, and go to state 79
+    OP_EQ   shift, and go to state 80
+    OP_NE   shift, and go to state 81
+    OP_AND  shift, and go to state 82
+    OP_OR   shift, and go to state 83
+    MINUS   shift, and go to state 84
+    PLUS    shift, and go to state 85
+    DIV     shift, and go to state 86
+    MULT    shift, and go to state 87
+
+
+state 91
+
+   20 atype: KEY_INTARRAY ANGLE_O integer . ANGLE_C
+
+    ANGLE_C  shift, and go to state 114
+
+
+state 92
+
+   27 stmt: KEY_IF PAREN_O expr PAREN_C . CURLY_O nest_block CURLY_C
+   28     | KEY_IF PAREN_O expr PAREN_C . CURLY_O nest_block CURLY_C KEY_ELSE CURLY_O nest_block CURLY_C
+
+    CURLY_O  shift, and go to state 115
+
+
+state 93
+
+   34 assignment: IDENT ANGLE_O . expr ANGLE_C ASSIGN expr SEMI
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 116
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 94
+
+   33 assignment: IDENT ASSIGN . expr SEMI
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 90
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 95
+
+   29 stmt: KEY_FOR PAREN_O opt_assign PAREN_O . expr PAREN_C opt_assign PAREN_C CURLY_O nest_block CURLY_C
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 117
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 96
+
+   58 expr: PAREN_O expr PAREN_C .
+
+    $default  reduce using rule 58 (expr)
+
+
+state 97
+
+   59 expr: BAR expr BAR .
+
+    $default  reduce using rule 59 (expr)
+
+
+state 98
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+   57     | IDENT ANGLE_O expr . ANGLE_C
+
+    ANGLE_C  shift, and go to state 118
+    OP_LE    shift, and go to state 76
+    OP_LT    shift, and go to state 77
+    OP_GE    shift, and go to state 78
+    OP_GT    shift, and go to state 79
+    OP_EQ    shift, and go to state 80
+    OP_NE    shift, and go to state 81
+    OP_AND   shift, and go to state 82
+    OP_OR    shift, and go to state 83
+    MINUS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    DIV      shift, and go to state 86
+    MULT     shift, and go to state 87
+
+
+state 99
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+   52     | expr OP_LE expr .
+
+    MINUS  shift, and go to state 84
+    PLUS   shift, and go to state 85
+    DIV    shift, and go to state 86
+    MULT   shift, and go to state 87
+
+    $default  reduce using rule 52 (expr)
+
+
+state 100
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   51     | expr OP_LT expr .
+   52     | expr . OP_LE expr
+
+    MINUS  shift, and go to state 84
+    PLUS   shift, and go to state 85
+    DIV    shift, and go to state 86
+    MULT   shift, and go to state 87
+
+    $default  reduce using rule 51 (expr)
+
+
+state 101
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   50     | expr OP_GE expr .
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    MINUS  shift, and go to state 84
+    PLUS   shift, and go to state 85
+    DIV    shift, and go to state 86
+    MULT   shift, and go to state 87
+
+    $default  reduce using rule 50 (expr)
+
+
+state 102
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   49     | expr OP_GT expr .
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    MINUS  shift, and go to state 84
+    PLUS   shift, and go to state 85
+    DIV    shift, and go to state 86
+    MULT   shift, and go to state 87
+
+    $default  reduce using rule 49 (expr)
+
+
+state 103
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   48     | expr OP_EQ expr .
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    MINUS  shift, and go to state 84
+    PLUS   shift, and go to state 85
+    DIV    shift, and go to state 86
+    MULT   shift, and go to state 87
+
+    $default  reduce using rule 48 (expr)
+
+
+state 104
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   47     | expr OP_NE expr .
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    MINUS  shift, and go to state 84
+    PLUS   shift, and go to state 85
+    DIV    shift, and go to state 86
+    MULT   shift, and go to state 87
+
+    $default  reduce using rule 47 (expr)
+
+
+state 105
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   45     | expr OP_AND expr .
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    MINUS  shift, and go to state 84
+    PLUS   shift, and go to state 85
+    DIV    shift, and go to state 86
+    MULT   shift, and go to state 87
+
+    $default  reduce using rule 45 (expr)
+
+
+state 106
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   46     | expr OP_OR expr .
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    MINUS  shift, and go to state 84
+    PLUS   shift, and go to state 85
+    DIV    shift, and go to state 86
+    MULT   shift, and go to state 87
+
+    $default  reduce using rule 46 (expr)
+
+
+state 107
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   42     | expr MINUS expr .
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    DIV   shift, and go to state 86
+    MULT  shift, and go to state 87
+
+    $default  reduce using rule 42 (expr)
+
+
+state 108
+
+   41 expr: expr . PLUS expr
+   41     | expr PLUS expr .
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    DIV   shift, and go to state 86
+    MULT  shift, and go to state 87
+
+    $default  reduce using rule 41 (expr)
+
+
+state 109
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   44     | expr DIV expr .
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    $default  reduce using rule 44 (expr)
+
+
+state 110
+
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   43     | expr MULT expr .
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    $default  reduce using rule 43 (expr)
+
+
+state 111
+
+   34 assignment: IDENT ANGLE_O expr ANGLE_C . ASSIGN expr SEMI
+   36 fct_call: IDENT ANGLE_O expr ANGLE_C . ASSIGN IDENT PAREN_O expr_list PAREN_C SEMI
+
+    ASSIGN  shift, and go to state 119
+
+
+state 112
+
+   35 fct_call: IDENT ASSIGN IDENT PAREN_O . expr_list PAREN_C SEMI
+
+    PAREN_C   reduce using rule 38 (expr_list)
+    $default  reduce using rule 40 (expr_list_)
+
+    expr_list   go to state 120
+    expr_list_  go to state 121
+
+
+state 113
+
+   33 assignment: IDENT ASSIGN expr SEMI .
+
+    $default  reduce using rule 33 (assignment)
+
+
+state 114
+
+   20 atype: KEY_INTARRAY ANGLE_O integer ANGLE_C .
+
+    $default  reduce using rule 20 (atype)
+
+
+state 115
+
+   27 stmt: KEY_IF PAREN_O expr PAREN_C CURLY_O . nest_block CURLY_C
+   28     | KEY_IF PAREN_O expr PAREN_C CURLY_O . nest_block CURLY_C KEY_ELSE CURLY_O nest_block CURLY_C
+
+    $default  reduce using rule 24 (stmts)
+
+    nest_block  go to state 122
+    stmts       go to state 123
+
+
+state 116
+
+   34 assignment: IDENT ANGLE_O expr . ANGLE_C ASSIGN expr SEMI
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    ANGLE_C  shift, and go to state 124
+    OP_LE    shift, and go to state 76
+    OP_LT    shift, and go to state 77
+    OP_GE    shift, and go to state 78
+    OP_GT    shift, and go to state 79
+    OP_EQ    shift, and go to state 80
+    OP_NE    shift, and go to state 81
+    OP_AND   shift, and go to state 82
+    OP_OR    shift, and go to state 83
+    MINUS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    DIV      shift, and go to state 86
+    MULT     shift, and go to state 87
+
+
+state 117
+
+   29 stmt: KEY_FOR PAREN_O opt_assign PAREN_O expr . PAREN_C opt_assign PAREN_C CURLY_O nest_block CURLY_C
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    PAREN_C  shift, and go to state 125
+    OP_LE    shift, and go to state 76
+    OP_LT    shift, and go to state 77
+    OP_GE    shift, and go to state 78
+    OP_GT    shift, and go to state 79
+    OP_EQ    shift, and go to state 80
+    OP_NE    shift, and go to state 81
+    OP_AND   shift, and go to state 82
+    OP_OR    shift, and go to state 83
+    MINUS    shift, and go to state 84
+    PLUS     shift, and go to state 85
+    DIV      shift, and go to state 86
+    MULT     shift, and go to state 87
+
+
+state 118
+
+   57 expr: IDENT ANGLE_O expr ANGLE_C .
+
+    $default  reduce using rule 57 (expr)
+
+
+state 119
+
+   34 assignment: IDENT ANGLE_O expr ANGLE_C ASSIGN . expr SEMI
+   36 fct_call: IDENT ANGLE_O expr ANGLE_C ASSIGN . IDENT PAREN_O expr_list PAREN_C SEMI
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 126
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 127
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 120
+
+   35 fct_call: IDENT ASSIGN IDENT PAREN_O expr_list . PAREN_C SEMI
+
+    PAREN_C  shift, and go to state 128
+
+
+state 121
+
+   37 expr_list: expr_list_ . expr
+   39 expr_list_: expr_list_ . expr COMMA
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 129
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 122
+
+   27 stmt: KEY_IF PAREN_O expr PAREN_C CURLY_O nest_block . CURLY_C
+   28     | KEY_IF PAREN_O expr PAREN_C CURLY_O nest_block . CURLY_C KEY_ELSE CURLY_O nest_block CURLY_C
+
+    CURLY_C  shift, and go to state 130
+
+
+state 123
+
+    6 nest_block: stmts .
+   23 stmts: stmts . stmt
+
+    KEY_IF   shift, and go to state 34
+    KEY_FOR  shift, and go to state 35
+    IDENT    shift, and go to state 37
+
+    $default  reduce using rule 6 (nest_block)
+
+    stmt        go to state 38
+    assignment  go to state 40
+    fct_call    go to state 41
+
+
+state 124
+
+   34 assignment: IDENT ANGLE_O expr ANGLE_C . ASSIGN expr SEMI
+
+    ASSIGN  shift, and go to state 131
+
+
+state 125
+
+   29 stmt: KEY_FOR PAREN_O opt_assign PAREN_O expr PAREN_C . opt_assign PAREN_C CURLY_O nest_block CURLY_C
+
+    IDENT  shift, and go to state 67
+
+    $default  reduce using rule 31 (opt_assign)
+
+    opt_assign  go to state 132
+    assignment  go to state 69
+
+
+state 126
+
+   36 fct_call: IDENT ANGLE_O expr ANGLE_C ASSIGN IDENT . PAREN_O expr_list PAREN_C SEMI
+   56 expr: IDENT .
+   57     | IDENT . ANGLE_O expr ANGLE_C
+
+    PAREN_O  shift, and go to state 133
+    ANGLE_O  shift, and go to state 72
+
+    $default  reduce using rule 56 (expr)
+
+
+state 127
+
+   34 assignment: IDENT ANGLE_O expr ANGLE_C ASSIGN expr . SEMI
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    SEMI    shift, and go to state 134
+    OP_LE   shift, and go to state 76
+    OP_LT   shift, and go to state 77
+    OP_GE   shift, and go to state 78
+    OP_GT   shift, and go to state 79
+    OP_EQ   shift, and go to state 80
+    OP_NE   shift, and go to state 81
+    OP_AND  shift, and go to state 82
+    OP_OR   shift, and go to state 83
+    MINUS   shift, and go to state 84
+    PLUS    shift, and go to state 85
+    DIV     shift, and go to state 86
+    MULT    shift, and go to state 87
+
+
+state 128
+
+   35 fct_call: IDENT ASSIGN IDENT PAREN_O expr_list PAREN_C . SEMI
+
+    SEMI  shift, and go to state 135
+
+
+state 129
+
+   37 expr_list: expr_list_ expr .
+   39 expr_list_: expr_list_ expr . COMMA
+   41 expr: expr . PLUS expr
+   42     | expr . MINUS expr
+   43     | expr . MULT expr
+   44     | expr . DIV expr
+   45     | expr . OP_AND expr
+   46     | expr . OP_OR expr
+   47     | expr . OP_NE expr
+   48     | expr . OP_EQ expr
+   49     | expr . OP_GT expr
+   50     | expr . OP_GE expr
+   51     | expr . OP_LT expr
+   52     | expr . OP_LE expr
+
+    COMMA   shift, and go to state 136
+    OP_LE   shift, and go to state 76
+    OP_LT   shift, and go to state 77
+    OP_GE   shift, and go to state 78
+    OP_GT   shift, and go to state 79
+    OP_EQ   shift, and go to state 80
+    OP_NE   shift, and go to state 81
+    OP_AND  shift, and go to state 82
+    OP_OR   shift, and go to state 83
+    MINUS   shift, and go to state 84
+    PLUS    shift, and go to state 85
+    DIV     shift, and go to state 86
+    MULT    shift, and go to state 87
+
+    $default  reduce using rule 37 (expr_list)
+
+
+state 130
+
+   27 stmt: KEY_IF PAREN_O expr PAREN_C CURLY_O nest_block CURLY_C .
+   28     | KEY_IF PAREN_O expr PAREN_C CURLY_O nest_block CURLY_C . KEY_ELSE CURLY_O nest_block CURLY_C
+
+    KEY_ELSE  shift, and go to state 137
+
+    $default  reduce using rule 27 (stmt)
+
+
+state 131
+
+   34 assignment: IDENT ANGLE_O expr ANGLE_C ASSIGN . expr SEMI
+
+    PAREN_O  shift, and go to state 48
+    BAR      shift, and go to state 49
+    INT      shift, and go to state 50
+    OCT      shift, and go to state 51
+    HEX      shift, and go to state 52
+    BIN      shift, and go to state 53
+    IDENT    shift, and go to state 54
+    TRUE     shift, and go to state 55
+    FALSE    shift, and go to state 56
+    MINUS    shift, and go to state 57
+    OP_NOT   shift, and go to state 58
+
+    expr     go to state 127
+    literal  go to state 60
+    integer  go to state 61
+
+
+state 132
+
+   29 stmt: KEY_FOR PAREN_O opt_assign PAREN_O expr PAREN_C opt_assign . PAREN_C CURLY_O nest_block CURLY_C
+
+    PAREN_C  shift, and go to state 138
+
+
+state 133
+
+   36 fct_call: IDENT ANGLE_O expr ANGLE_C ASSIGN IDENT PAREN_O . expr_list PAREN_C SEMI
+
+    PAREN_C   reduce using rule 38 (expr_list)
+    $default  reduce using rule 40 (expr_list_)
+
+    expr_list   go to state 139
+    expr_list_  go to state 121
+
+
+state 134
+
+   34 assignment: IDENT ANGLE_O expr ANGLE_C ASSIGN expr SEMI .
+
+    $default  reduce using rule 34 (assignment)
+
+
+state 135
+
+   35 fct_call: IDENT ASSIGN IDENT PAREN_O expr_list PAREN_C SEMI .
+
+    $default  reduce using rule 35 (fct_call)
+
+
+state 136
+
+   39 expr_list_: expr_list_ expr COMMA .
+
+    $default  reduce using rule 39 (expr_list_)
+
+
+state 137
+
+   28 stmt: KEY_IF PAREN_O expr PAREN_C CURLY_O nest_block CURLY_C KEY_ELSE . CURLY_O nest_block CURLY_C
+
+    CURLY_O  shift, and go to state 140
+
+
+state 138
+
+   29 stmt: KEY_FOR PAREN_O opt_assign PAREN_O expr PAREN_C opt_assign PAREN_C . CURLY_O nest_block CURLY_C
+
+    CURLY_O  shift, and go to state 141
+
+
+state 139
+
+   36 fct_call: IDENT ANGLE_O expr ANGLE_C ASSIGN IDENT PAREN_O expr_list . PAREN_C SEMI
+
+    PAREN_C  shift, and go to state 142
+
+
+state 140
+
+   28 stmt: KEY_IF PAREN_O expr PAREN_C CURLY_O nest_block CURLY_C KEY_ELSE CURLY_O . nest_block CURLY_C
+
+    $default  reduce using rule 24 (stmts)
+
+    nest_block  go to state 143
+    stmts       go to state 123
+
+
+state 141
+
+   29 stmt: KEY_FOR PAREN_O opt_assign PAREN_O expr PAREN_C opt_assign PAREN_C CURLY_O . nest_block CURLY_C
+
+    $default  reduce using rule 24 (stmts)
+
+    nest_block  go to state 144
+    stmts       go to state 123
+
+
+state 142
+
+   36 fct_call: IDENT ANGLE_O expr ANGLE_C ASSIGN IDENT PAREN_O expr_list PAREN_C . SEMI
+
+    SEMI  shift, and go to state 145
+
+
+state 143
+
+   28 stmt: KEY_IF PAREN_O expr PAREN_C CURLY_O nest_block CURLY_C KEY_ELSE CURLY_O nest_block . CURLY_C
+
+    CURLY_C  shift, and go to state 146
+
+
+state 144
+
+   29 stmt: KEY_FOR PAREN_O opt_assign PAREN_O expr PAREN_C opt_assign PAREN_C CURLY_O nest_block . CURLY_C
+
+    CURLY_C  shift, and go to state 147
+
+
+state 145
+
+   36 fct_call: IDENT ANGLE_O expr ANGLE_C ASSIGN IDENT PAREN_O expr_list PAREN_C SEMI .
+
+    $default  reduce using rule 36 (fct_call)
+
+
+state 146
+
+   28 stmt: KEY_IF PAREN_O expr PAREN_C CURLY_O nest_block CURLY_C KEY_ELSE CURLY_O nest_block CURLY_C .
+
+    $default  reduce using rule 28 (stmt)
+
+
+state 147
+
+   29 stmt: KEY_FOR PAREN_O opt_assign PAREN_O expr PAREN_C opt_assign PAREN_C CURLY_O nest_block CURLY_C .
+
+    $default  reduce using rule 29 (stmt)
