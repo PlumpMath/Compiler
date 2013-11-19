@@ -19,8 +19,9 @@ function foo() : int
                 b = true && false;
                 b = true && false;
                 b = true || false; 
-                b = 1>2 &&1>2;
-                b = !true;
+                b = 1>2 &&1<2;
+                b = 1>2 ||1+2;
+                b = !1>1;
                 a = |1+1|; 
                 a = -1*1;
                 a = o[1];
