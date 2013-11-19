@@ -194,7 +194,6 @@ class Typecheck : public Visitor {
   // It returns the actual type of the symbol.
   Basetype get_ident_type(const char* name, char accepted_types, Attribute m_attribute)
   {
-	  // WRITEME
       Symbol *s  = new Symbol();
       s = m_st->lookup(m_attribute.m_scope, name);
       if(s ==NULL)
@@ -373,26 +372,50 @@ class Typecheck : public Visitor {
   void visitCall(Call * p)
   {
 	set_scope_and_descend_into_children(p);
-
+    p->m_attribute.m_scope = m_st->get_scope();
+    //create assignment symblo check if it exists
+    visit(p->m_symname_1);
+	char *name = strdup(p -> m_symname_1 -> spelling());
 	// WRITEME
 	// ASSERT left hand side var exists, is a variable, and get type
+    char accepted = 15;//This accepts everything
+    Basetype assigned_to_type= get_ident_type(name,accepted, p->m_attribute);
+    if (assigned_to_type==bt_undef)
+		this -> t_error(sym_name_undef, p -> m_attribute);
+    
+
 
 	// ASSERT the parameters match, and the function return type matches
 	// assuming that you have the type of the left hand side variable
 	// in "assigned_to_type", you can just uncomment the following line
-	//check_call(p, p -> m_symname_2, p -> m_expr_list, assigned_to_type);
+    visit(p->m_symname_2);
+    visit_list(p->m_expr_list);
+	check_call(p, p -> m_symname_2, p -> m_expr_list, assigned_to_type);
   }
 
   void visitArrayCall(ArrayCall * p)
   {
 	set_scope_and_descend_into_children(p);
 
+	 p->m_attribute.m_scope = m_st->get_scope();
+    //create assignment symblo check if it exists
+    visit(p->m_symname_1);
+	char *name = strdup(p -> m_symname_1 -> spelling());
 	// WRITEME
-	// ASSERT the variable is an array
+	// ASSERT left hand side var exists, is a variable, and get type
+    char accepted = bt_intarray;
+    Basetype assigned_to_type= get_ident_type(name,accepted, p->m_attribute);
+
+    if (assigned_to_type==bt_undef)
+		this -> t_error(sym_name_undef, p -> m_attribute);
+    
+// ASSERT the variable is an array
 
 	// WRITEME
 	// ASSERT the index parameter is an integer
-
+    visit(p->m_expr_1);
+    if(p->m_expr_1->m_attribute.m_basetype!=bt_integer)
+		this -> t_error(array_index_error, p -> m_attribute);
 	// ASSERT the call is ok and returns an integer
 	check_call(p, p -> m_symname_2, p -> m_expr_list_2, bt_integer);
   }
@@ -406,25 +429,44 @@ class Typecheck : public Visitor {
   void visitIfNoElse(IfNoElse * p)
   {
 	set_scope_and_descend_into_children(p);
-
+	 p->m_attribute.m_scope = m_st->get_scope();
+     visit(p->m_expr);
 	// WRITEME
 	// ASSERT Expression of type boolean
+    if (p->m_expr->m_attribute.m_basetype!= bt_boolean)
+		this -> t_error(if_pred_err, p -> m_attribute);
+
+     visit(p->m_nested_block);
   }
 
   void visitIfWithElse(IfWithElse * p)
   {
 	set_scope_and_descend_into_children(p);
+ p->m_attribute.m_scope = m_st->get_scope();
+     visit(p->m_expr);
 
-	// WRITEME
 	// ASSERT Expression of type boolean
+    if (p->m_expr->m_attribute.m_basetype!= bt_boolean)
+		this -> t_error(if_pred_err, p -> m_attribute);
+
+     visit(p->m_nested_block_1);
+     visit(p->m_nested_block_2);
   }
 
   void visitForLoop(ForLoop * p)
   {
 	set_scope_and_descend_into_children(p);
+    //visit(p->m_stat_1);
+    //visit(p->m_expr);
 
-	// WRITEME
 	// ASSERT Expression of type boolean
+    if (p->m_expr->m_attribute.m_basetype!= bt_boolean)
+		this -> t_error(for_pred_err, p -> m_attribute);
+  //  visit(p->m_stat_2);
+  //  visit(p->m_nested_block);
+
+
+
   }
   
   void visitNone(None * p)
@@ -455,118 +497,303 @@ class Typecheck : public Visitor {
 
   void visitAnd(And * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+      set_scope_and_descend_into_children(p);
+      p -> m_attribute.m_basetype = bt_boolean;
+
+      // ASSERT left hand side is an integer
+      char type = bt_boolean |bt_integer;
+      bool accepted=(type&p->m_expr_1->m_attribute.m_basetype) ;
+      cout<<"Type = "<<p->m_expr_2->m_attribute.m_basetype<<"Accepted"<< accepted<<endl;
+      if(!accepted)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      // ASSERT right hand side is an integer
+      type = bt_boolean;
+      if(!accepted)
+          this -> t_error(expr_type_err, p -> m_attribute);
+
+
+
   }
 
   void visitDiv(Div * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+      set_scope_and_descend_into_children(p);
+      p -> m_attribute.m_basetype = bt_integer;
+
+      // ASSERT left hand side is an integer
+      Basetype type = bt_integer;
+      if(type != p->m_expr_1->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      // ASSERT right hand side is an integer
+      type = bt_integer;
+      if(type != p->m_expr_2->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+
   }
 
   void visitCompare(Compare * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+      set_scope_and_descend_into_children(p);
+      p -> m_attribute.m_basetype = bt_integer;
+
+      // ASSERT left hand side is an integer
+      Basetype type = bt_integer;
+      if(type != p->m_expr_1->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      // ASSERT right hand side is an integer
+      type = bt_integer;
+      if(type != p->m_expr_2->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+
+
   }
 
   void visitGt(Gt * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+      set_scope_and_descend_into_children(p);
+      p -> m_attribute.m_basetype = bt_boolean;
+
+      // ASSERT left hand side is an integer
+      Basetype type = bt_integer;
+      if(type != p->m_expr_1->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      // ASSERT right hand side is an integer
+      type = bt_integer;
+      if(type != p->m_expr_2->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+
+
+
   }
 
   void visitGteq(Gteq * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+      set_scope_and_descend_into_children(p);
+      p -> m_attribute.m_basetype = bt_boolean;
+
+      // ASSERT left hand side is an integer
+      Basetype type = bt_integer;
+      if(type != p->m_expr_1->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      // ASSERT right hand side is an integer
+      type = bt_integer;
+      if(type != p->m_expr_2->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+
+
+
+
   }
 
   void visitLt(Lt * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+      set_scope_and_descend_into_children(p);
+      p -> m_attribute.m_basetype = bt_integer;
+
+      // ASSERT left hand side is an integer
+      Basetype type = bt_integer;
+      if(type != p->m_expr_1->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      // ASSERT right hand side is an integer
+      type = bt_integer;
+      if(type != p->m_expr_2->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+
+
+
   }
 
   void visitLteq(Lteq * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+      set_scope_and_descend_into_children(p);
+      p -> m_attribute.m_basetype = bt_boolean;
+
+      // ASSERT left hand side is an integer
+      Basetype type = bt_integer;
+      if(type != p->m_expr_1->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      // ASSERT right hand side is an integer
+      type = bt_integer;
+      if(type != p->m_expr_2->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+
+
+
   }
 
   void visitMinus(Minus * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+      set_scope_and_descend_into_children(p);
+      p -> m_attribute.m_basetype = bt_integer;
+
+      // ASSERT left hand side is an integer
+      Basetype type = bt_integer;
+      if(type != p->m_expr_1->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      // ASSERT right hand side is an integer
+      type = bt_integer;
+      if(type != p->m_expr_2->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+
+
+
   }
 
   void visitNoteq(Noteq * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+      set_scope_and_descend_into_children(p);
+      p -> m_attribute.m_basetype = bt_boolean;
+
+      // ASSERT left hand side is an integer
+      Basetype type = bt_integer;
+      if(type != p->m_expr_1->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      // ASSERT right hand side is an integer
+      type = bt_integer;
+      if(type != p->m_expr_2->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+
+
   }
 
   void visitOr(Or * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+
+      set_scope_and_descend_into_children(p);
+      p -> m_attribute.m_basetype = bt_boolean;
+
+      // ASSERT left hand side is an integer
+      char type = bt_boolean | bt_integer;
+      if(!(type&p->m_expr_1->m_attribute.m_basetype))
+          this -> t_error(expr_type_err, p -> m_attribute);
+      // ASSERT right hand side is an integer
+      type = bt_boolean | bt_integer;
+      if(!(type&p->m_expr_2->m_attribute.m_basetype))
+          this -> t_error(expr_type_err, p -> m_attribute);
+
   }
 
   void visitPlus(Plus * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+      set_scope_and_descend_into_children(p);
+      p -> m_attribute.m_basetype = bt_integer;
+
+      // ASSERT left hand side is an integer
+      Basetype type = bt_integer;
+      if(type != p->m_expr_1->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      // ASSERT right hand side is an integer
+      type = bt_integer;
+      if(type != p->m_expr_2->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+
+
+
   }
 
   void visitTimes(Times * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+      set_scope_and_descend_into_children(p);
+      p -> m_attribute.m_basetype = bt_integer;
+      // ASSERT left hand side is an integer
+      Basetype type = bt_integer;
+      if(type!=p->m_expr_1->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      // ASSERT right hand side is an integer
+      type = bt_integer;
+      if(type != p->m_expr_2->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+
+
   }
 
   void visitNot(Not * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+      set_scope_and_descend_into_children(p);
+      Basetype type = bt_boolean;
+      if(type != p->m_expr->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      
+      p -> m_attribute.m_basetype = bt_boolean;
   }
 
   void visitUminus(Uminus * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+      set_scope_and_descend_into_children(p);
+      Basetype type = bt_integer ;
+      if(type != p->m_expr->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      
+      p -> m_attribute.m_basetype = bt_integer;
+
+
   }
 
   void visitMagnitude(Magnitude * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
+      set_scope_and_descend_into_children(p);
+      Basetype type = bt_integer;
+      if(type != p->m_expr->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      
+      p -> m_attribute.m_basetype = bt_integer;
+
+
   }
 
   void visitIdent(Ident * p)
   {
-	set_scope_and_descend_into_children(p);
-	// WRITEME
-	// ASSERT symbol under varname exists and is either an integer or a boolean
+      set_scope_and_descend_into_children(p);
+      // WRITEME
+      // ASSERT symbol under varname exists and is either an integer or a boolean
+      char *name = strdup(p -> m_symname -> spelling());
+      // ASSERT left hand side var exists, and is an int/bool
+      char  accepted = bt_boolean | bt_integer;
+      Basetype type = get_ident_type(name,accepted, p->m_attribute);
+      if(type==bt_undef)
+          this -> t_error(sym_name_undef, p -> m_attribute);
+
+
+
   }
 
   void visitArrayAccess(ArrayAccess * p)
   {
-	set_scope_and_descend_into_children(p);
+      set_scope_and_descend_into_children(p);
+
+	 p->m_attribute.m_scope = m_st->get_scope();
+    //create assignment symblo check if it exists
+	char *name = strdup(p -> m_symname -> spelling());
 	// WRITEME
-	// ASSERT the array symbol exists and is indeed an array
+	// ASSERT left hand side var exists, is a variable, and get type
+    char accepted = bt_intarray;
+    Basetype assigned_to_type= get_ident_type(name,accepted, p->m_attribute);
+
+    if (assigned_to_type==bt_undef)
+		this -> t_error(sym_name_undef, p -> m_attribute);
+    
+
+    if (p->m_expr->m_attribute.m_basetype != bt_integer)
+		this -> t_error(expr_type_err, p -> m_attribute);
+
+    
+    p -> m_attribute.m_basetype = bt_integer;
+    
+
+      // WRITEME
+      // ASSERT the array symbol exists and is indeed an array
   }
 
   void visitIntLit(IntLit * p)
   {
-	set_scope_and_descend_into_children(p);
-	p -> m_attribute.m_basetype = bt_integer;
+      set_scope_and_descend_into_children(p);
+      p -> m_attribute.m_basetype = bt_integer;
   }
 
   void visitBoolLit(BoolLit * p)
   {
-	set_scope_and_descend_into_children(p);
-	p -> m_attribute.m_basetype = bt_boolean;
+      set_scope_and_descend_into_children(p);
+      p -> m_attribute.m_basetype = bt_boolean;
   }
 
   void visitSymName(SymName * p) {}
