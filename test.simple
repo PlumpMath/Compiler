@@ -21,7 +21,7 @@ function Main() : int
     t=true;
     x = 5;
     
-    t = t && true;
+    t = t||true;
 
     if (x < 3) {
         x = 7;
@@ -40,15 +40,16 @@ function Main() : int
 
 function f(ax: int) : int
 {
-    var d: bool;
+    var l: bool;
+    var d: int;
 
     function nested() : bool
     {
         var  i, a : int;
-    return j-a == 12;
+    return i-a == 12;
     }
 
-    return -(---k+j*k/x);
+    return -(---d+d*d/d);
 }
 
 function main(a: int) : bool

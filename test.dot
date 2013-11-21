@@ -1,0 +1,440 @@
+digraph G { 
+"1" [label="Program"]
+"0" -> "1"
+"2" [label="Func"]
+"1" -> "2"
+"3" [label="TBoolean"]
+"2" -> "3"
+"4" [label="SymName\n\"array\""]
+"2" -> "4"
+"5" [label="Param"]
+"2" -> "5"
+"6" [label="TInteger"]
+"5" -> "6"
+"7" [label="SymName\n\"ax\""]
+"5" -> "7"
+"8" [label="FunctionBlock"]
+"2" -> "8"
+"9" [label="Decl"]
+"8" -> "9"
+"10" [label="TIntArray"]
+"9" -> "10"
+"11" [label="Primitive\n12"]
+"10" -> "11"
+"12" [label="SymName\n\"a\""]
+"9" -> "12"
+"13" [label="Decl"]
+"8" -> "13"
+"14" [label="TIntArray"]
+"13" -> "14"
+"15" [label="Primitive\n12"]
+"14" -> "15"
+"16" [label="SymName\n\"b\""]
+"13" -> "16"
+"17" [label="Decl"]
+"8" -> "17"
+"18" [label="TInteger"]
+"17" -> "18"
+"19" [label="SymName\n\"x\""]
+"17" -> "19"
+"20" [label="Decl"]
+"8" -> "20"
+"21" [label="TInteger"]
+"20" -> "21"
+"22" [label="SymName\n\"z\""]
+"20" -> "22"
+"23" [label="ArrayAssignment"]
+"8" -> "23"
+"24" [label="SymName\n\"a\""]
+"23" -> "24"
+"25" [label="Plus\n<5>"]
+"23" -> "25"
+"26" [label="IntLit\n<2>"]
+"25" -> "26"
+"27" [label="Primitive\n2"]
+"26" -> "27"
+"28" [label="IntLit\n<3>"]
+"25" -> "28"
+"29" [label="Primitive\n3"]
+"28" -> "29"
+"30" [label="ArrayAccess\n<BOTTOM>"]
+"23" -> "30"
+"31" [label="SymName\n\"b\""]
+"30" -> "31"
+"32" [label="IntLit\n<0>"]
+"30" -> "32"
+"33" [label="Primitive\n0"]
+"32" -> "33"
+"34" [label="ArrayAssignment"]
+"8" -> "34"
+"35" [label="SymName\n\"a\""]
+"34" -> "35"
+"36" [label="IntLit\n<0>"]
+"34" -> "36"
+"37" [label="Primitive\n0"]
+"36" -> "37"
+"38" [label="Plus\n<TOP>"]
+"34" -> "38"
+"39" [label="Times\n<TOP>"]
+"38" -> "39"
+"40" [label="Ident\n<TOP>"]
+"39" -> "40"
+"41" [label="SymName\n\"x\""]
+"40" -> "41"
+"42" [label="IntLit\n<7>"]
+"39" -> "42"
+"43" [label="Primitive\n7"]
+"42" -> "43"
+"44" [label="ArrayAccess\n<BOTTOM>"]
+"38" -> "44"
+"45" [label="SymName\n\"b\""]
+"44" -> "45"
+"46" [label="IntLit\n<1>"]
+"44" -> "46"
+"47" [label="Primitive\n1"]
+"46" -> "47"
+"48" [label="Return"]
+"8" -> "48"
+"49" [label="BoolLit\n<0>"]
+"48" -> "49"
+"50" [label="Primitive\n0"]
+"49" -> "50"
+"51" [label="Func"]
+"1" -> "51"
+"52" [label="TInteger"]
+"51" -> "52"
+"53" [label="SymName\n\"Main\""]
+"51" -> "53"
+"54" [label="FunctionBlock"]
+"51" -> "54"
+"55" [label="Decl"]
+"54" -> "55"
+"56" [label="TInteger"]
+"55" -> "56"
+"57" [label="SymName\n\"x\""]
+"55" -> "57"
+"58" [label="Decl"]
+"54" -> "58"
+"59" [label="TInteger"]
+"58" -> "59"
+"60" [label="SymName\n\"k\""]
+"58" -> "60"
+"61" [label="SymName\n\"j\""]
+"58" -> "61"
+"62" [label="Decl"]
+"54" -> "62"
+"63" [label="TBoolean"]
+"62" -> "63"
+"64" [label="SymName\n\"t\""]
+"62" -> "64"
+"65" [label="Assignment"]
+"54" -> "65"
+"66" [label="SymName\n\"t\""]
+"65" -> "66"
+"67" [label="BoolLit\n<1>"]
+"65" -> "67"
+"68" [label="Primitive\n1"]
+"67" -> "68"
+"69" [label="Assignment"]
+"54" -> "69"
+"70" [label="SymName\n\"x\""]
+"69" -> "70"
+"71" [label="IntLit\n<5>"]
+"69" -> "71"
+"72" [label="Primitive\n5"]
+"71" -> "72"
+"73" [label="Assignment"]
+"54" -> "73"
+"74" [label="SymName\n\"t\""]
+"73" -> "74"
+"75" [label="Or\n<1>"]
+"73" -> "75"
+"76" [label="Ident\n<1>"]
+"75" -> "76"
+"77" [label="SymName\n\"t\""]
+"76" -> "77"
+"78" [label="BoolLit\n<1>"]
+"75" -> "78"
+"79" [label="Primitive\n1"]
+"78" -> "79"
+"80" [label="IfNoElse"]
+"54" -> "80"
+"81" [label="Lt\n<0>"]
+"80" -> "81"
+"82" [label="Ident\n<5>"]
+"81" -> "82"
+"83" [label="SymName\n\"x\""]
+"82" -> "83"
+"84" [label="IntLit\n<3>"]
+"81" -> "84"
+"85" [label="Primitive\n3"]
+"84" -> "85"
+"86" [label="NestedBlock"]
+"80" -> "86"
+"87" [label="Assignment"]
+"86" -> "87"
+"88" [label="SymName\n\"x\""]
+"87" -> "88"
+"89" [label="IntLit\n<7>"]
+"87" -> "89"
+"90" [label="Primitive\n7"]
+"89" -> "90"
+"91" [label="IfWithElse"]
+"54" -> "91"
+"92" [label="Lt\n<TOP>"]
+"91" -> "92"
+"93" [label="Ident\n<TOP>"]
+"92" -> "93"
+"94" [label="SymName\n\"x\""]
+"93" -> "94"
+"95" [label="IntLit\n<3>"]
+"92" -> "95"
+"96" [label="Primitive\n3"]
+"95" -> "96"
+"97" [label="NestedBlock"]
+"91" -> "97"
+"98" [label="Assignment"]
+"97" -> "98"
+"99" [label="SymName\n\"x\""]
+"98" -> "99"
+"100" [label="IntLit\n<9>"]
+"98" -> "100"
+"101" [label="Primitive\n9"]
+"100" -> "101"
+"102" [label="NestedBlock"]
+"91" -> "102"
+"103" [label="IfNoElse"]
+"102" -> "103"
+"104" [label="And\n<1>"]
+"103" -> "104"
+"105" [label="BoolLit\n<1>"]
+"104" -> "105"
+"106" [label="Primitive\n1"]
+"105" -> "106"
+"107" [label="Ident\n<1>"]
+"104" -> "107"
+"108" [label="SymName\n\"t\""]
+"107" -> "108"
+"109" [label="NestedBlock"]
+"103" -> "109"
+"110" [label="Assignment"]
+"109" -> "110"
+"111" [label="SymName\n\"x\""]
+"110" -> "111"
+"112" [label="IntLit\n<12>"]
+"110" -> "112"
+"113" [label="Primitive\n12"]
+"112" -> "113"
+"114" [label="Return"]
+"54" -> "114"
+"115" [label="IntLit\n<0>"]
+"114" -> "115"
+"116" [label="Primitive\n0"]
+"115" -> "116"
+"117" [label="Func"]
+"1" -> "117"
+"118" [label="TInteger"]
+"117" -> "118"
+"119" [label="SymName\n\"f\""]
+"117" -> "119"
+"120" [label="Param"]
+"117" -> "120"
+"121" [label="TInteger"]
+"120" -> "121"
+"122" [label="SymName\n\"ax\""]
+"120" -> "122"
+"123" [label="FunctionBlock"]
+"117" -> "123"
+"124" [label="Decl"]
+"123" -> "124"
+"125" [label="TBoolean"]
+"124" -> "125"
+"126" [label="SymName\n\"l\""]
+"124" -> "126"
+"127" [label="Decl"]
+"123" -> "127"
+"128" [label="TInteger"]
+"127" -> "128"
+"129" [label="SymName\n\"d\""]
+"127" -> "129"
+"130" [label="Func"]
+"123" -> "130"
+"131" [label="TBoolean"]
+"130" -> "131"
+"132" [label="SymName\n\"nested\""]
+"130" -> "132"
+"133" [label="FunctionBlock"]
+"130" -> "133"
+"134" [label="Decl"]
+"133" -> "134"
+"135" [label="TInteger"]
+"134" -> "135"
+"136" [label="SymName\n\"i\""]
+"134" -> "136"
+"137" [label="SymName\n\"a\""]
+"134" -> "137"
+"138" [label="Return"]
+"133" -> "138"
+"139" [label="Compare\n<TOP>"]
+"138" -> "139"
+"140" [label="Minus\n<TOP>"]
+"139" -> "140"
+"141" [label="Ident\n<TOP>"]
+"140" -> "141"
+"142" [label="SymName\n\"i\""]
+"141" -> "142"
+"143" [label="Ident\n<TOP>"]
+"140" -> "143"
+"144" [label="SymName\n\"a\""]
+"143" -> "144"
+"145" [label="IntLit\n<12>"]
+"139" -> "145"
+"146" [label="Primitive\n12"]
+"145" -> "146"
+"147" [label="Return"]
+"123" -> "147"
+"148" [label="Uminus\n<BOTTOM>"]
+"147" -> "148"
+"149" [label="Plus\n<TOP>"]
+"148" -> "149"
+"150" [label="Uminus\n<BOTTOM>"]
+"149" -> "150"
+"151" [label="Uminus\n<BOTTOM>"]
+"150" -> "151"
+"152" [label="Uminus\n<BOTTOM>"]
+"151" -> "152"
+"153" [label="Ident\n<TOP>"]
+"152" -> "153"
+"154" [label="SymName\n\"d\""]
+"153" -> "154"
+"155" [label="Div\n<TOP>"]
+"149" -> "155"
+"156" [label="Times\n<TOP>"]
+"155" -> "156"
+"157" [label="Ident\n<TOP>"]
+"156" -> "157"
+"158" [label="SymName\n\"d\""]
+"157" -> "158"
+"159" [label="Ident\n<TOP>"]
+"156" -> "159"
+"160" [label="SymName\n\"d\""]
+"159" -> "160"
+"161" [label="Ident\n<TOP>"]
+"155" -> "161"
+"162" [label="SymName\n\"d\""]
+"161" -> "162"
+"163" [label="Func"]
+"1" -> "163"
+"164" [label="TBoolean"]
+"163" -> "164"
+"165" [label="SymName\n\"main\""]
+"163" -> "165"
+"166" [label="Param"]
+"163" -> "166"
+"167" [label="TInteger"]
+"166" -> "167"
+"168" [label="SymName\n\"a\""]
+"166" -> "168"
+"169" [label="FunctionBlock"]
+"163" -> "169"
+"170" [label="Decl"]
+"169" -> "170"
+"171" [label="TInteger"]
+"170" -> "171"
+"172" [label="SymName\n\"i\""]
+"170" -> "172"
+"173" [label="Func"]
+"169" -> "173"
+"174" [label="TBoolean"]
+"173" -> "174"
+"175" [label="SymName\n\"tain\""]
+"173" -> "175"
+"176" [label="Param"]
+"173" -> "176"
+"177" [label="TInteger"]
+"176" -> "177"
+"178" [label="SymName\n\"integer\""]
+"176" -> "178"
+"179" [label="FunctionBlock"]
+"173" -> "179"
+"180" [label="Return"]
+"179" -> "180"
+"181" [label="Or\n<1>"]
+"180" -> "181"
+"182" [label="BoolLit\n<0>"]
+"181" -> "182"
+"183" [label="Primitive\n0"]
+"182" -> "183"
+"184" [label="BoolLit\n<1>"]
+"181" -> "184"
+"185" [label="Primitive\n1"]
+"184" -> "185"
+"186" [label="Return"]
+"169" -> "186"
+"187" [label="Lt\n<0>"]
+"186" -> "187"
+"188" [label="Plus\n<10>"]
+"187" -> "188"
+"189" [label="IntLit\n<2>"]
+"188" -> "189"
+"190" [label="Primitive\n2"]
+"189" -> "190"
+"191" [label="Times\n<8>"]
+"188" -> "191"
+"192" [label="IntLit\n<2>"]
+"191" -> "192"
+"193" [label="Primitive\n2"]
+"192" -> "193"
+"194" [label="IntLit\n<4>"]
+"191" -> "194"
+"195" [label="Primitive\n4"]
+"194" -> "195"
+"196" [label="IntLit\n<3>"]
+"187" -> "196"
+"197" [label="Primitive\n3"]
+"196" -> "197"
+"198" [label="Func"]
+"1" -> "198"
+"199" [label="TBoolean"]
+"198" -> "199"
+"200" [label="SymName\n\"main1\""]
+"198" -> "200"
+"201" [label="Param"]
+"198" -> "201"
+"202" [label="TInteger"]
+"201" -> "202"
+"203" [label="SymName\n\"ax\""]
+"201" -> "203"
+"204" [label="FunctionBlock"]
+"198" -> "204"
+"205" [label="Decl"]
+"204" -> "205"
+"206" [label="TInteger"]
+"205" -> "206"
+"207" [label="SymName\n\"i\""]
+"205" -> "207"
+"208" [label="Return"]
+"204" -> "208"
+"209" [label="Lt\n<0>"]
+"208" -> "209"
+"210" [label="Plus\n<10>"]
+"209" -> "210"
+"211" [label="IntLit\n<2>"]
+"210" -> "211"
+"212" [label="Primitive\n2"]
+"211" -> "212"
+"213" [label="Times\n<8>"]
+"210" -> "213"
+"214" [label="IntLit\n<2>"]
+"213" -> "214"
+"215" [label="Primitive\n2"]
+"214" -> "215"
+"216" [label="IntLit\n<4>"]
+"213" -> "216"
+"217" [label="Primitive\n4"]
+"216" -> "217"
+"218" [label="IntLit\n<3>"]
+"209" -> "218"
+"219" [label="Primitive\n3"]
+"218" -> "219"
+}; 

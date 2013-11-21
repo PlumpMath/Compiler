@@ -480,19 +480,15 @@ class Typecheck : public Visitor {
   {
       set_scope_and_descend_into_children(p);
       p -> m_attribute.m_basetype = bt_boolean;
-
       // ASSERT left hand side is an integer
-      char type = bt_boolean;
-      bool accepted=(type&p->m_expr_1->m_attribute.m_basetype) ;
-      if(!accepted){
+      Basetype type = bt_boolean;
+      if(type!=p->m_expr_1->m_attribute.m_basetype)
           this -> t_error(expr_type_err, p -> m_attribute);
-      }
-      
       // ASSERT right hand side is an integer
-      if(!accepted){
+      type = bt_boolean;
+      if(type != p->m_expr_2->m_attribute.m_basetype){
           this -> t_error(expr_type_err, p -> m_attribute);
-      }
-
+  }
 
 
   }
@@ -585,20 +581,14 @@ class Typecheck : public Visitor {
   {
       set_scope_and_descend_into_children(p);
       p -> m_attribute.m_basetype = bt_boolean;
-      // ASSERT left hand side is a accepted
-      char type = bt_integer;
-      bool accepted=(type&p->m_expr_1->m_attribute.m_basetype) ;
-      if(!accepted){
- //         cout<<p->m_expr_1->m_attribute.m_basetype;
-//          this -> t_error(expr_type_err, p -> m_attribute);
-      }
-
-      // ASSERT right hand side is a accepted
-      if(!accepted){
-          //this -> t_error(expr_type_err, p -> m_attribute);
-;
-      }
-
+      // ASSERT left hand side is an integer
+      Basetype type = bt_integer;
+      if(type!=p->m_expr_1->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      // ASSERT right hand side is an integer
+      type = bt_integer;
+      if(type != p->m_expr_2->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
 
 
 
@@ -616,6 +606,8 @@ class Typecheck : public Visitor {
           this -> t_error(expr_type_err, p -> m_attribute);
 
       // ASSERT right hand side is a accepted
+
+       accepted=(type&p->m_expr_2->m_attribute.m_basetype) ;
       if(!accepted)
           this -> t_error(expr_type_err, p -> m_attribute);
 
@@ -649,12 +641,24 @@ class Typecheck : public Visitor {
 
       // ASSERT left hand side is an integer
       Basetype type = bt_integer;
-      if(type != p->m_expr_1->m_attribute.m_basetype)
-          this -> t_error(expr_type_err, p -> m_attribute);
-      // ASSERT right hand side is an integer
-      type = bt_integer;
-      if(type != p->m_expr_2->m_attribute.m_basetype)
-          this -> t_error(expr_type_err, p -> m_attribute);
+      if(type == p->m_expr_1->m_attribute.m_basetype){
+          if(type != p->m_expr_1->m_attribute.m_basetype)
+              this -> t_error(expr_type_err, p -> m_attribute);
+          // ASSERT right hand side is an integer
+          type = bt_integer;
+          if(type != p->m_expr_2->m_attribute.m_basetype)
+              this -> t_error(expr_type_err, p -> m_attribute);
+      }
+      else{
+          type = bt_boolean;
+          if(type != p->m_expr_1->m_attribute.m_basetype)
+              this -> t_error(expr_type_err, p -> m_attribute);
+          // ASSERT right hand side is an integer
+          type = bt_boolean;
+          if(type != p->m_expr_2->m_attribute.m_basetype)
+              this -> t_error(expr_type_err, p -> m_attribute);
+
+      }
 
 
   }
@@ -668,9 +672,9 @@ class Typecheck : public Visitor {
       bool accepted=(type&p->m_expr_1->m_attribute.m_basetype) ;
       if(!accepted)
           this -> t_error(expr_type_err, p -> m_attribute);
-      
+
       // ASSERT right hand side is a accepted
-      type = bt_boolean;
+      accepted=(type&p->m_expr_2->m_attribute.m_basetype) ;
       if(!accepted)
           this -> t_error(expr_type_err, p -> m_attribute);
 
@@ -719,7 +723,7 @@ class Typecheck : public Visitor {
       Basetype type = bt_boolean;
       if(type != p->m_expr->m_attribute.m_basetype)
           this -> t_error(expr_type_err, p -> m_attribute);
-      
+
       p -> m_attribute.m_basetype = bt_boolean;
   }
 
@@ -729,7 +733,7 @@ class Typecheck : public Visitor {
       Basetype type = bt_integer ;
       if(type != p->m_expr->m_attribute.m_basetype)
           this -> t_error(expr_type_err, p -> m_attribute);
-      
+
       p -> m_attribute.m_basetype = bt_integer;
 
 
@@ -741,7 +745,7 @@ class Typecheck : public Visitor {
       Basetype type = bt_integer;
       if(type != p->m_expr->m_attribute.m_basetype)
           this -> t_error(expr_type_err, p -> m_attribute);
-      
+
       p -> m_attribute.m_basetype = bt_integer;
 
 
@@ -759,7 +763,8 @@ class Typecheck : public Visitor {
       if(type==bt_undef)
           this -> t_error(sym_name_undef, p -> m_attribute);
 
-      p -> m_attribute.m_basetype = bt_integer;
+      p -> m_attribute.m_basetype = type;
+
 
 
 
@@ -771,24 +776,24 @@ class Typecheck : public Visitor {
   {
       set_scope_and_descend_into_children(p);
 
-	 p->m_attribute.m_scope = m_st->get_scope();
-    //create assignment symblo check if it exists
-	char *name = strdup(p -> m_symname -> spelling());
-	// WRITEME
-	// ASSERT left hand side var exists, is a variable, and get type
-    char accepted = bt_intarray;
-    Basetype assigned_to_type= get_ident_type(name,accepted, p->m_attribute);
+      p->m_attribute.m_scope = m_st->get_scope();
+      //create assignment symblo check if it exists
+      char *name = strdup(p -> m_symname -> spelling());
+      // WRITEME
+      // ASSERT left hand side var exists, is a variable, and get type
+      char accepted = bt_intarray;
+      Basetype assigned_to_type= get_ident_type(name,accepted, p->m_attribute);
 
-    if (assigned_to_type==bt_undef)
-		this -> t_error(sym_name_undef, p -> m_attribute);
-    
+      if (assigned_to_type==bt_undef)
+          this -> t_error(sym_name_undef, p -> m_attribute);
 
-    if (p->m_expr->m_attribute.m_basetype != bt_integer)
-		this -> t_error(expr_type_err, p -> m_attribute);
 
-    
-    p -> m_attribute.m_basetype = bt_integer;
-    
+      if (p->m_expr->m_attribute.m_basetype != bt_integer)
+          this -> t_error(expr_type_err, p -> m_attribute);
+
+
+      p -> m_attribute.m_basetype = bt_integer;
+
 
       // WRITEME
       // ASSERT the array symbol exists and is indeed an array
