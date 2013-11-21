@@ -389,8 +389,7 @@ class Typecheck : public Visitor {
   void visitArrayCall(ArrayCall * p)
   {
 	set_scope_and_descend_into_children(p);
-
-	 p->m_attribute.m_scope = m_st->get_scope();
+    p->m_attribute.m_scope = m_st->get_scope();
     //create assignment symblo check if it exists
 	char *name = strdup(p -> m_symname_1 -> spelling());
 	// WRITEME
@@ -483,15 +482,16 @@ class Typecheck : public Visitor {
       p -> m_attribute.m_basetype = bt_boolean;
 
       // ASSERT left hand side is an integer
-      char type = bt_boolean |bt_integer;
+      char type = bt_boolean;
       bool accepted=(type&p->m_expr_1->m_attribute.m_basetype) ;
-      if(!accepted)
+      if(!accepted){
           this -> t_error(expr_type_err, p -> m_attribute);
+      }
       
       // ASSERT right hand side is an integer
-      type = bt_boolean;
-      if(!accepted)
+      if(!accepted){
           this -> t_error(expr_type_err, p -> m_attribute);
+      }
 
 
 
@@ -516,16 +516,28 @@ class Typecheck : public Visitor {
   void visitCompare(Compare * p)
   {
       set_scope_and_descend_into_children(p);
-      p -> m_attribute.m_basetype = bt_integer;
+      p -> m_attribute.m_basetype = bt_boolean;
 
       // ASSERT left hand side is an integer
       Basetype type = bt_integer;
+      if(type == p->m_expr_1->m_attribute.m_basetype){
       if(type != p->m_expr_1->m_attribute.m_basetype)
           this -> t_error(expr_type_err, p -> m_attribute);
       // ASSERT right hand side is an integer
       type = bt_integer;
       if(type != p->m_expr_2->m_attribute.m_basetype)
           this -> t_error(expr_type_err, p -> m_attribute);
+      }
+      else{
+      type = bt_boolean;
+      if(type != p->m_expr_1->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+      // ASSERT right hand side is an integer
+      type = bt_boolean;
+      if(type != p->m_expr_2->m_attribute.m_basetype)
+          this -> t_error(expr_type_err, p -> m_attribute);
+
+      }
 
 
   }
@@ -555,8 +567,10 @@ class Typecheck : public Visitor {
 
       // ASSERT left hand side is an integer
       Basetype type = bt_integer;
-      if(type != p->m_expr_1->m_attribute.m_basetype)
+      if(type != p->m_expr_1->m_attribute.m_basetype){
           this -> t_error(expr_type_err, p -> m_attribute);
+
+      }
       // ASSERT right hand side is an integer
       type = bt_integer;
       if(type != p->m_expr_2->m_attribute.m_basetype)
@@ -572,15 +586,18 @@ class Typecheck : public Visitor {
       set_scope_and_descend_into_children(p);
       p -> m_attribute.m_basetype = bt_boolean;
       // ASSERT left hand side is a accepted
-      char type = bt_boolean |bt_integer;
+      char type = bt_integer;
       bool accepted=(type&p->m_expr_1->m_attribute.m_basetype) ;
-      if(!accepted)
-          this -> t_error(expr_type_err, p -> m_attribute);
-      
+      if(!accepted){
+ //         cout<<p->m_expr_1->m_attribute.m_basetype;
+//          this -> t_error(expr_type_err, p -> m_attribute);
+      }
+
       // ASSERT right hand side is a accepted
-      type = bt_boolean;
-      if(!accepted)
-          this -> t_error(expr_type_err, p -> m_attribute);
+      if(!accepted){
+          //this -> t_error(expr_type_err, p -> m_attribute);
+;
+      }
 
 
 
@@ -593,13 +610,12 @@ class Typecheck : public Visitor {
       set_scope_and_descend_into_children(p);
       p -> m_attribute.m_basetype = bt_boolean;
       // ASSERT left hand side is a accepted
-      char type = bt_boolean |bt_integer;
+      char type = bt_integer;
       bool accepted=(type&p->m_expr_1->m_attribute.m_basetype) ;
       if(!accepted)
           this -> t_error(expr_type_err, p -> m_attribute);
-      
+
       // ASSERT right hand side is a accepted
-      type = bt_boolean;
       if(!accepted)
           this -> t_error(expr_type_err, p -> m_attribute);
 
@@ -648,7 +664,7 @@ class Typecheck : public Visitor {
       set_scope_and_descend_into_children(p);
       p -> m_attribute.m_basetype = bt_boolean;
       // ASSERT left hand side is a accepted
-      char type = bt_boolean |bt_integer;
+      char type = bt_boolean ;
       bool accepted=(type&p->m_expr_1->m_attribute.m_basetype) ;
       if(!accepted)
           this -> t_error(expr_type_err, p -> m_attribute);
@@ -742,6 +758,10 @@ class Typecheck : public Visitor {
       Basetype type = get_ident_type(name,accepted, p->m_attribute);
       if(type==bt_undef)
           this -> t_error(sym_name_undef, p -> m_attribute);
+
+      p -> m_attribute.m_basetype = bt_integer;
+
+
 
 
 

@@ -1,34 +1,71 @@
-function foo() : int
-        {
-            return 0;
-        }
+function array(ax: int) : bool
+{
+  var a: intarray[12];
+  var b: intarray[12];
+  var x: int;
+  var z: int;
 
-        function Main() : int
-        {
-            var o : intarray[100];
-            var a : int;
-            var b : bool;
-            o[1]  = foo();
-        if(true)
-        { 
-            [$ statements... $]
-                b = 1>=1; [$ assuming i has been declared above $]
-                b = 1>1; [$ assuming i has been declared above $]
-                b = 1<=1; [$ assuming i has been declared above $]
-                b = 1>1; [$ assuming i has been declared above $]
-                b = true && false;
-                b = true && false;
-                b = true || false; 
-                b = 1>2 &&1<2;
-                b = 1>2 ||1+2;
-                b = !1>1;
-                a = |1+1|; 
-                a = -1*1;
-                a = o[1];
-                
+  a[2+3] = b[0];
+    
+  a[0] = x*7 + b[1];
+
+
+  return false;
+}
+
+function Main() : int
+{
+    var x: int;
+    var k,j :int ;
+    var t: bool;
+    t=true;
+    x = 5;
+    
+    t = t && true;
+
+    if (x < 3) {
+        x = 7;
+    }
+    if (x <3) {
+        x = 9;
+    }
+    else {
+        if (true&&t) {
+            x = 12;
         }
-                        else{
-            for ((1>2))   {  }
-        }
-        return 0;
-        }
+    }
+   
+    return 0;
+}
+
+function f(ax: int) : int
+{
+    var d: bool;
+
+    function nested() : bool
+    {
+        var  i, a : int;
+    return j-a == 12;
+    }
+
+    return -(---k+j*k/x);
+}
+
+function main(a: int) : bool
+{
+    var i : int;
+
+    function  tain(integer: int) : bool
+    {
+        return false || true;
+    }
+    return (2+2*4) < 3;
+}
+
+function main1(ax: int) : bool
+{
+    var i: int;
+    return (2+2*4) < 3;
+}
+
+

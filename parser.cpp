@@ -68,19 +68,19 @@
 /* Line 268 of yacc.c  */
 #line 1 "parser.ypp"
 
-	#include <stdio.h>
-	#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-    	#include "ast.hpp"
-    	#include "primitive.hpp"
-    	#include "symtab.hpp"
+        #include "ast.hpp"
+        #include "primitive.hpp"
+        #include "symtab.hpp"
 
-	#define YYDEBUG 1
+    #define YYDEBUG 1
 
-    	extern Program_ptr ast;
-	int yylex(void);
-	void yyerror(const char *);
-	
+        extern Program_ptr ast;
+    int yylex(void);
+    void yyerror(const char *);
+    
 
 
 /* Line 268 of yacc.c  */
@@ -2256,9 +2256,9 @@ yyreturn:
 extern int yylineno;
 
 void yyerror(const char *s) {
-	fprintf(stderr, "%s at line %d\n", s, yylineno);
-	exit(1);
-	return;
+    fprintf(stderr, "%s at line %d\n", s, yylineno);
+    exit(1);
+    return;
 }
 
 

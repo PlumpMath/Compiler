@@ -564,12 +564,12 @@ char *yytext;
 void yyerror(const char *);
 
 int getIntValue(char* text, int type) {
-	if(strlen(text) > 10) {
-		yyerror("integer too long");
-		exit(0);
-	}
-	int value = (int) strtol(yytext, 0, type);
-	return value;
+    if(strlen(text) > 10) {
+        yyerror("integer too long");
+        exit(0);
+    }
+    int value = (int) strtol(yytext, 0, type);
+    return value;
 }
 
 #line 576 "lexer.cpp"
@@ -2093,7 +2093,7 @@ void yyfree (void * ptr )
 
 
 int yywrap(void) {
-	return 1;
+    return 1;
 }
 
 
