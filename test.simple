@@ -7,6 +7,7 @@ function array(ax: int) : bool
 
   a[2+3] = b[0];
     
+  a[2+3-4] = b[7];
   a[0] = x*7 + b[1];
 
 
@@ -21,10 +22,10 @@ function Main() : int
     t=true;
     x = 5;
     
-    t = t||true;
+    t = array(1);
 
     if (x < 3) {
-        x = 7;
+        t = 7>1;
     }
     if (x <3) {
         x = 9;

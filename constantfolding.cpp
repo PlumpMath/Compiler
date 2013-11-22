@@ -150,6 +150,7 @@ class ConstantFolding : public CFVisitor {
         LatticeElemMap* visitParam(Param *p, LatticeElemMap *in)
         {
             in = visit_children_of(p, in);
+            (*in)[ (p->m_symname)->spelling()]=TOP;
             return in;
         }
 
@@ -209,7 +210,14 @@ class ConstantFolding : public CFVisitor {
         LatticeElemMap* visitArrayCall(ArrayCall *p, LatticeElemMap *in)
         {
             in = visit_children_of(p, in);
+            LatticeElemMap::iterator iter;
+           for (iter = in->begin(); iter != in->end(); iter++){
+                   (*in)[iter->first]=TOP;
+
+               }
+
             return in;
+ 
         }
 
         LatticeElemMap* visitIfNoElse(IfNoElse *p, LatticeElemMap *in)
@@ -691,6 +699,7 @@ class ConstantFolding : public CFVisitor {
         LatticeElemMap* visitArrayAccess(ArrayAccess *p, LatticeElemMap *in)
         {
             in = visit_children_of(p, in);
+            p->m_attribute.m_lattice_elem = TOP;
             return in;
         }
 
