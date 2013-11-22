@@ -385,8 +385,6 @@ class ConstantFolding : public CFVisitor {
                 p->m_attribute.m_lattice_elem = 0;
             else if (e1==TOP||e2 == TOP)
                 p->m_attribute.m_lattice_elem = TOP;
-            else if (e1==BOTTOM||e2 == BOTTOM)
-                p->m_attribute.m_lattice_elem = BOTTOM;
             else
                 // Otherwise, it contains the boolean opposite of the child's LatticeElem
                 p->m_attribute.m_lattice_elem = e1.value && e2.value;
@@ -408,8 +406,6 @@ class ConstantFolding : public CFVisitor {
                 p->m_attribute.m_lattice_elem = 1;
             else if (e1==TOP||e2 == TOP)
                 p->m_attribute.m_lattice_elem = TOP;
-            else if (e1==BOTTOM||e2 == BOTTOM)
-                p->m_attribute.m_lattice_elem = BOTTOM;
             else
                 // Otherwise, it contains the boolean opposite of the child's LatticeElem
                 p->m_attribute.m_lattice_elem = e1.value || e2.value;
@@ -431,9 +427,6 @@ class ConstantFolding : public CFVisitor {
 
             if (e1==TOP||e2 == TOP)
                 p->m_attribute.m_lattice_elem = TOP;
-            else if (e1==BOTTOM||e2 == BOTTOM)
-                p->m_attribute.m_lattice_elem = BOTTOM;
-            else
                 // Otherwise, it contains the boolean opposite of the child's LatticeElem
                 p->m_attribute.m_lattice_elem = e1.value== e2.value;
             in = visit_children_of(p, in);
@@ -451,8 +444,6 @@ class ConstantFolding : public CFVisitor {
 
             if (e1==TOP||e2 == TOP)
                 p->m_attribute.m_lattice_elem = TOP;
-            else if (e1==BOTTOM||e2 == BOTTOM)
-                p->m_attribute.m_lattice_elem = BOTTOM;
             else
                 // Otherwise, it contains the boolean opposite of the child's LatticeElem
                 p->m_attribute.m_lattice_elem = e1.value!= e2.value;
@@ -471,8 +462,6 @@ class ConstantFolding : public CFVisitor {
 
             if (e1==TOP||e2 == TOP)
                 p->m_attribute.m_lattice_elem = TOP;
-            else if (e1==BOTTOM||e2 == BOTTOM)
-                p->m_attribute.m_lattice_elem = BOTTOM;
             else
                 // Otherwise, it contains the boolean opposite of the child's LatticeElem
                 p->m_attribute.m_lattice_elem = e1.value> e2.value;
@@ -491,8 +480,6 @@ class ConstantFolding : public CFVisitor {
 
             if (e1==TOP||e2 == TOP)
                 p->m_attribute.m_lattice_elem = TOP;
-            else if (e1==BOTTOM||e2 == BOTTOM)
-                p->m_attribute.m_lattice_elem = BOTTOM;
             else
                 // Otherwise, it contains the boolean opposite of the child's LatticeElem
                 p->m_attribute.m_lattice_elem = e1.value>= e2.value;
@@ -511,8 +498,6 @@ class ConstantFolding : public CFVisitor {
 
             if (e1==TOP||e2 == TOP)
                 p->m_attribute.m_lattice_elem = TOP;
-            else if (e1==BOTTOM||e2 == BOTTOM)
-                p->m_attribute.m_lattice_elem = BOTTOM;
             else
                 // Otherwise, it contains the boolean opposite of the child's LatticeElem
                 p->m_attribute.m_lattice_elem = e1.value< e2.value;
@@ -533,8 +518,6 @@ class ConstantFolding : public CFVisitor {
 
             if (e1==TOP||e2 == TOP)
                 p->m_attribute.m_lattice_elem = TOP;
-            else if (e1==BOTTOM||e2 == BOTTOM)
-                p->m_attribute.m_lattice_elem = BOTTOM;
             else
                 // Otherwise, it contains the boolean opposite of the child's LatticeElem
                 p->m_attribute.m_lattice_elem = e1.value>= e2.value;
@@ -548,8 +531,6 @@ class ConstantFolding : public CFVisitor {
             LatticeElem &e1 = p->m_expr->m_attribute.m_lattice_elem;
             if (e1==TOP)
                 p->m_attribute.m_lattice_elem = TOP;
-            else if(e1 == BOTTOM)
-                p->m_attribute.m_lattice_elem = BOTTOM;
             else
                 p->m_attribute.m_lattice_elem = -e1.value;
             return in;
@@ -561,8 +542,6 @@ class ConstantFolding : public CFVisitor {
             LatticeElem &e1 = p->m_expr->m_attribute.m_lattice_elem;
             if (e1==TOP)
                 p->m_attribute.m_lattice_elem = TOP;
-            else if(e1 == BOTTOM)
-                p->m_attribute.m_lattice_elem = BOTTOM;
             else
                 p->m_attribute.m_lattice_elem = abs(e1.value);
             return in;
@@ -582,8 +561,6 @@ class ConstantFolding : public CFVisitor {
             // If it's TOP, then we cannot know anything about this expression; it should be TOP as well
             if (e1==TOP||e2 == TOP)
                 p->m_attribute.m_lattice_elem = TOP;
-            else if (e1==BOTTOM||e2 == BOTTOM)
-                p->m_attribute.m_lattice_elem = BOTTOM;
             else
                 // Otherwise, it contains the boolean opposite of the child's LatticeElem
                 p->m_attribute.m_lattice_elem = e1.value + e2.value;
