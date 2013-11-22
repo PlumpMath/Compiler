@@ -545,13 +545,28 @@ class ConstantFolding : public CFVisitor {
         LatticeElemMap* visitUminus(Uminus *p, LatticeElemMap *in)
         {
             in = visit_children_of(p, in);
+            LatticeElem &e1 = p->m_expr->m_attribute.m_lattice_elem;
+            if (e1==TOP)
+                p->m_attribute.m_lattice_elem = TOP;
+            else if(e1 == BOTTOM)
+                p->m_attribute.m_lattice_elem = BOTTOM;
+            else
+                p->m_attribute.m_lattice_elem = -e1.value;
             return in;
         }
 
         LatticeElemMap* visitMagnitude(Magnitude *p, LatticeElemMap *in)
         {
             in = visit_children_of(p, in);
+            LatticeElem &e1 = p->m_expr->m_attribute.m_lattice_elem;
+            if (e1==TOP)
+                p->m_attribute.m_lattice_elem = TOP;
+            else if(e1 == BOTTOM)
+                p->m_attribute.m_lattice_elem = BOTTOM;
+            else
+                p->m_attribute.m_lattice_elem = abs(e1.value);
             return in;
+
         }
 
         LatticeElemMap* visitPlus(Plus *p, LatticeElemMap *in)
