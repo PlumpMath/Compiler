@@ -161,6 +161,11 @@ class Typecheck : public Visitor {
 		Symbol *s = new Symbol();
 		s -> m_basetype = type;
 		name = strdup((*symname_iter) -> spelling());
+
+		if (type == bt_intarray) {
+			s -> arr_length = ((TIntArray*)p -> m_type) -> m_primitive -> m_data; 
+		}
+
 		if (! m_st -> insert(name, s))
 			this -> t_error(dup_ident_name,  p -> m_attribute);
 	}
@@ -179,6 +184,7 @@ class Typecheck : public Visitor {
     if (! m_st -> insert(name, s))
     	this -> t_error(dup_ident_name, p -> m_attribute);
   }
+
 
   // This method is a useful utility. You may implement and use it or choose not to.
   //

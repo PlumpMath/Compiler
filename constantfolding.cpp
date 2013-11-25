@@ -638,7 +638,7 @@ class ConstantFolding : public CFVisitor {
             if(e1 == 0)
                 p->m_attribute.m_lattice_elem = 0;
             if(e2 == 0)
-                p->m_attribute.m_lattice_elem = TOP;
+                p->m_attribute.m_lattice_elem = 0;
             else if (e1==TOP||e2 == TOP)
                 p->m_attribute.m_lattice_elem = TOP;
             else if (e1==BOTTOM||e2 == BOTTOM)

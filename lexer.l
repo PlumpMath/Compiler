@@ -10,12 +10,12 @@
 void yyerror(const char *);
 
 int getIntValue(char* text, int type) {
-    if(strlen(text) > 10) {
-        yyerror("integer too long");
-        exit(0);
-    }
-    int value = (int) strtol(yytext, 0, type);
-    return value;
+	if(strlen(text) > 10) {
+		yyerror("integer too long");
+		exit(0);
+	}
+	int value = (int) strtol(yytext, 0, type);
+	return value;
 }
 
 %}
@@ -39,16 +39,16 @@ ID        [a-zA-Z][a-zA-Z0-9]*
 \-      { return MINUS;   }
 \*      { return MULT;    }
 \/      { return DIV;     }
-;       { return SEMI;    }
-:       { return COLON;   }
-,       { return COMMA;   }
-\{      { return CURLY_O; }
-\}      { return CURLY_C; }
-\(      { return PAREN_O; }
-\)      { return PAREN_C; }
+;	    { return SEMI;    }
+:	    { return COLON;   }
+,	    { return COMMA;   }
+\{	    { return CURLY_O; }
+\}	    { return CURLY_C; }
+\(	    { return PAREN_O; }
+\)	    { return PAREN_C; }
 \|      { return BAR;     }
-\[      { return ANGLE_O; }
-\]      { return ANGLE_C; }
+\[	    { return ANGLE_O; }
+\]	    { return ANGLE_C; }
 
 bool      { return KEY_BOOL;     }
 else      { return KEY_ELSE;     }
@@ -75,13 +75,13 @@ false     { return FALSE;        }
 
 [ \n\t]                            { /* skip whitespace */ }
 
-.                                  { return ILLEGAL; }
+.	                               { return ILLEGAL; }
 
 
 %%
 
 
 int yywrap(void) {
-    return 1;
+	return 1;
 }
 
