@@ -1,4 +1,4 @@
-function array(ax: int) : bool
+[$function array(ax: int) : bool
 {
   var a: intarray[12];
   var b: intarray[12];
@@ -13,7 +13,7 @@ function array(ax: int) : bool
 
   return false;
 }
-
+$]
 function Main() : int
 {
     var x: int;
@@ -22,7 +22,6 @@ function Main() : int
     t=true;
     x = 5;
     
-    t = array(1);
 
     if (x < 3) {
         t = 7>1;
@@ -38,17 +37,12 @@ function Main() : int
    
     return 0;
 }
-
+[$
 function f(ax: int) : int
 {
     var l: bool;
     var d: int;
 
-    function nested() : bool
-    {
-        var  i, a : int;
-    return i-a == 12;
-    }
 
     return -(---d+d*d/d);
 }
@@ -57,17 +51,12 @@ function main(a: int) : bool
 {
     var i : int;
 
-    function  tain(integer: int) : bool
-    {
-        return false || true;
-    }
     return (2+2*4) < 3;
 }
-
 function main1(ax: int) : bool
 {
     var i: int;
     return (2+2*4) < 3;
 }
-
+$]
 

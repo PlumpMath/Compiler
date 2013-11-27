@@ -1,0 +1,14 @@
+function aain(a: int) :int 
+{
+    return 1;
+}
+
+function Main() :int 
+{
+    var d: int;
+    d = aain(1);
+    return d; 
+}
+
+
+
