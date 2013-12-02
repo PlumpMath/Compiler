@@ -1,13 +1,14 @@
 function aain(a: int) :int 
 {
-    return 1;
+    return a;
 }
 
 function Main() :int 
 {
-    var d: int;
-    d = aain(1);
-    return d; 
+    var c,e,d: int;
+    e=aain(1);
+    c= 2;
+    return e; 
 }
 
 

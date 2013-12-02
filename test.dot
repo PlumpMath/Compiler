@@ -1,2 +1,12 @@
 .text
 
+.globl _Main
+_Main:
+	pushl %ebp #Save Original EBP
+	movl %esp,%ebp #Point EBP to top of stack
+	subl $12,%esp #make room for local variables
+	pushl $0
+	popl %eax
+	mov %ebp,%esp
+	popl %ebp
+	ret

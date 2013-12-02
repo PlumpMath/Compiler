@@ -18,9 +18,9 @@
 
 #include <stdio.h>
 
-int Main();
+int _Main();
 
 int main() {
-    printf("Main returned: %d\n", Main());
+    printf("Main returned: %d\n", _Main());
 	return 0;
 }

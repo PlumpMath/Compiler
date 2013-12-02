@@ -253,7 +253,6 @@ SymScope::SymScope()
 	m_parent = NULL; 
 	m_scopesize = 0;
 }
-
 SymScope::SymScope(SymScope * parent) 
 {
 	m_parent = parent;

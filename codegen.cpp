@@ -111,10 +111,10 @@ class Codegen : public Visitor
   
   void emit_prologue(SymName *name, unsigned int size_locals, unsigned int num_args)
   {
-      int total_size = (size_locals +num_args)*WORDSIZE;
+      int total_size = (size_locals +num_args+1)*WORDSIZE;
       stringstream ss;
       ss
-          <<name->spelling()<<":"<<endl
+          <<"_"<<name->spelling()<<":"<<endl
           <<"\t"<<"pushl \%ebp"<<" #Save Original EBP"<<endl
           <<"\t"<<"movl \%esp,\%ebp"<<" #Point EBP to top of stack"<<endl
           <<"\t"<<"subl $"<<total_size<<",\%esp"<<" #make room for local variables"<<endl;
@@ -147,11 +147,12 @@ class Codegen : public Visitor
 
 
   }
-
+ 
   void emit_epilogue()
   {
       stringstream ss;
       ss
+          <<"\t"<<"movl \%ebp,\%esp"<<endl
           <<"\t"<<"popl \%ebp"<<endl
           <<"\t"<<"ret"<<endl;
       fprintf( m_outputfile, "%s", ss.str().c_str());
@@ -177,7 +178,7 @@ public:
     // WRITEME
     stringstream ss;
       ss
-          <<".globl Main"<<endl;
+          <<".globl _Main"<<endl;
       fprintf( m_outputfile, "%s", ss.str().c_str());
       visit_children_of(p);
 
@@ -194,7 +195,32 @@ public:
   }
   void visitFunction_block(Function_block * p)
   {
+
+      stringstream ss;
+#if 1
+      int i = 0;
+	list<Decl_ptr>::iterator m_decl_list_iter;
+	list<SymName_ptr>::iterator m_symname_list_iter;
+	for(m_decl_list_iter = p->m_decl_list->begin();
+	  m_decl_list_iter != p->m_decl_list->end();
+	  ++m_decl_list_iter){
+        /*
+       for(m_symname_list_iter= (*m_decl_list_iter)->m_symname_list->begin();
+               m_symname_list_iter != (*m_decl_list_iter)->m_symname_list->end(); ++m_symname_list_iter){
+           Symbol *s = new Symbol();
+
+           char * name= strdup((*m_symname_list_iter)->spelling());
+           m_st -> insert(name, s);
+           */
+       // add_decl_symbol((*m_decl_list_iter));
+        
+      fprintf( m_outputfile, "%s", ss.str().c_str());
+
+	}
+	
+#endif
       visit_children_of(p);
+
      
   }
   void visitNested_block(Nested_block * p)
@@ -203,29 +229,79 @@ public:
   }
   void visitAssignment(Assignment * p)
   {
-    // WRITEME
+      stringstream ss;
+
+      p->visit_children(this);
+#if 1
+      const char * name = p->m_symname->spelling();
+      int off= m_st->lookup( p->m_attribute.m_scope,name)->get_offset();
+      off = -(off+4);
+      p->m_symname->m_attribute.m_place = off;
+      ss
+          <<"\t"<<"popl \%ebx"<<endl
+          <<"\t"<<"movl \%ebx,"<<off<<"(\%ebp)"<<endl;
+
+      fprintf( m_outputfile, "%s", ss.str().c_str());
+#endif
+      // WRITEME
   }
   void visitArrayAssignment(ArrayAssignment * p)
   {
-    // WRITEME
+      // WRITEME
   }
   void visitCall(Call * p)
   {
       p->visit_children(this);
       stringstream ss;
+      list<Expr_ptr>::iterator m_expr_list_iter;
       int param_size = p->m_expr_list->size();
-      for (int i=0;i<param_size;i++)
-      {
-          ss
-              <<"\t"<<"popl \%ebx"<<endl
-              <<"\t"<<"movl %ebx,"<<(param_size-i-1)*WORDSIZE<<"(\%esp)"
-              <<endl;
+      int i =0;
+      for(m_expr_list_iter = p->m_expr_list->begin();
+              m_expr_list_iter != p->m_expr_list->end();
+              ++m_expr_list_iter){
+         ss
+              <<"\t"<<"popl \%ebx"<<"#start visit call"<<endl
+              //<<"\t"<<"movl \%ebx,"<<(param_size-i-1)*WORDSIZE<<"(\%esp)"
+              <<"\t"<<"pushl \%ebx"<<endl;
+          (*m_expr_list_iter)->m_attribute.m_place = (param_size-i-1)*WORDSIZE;
+          i++;
       }
 
 
+#if 0
+      int param_size = p->m_expr_list->size();
+      for (int i=0;i<param_size;i++)
+      {
+         ss
+              <<"\t"<<"popl \%ebx"<<"#start visit call"<<endl
+              <<"\t"<<"movl \%ebx,"<<(param_size-i-1)*WORDSIZE<<"(\%esp)"
+              <<endl;
+         *(p->m_expr_list[i])m_place=(param_size-i-1)*WORDSIZE;
+
+       }
+
+#endif
+      ss
+          <<"\t"<<"call _"<< p->m_symname_2->spelling()<<endl;
+#if 1
+           int off = -(m_st->lookup(p->m_attribute.m_scope,p->m_symname_1->spelling())->get_offset())-4; 
+      ss
+          <<"\tmovl "<<"\%eax,"<<off<<"(\%ebp)"<<"#end visit call"<<endl;
+      for(m_expr_list_iter = p->m_expr_list->begin();
+              m_expr_list_iter != p->m_expr_list->end();
+              ++m_expr_list_iter){
+         ss
+              <<"\t"<<"popl \%ebx"<<endl;
+      }
+      //   cout<<p->m_symname->spelling()<<endl;
+
+#endif
 
 
-  fprintf( m_outputfile, "%s", ss.str().c_str());
+
+
+
+      fprintf( m_outputfile, "%s", ss.str().c_str());
 
       // WRITEME
   }
@@ -236,15 +312,12 @@ public:
   void visitReturn(Return * p)
   {
       visit_children_of(p);
-#if 1
       stringstream ss;
       ss
           <<"\t"<<"popl "<<"\%eax"<<endl;
       fprintf( m_outputfile, "%s", ss.str().c_str());
       emit_epilogue();
-#endif
 
-      // WRITEME
   }
 
   // control flow
@@ -362,6 +435,18 @@ public:
   // variable and constant access
   void visitIdent(Ident * p)
   {
+      stringstream ss;
+      p->visit_children(this);
+#if 1
+   //   cout<<p->m_symname->spelling()<<endl;
+      int off = -(m_st->lookup( p->m_attribute.m_scope,p->m_symname->spelling())->get_offset())-4;
+      ss
+          <<"\tmovl "<<off<<"(\%ebp),"<<"\%ebx"<<endl
+          <<"\t"<<"pushl \%ebx"<<endl;
+
+      fprintf( m_outputfile, "%s", ss.str().c_str());
+#endif
+
       // WRITEME
   }
   void visitIntLit(IntLit * p)

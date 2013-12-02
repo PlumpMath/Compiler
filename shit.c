@@ -1,10 +1,16 @@
 
-int f(int a, int b, int c, int d, int e, int f ){
-    return a+b+c+d+e;
+int f(int a,int b){
+
+    return a+b;
 }
 int main(){
-    int a;
-    int b;
-    a = f(1,2,3,4,5,6);
+    int a,b,c,d,e,f;
+    a=1;
+    b=2;
+    c=3;
+    d=4;
+
+
     return a;
 }
+
