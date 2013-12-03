@@ -5,7 +5,12 @@ _ain:
 	pushl %ebp #Save Original EBP
 	movl %esp,%ebp #Point EBP to top of stack
 	subl $4,%esp #make room for local variables
-	pushl $1
+	popl %ebx
+	popl %eax
+	cmpl %ebx,%eax
+	setg %al
+	movzbl %al,%eax
+	pushl %eax
 	popl %eax
 	movl %ebp,%esp
 	popl %ebp
@@ -18,8 +23,6 @@ _aain:
 	movl %ebx,-4(%ebp)
 	movl 8(%ebp),%ebx
 	movl %ebx,-8(%ebp)
-	call _ain
-	movl %eax,-12(%ebp)#end visit call
 	movl -4(%ebp),%ebx
 	pushl %ebx
 	movl -8(%ebp),%ebx
@@ -47,18 +50,13 @@ _Main:
 	pushl %ebp #Save Original EBP
 	movl %esp,%ebp #Point EBP to top of stack
 	subl $8,%esp #make room for local variables
-	pushl $2
-	pushl $15
-	popl %ebx#start visit call
-	pushl %ebx
-	popl %ebx#start visit call
-	pushl %ebx
-	call _aain
-	movl %eax,-8(%ebp)#end visit call
 	popl %ebx
+	popl %eax
+	orl %ebx,%eax
+	pushl %eax
 	popl %ebx
-	movl -8(%ebp),%ebx
-	pushl %ebx
+	movl %ebx,-4(%ebp)
+	pushl $0
 	popl %eax
 	movl %ebp,%esp
 	popl %ebp

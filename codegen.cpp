@@ -135,6 +135,17 @@ class Codegen : public Visitor
       fprintf( m_outputfile, "%s", ss.str().c_str());
 
   }
+  void emit_logic(string op){
+      stringstream ss;
+       ss
+          <<"\t"<<"popl \%ebx"<<endl
+          <<"\t"<<"popl \%eax"<<endl
+          <<"\t"<<"cmpl \%ebx,\%eax"<<endl
+          <<"\t"<<op<<" \%al"<<endl
+          <<"\t"<<"movzbl %al,%eax"<<endl
+          <<"\t"<<"pushl \%eax"<<endl;
+      fprintf( m_outputfile, "%s", ss.str().c_str());
+  }
 
   void emit_arith(string op){
       stringstream ss;
@@ -386,6 +397,7 @@ public:
   // comparison operations
   void visitCompare(Compare * p)
   {
+      emit_logic("sete");
       // WRITEME
   }
   void visitNoteq(Noteq * p)
@@ -394,28 +406,37 @@ public:
   }
   void visitGt(Gt * p)
   {
+      emit_logic("setg");
       // WRITEME
   }
   void visitGteq(Gteq * p)
   {
+      emit_logic("setge");
       // WRITEME
   }
   void visitLt(Lt * p)
   {
+      emit_logic("setl");
       // WRITEME
   }
   void visitLteq(Lteq * p)
   {
+      emit_logic("setle");
       // WRITEME
   }
 
   // arithmetic and logic operations
   void visitAnd(And * p)
   {
-      // WRITEME
+
+  
+      p->visit_children(this);
+      emit_arith("andl");
   }
   void visitOr(Or * p)
   {
+      p->visit_children(this);
+      emit_arith("orl");
       // WRITEME
   }
   void visitMinus(Minus * p)
@@ -449,6 +470,12 @@ public:
   }
   void visitUminus(Uminus * p)
   {
+      p->visit_children(this);
+      stringstream ss;
+      ss<<"pushl $-1"<<endl;
+      fprintf( m_outputfile, "%s", ss.str().c_str());
+      emit_arith("imull");
+
       // WRITEME
   }
   void visitMagnitude(Magnitude * p)

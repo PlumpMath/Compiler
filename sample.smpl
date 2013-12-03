@@ -1,21 +1,21 @@
-function ain() :int 
+function ain() :bool 
 {
-    return 1;
+    return 1>2;
 }
 
 
 function aain(a: int, b:int) :int 
 {
     var c:int;
-    c=ain();
     return a+b+c+4;
 }
 
 function Main() :int 
 {
-    var c,e,d: int;
-    e=aain(15,2);
-    return e; 
+    var b :bool;
+    b=true||false;
+
+    return 0 ; 
 }
 
 
