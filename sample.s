@@ -6,14 +6,7 @@ _ain:
 	movl %esp,%ebp #Point EBP to top of stack
 	subl $4,%esp #make room for local variables
 	pushl %ebx#Save Used Registor
-	pushl $1
-	pushl $2
-	popl %ebx
-	popl %eax
-	cmpl %ebx,%eax
-	setg %al
-	movzbl %al,%eax
-	pushl %eax
+	pushl $0
 	popl %eax
 	popl %ebx#save store register
 	movl %ebp,%esp
@@ -60,14 +53,19 @@ _Main:
 	pushl $2
 	popl %ebx
 	movl %ebx,-4(%ebp)
-	pushl $0
-	popl %eax#start IfwithNoElse
+	pushl $1
+	popl %eax#start IfwithElse
 	cmpl $1,%eax
 	jne label0
 	pushl $5
 	popl %ebx
 	movl %ebx,-4(%ebp)
+	jmp label1
 label0:#end if
+	pushl $6
+	popl %ebx
+	movl %ebx,-4(%ebp)
+label1:#end if
 	movl -4(%ebp),%ebx
 	pushl %ebx
 	popl %eax

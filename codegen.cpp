@@ -10,7 +10,7 @@
 #include <sstream>
 #include <iomanip>
 #define WORDSIZE 4
-#define OPTIMIZE 0
+#define OPTIMIZE 1
 
 class Codegen : public Visitor
 {
@@ -142,7 +142,7 @@ class Codegen : public Visitor
 #if OPTIMIZE
             stringstream ss;
             if(e!=TOP){
-                ss<<"\t"<<"pushl "<<e.value<<endl;
+                ss<<"\t"<<"pushl $"<<e.value<<endl;
                 fprintf( m_outputfile, "%s", ss.str().c_str());
                 return true;
             }
@@ -269,11 +269,7 @@ class Codegen : public Visitor
                 
                 stringstream ss;
                 p->visit_children(this);
-                ss
-                    <<"label"<<new_label()<<":#end if"<<endl;
-                fprintf( m_outputfile, "%s", ss.str().c_str());
-
-                // WRITEME
+                              // WRITEME
             }
             void visitAssignment(Assignment * p)
             {
@@ -389,11 +385,40 @@ class Codegen : public Visitor
                    <<"\t"<<"jne label"<<label_count<<endl;
                 fprintf( m_outputfile, "%s", ss.str().c_str());
                 visit(p->m_nested_block);
+                ss.str("");
+                ss
+                    <<"label"<<new_label()<<":#end if"<<endl;
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+
+ 
 
             }
             void visitIfWithElse(IfWithElse * p)
             {
-                // WRITEME
+
+                visit(p->m_expr);
+                stringstream ss;
+                ss
+                   <<"\t"<<"popl \%eax#start IfwithElse"<<endl
+                   <<"\t"<<"cmpl $1,\%eax"<<endl
+                   <<"\t"<<"jne label"<<label_count<<endl;
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+                visit(p->m_nested_block_1);
+                ss.str("");
+                ss
+                    <<"\t"<<"jmp label"<<label_count<<endl
+                    <<"label"<<new_label()<<":#end if"<<endl;
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+                ss.str("");
+                visit(p->m_nested_block_2);
+                ss.str("");
+                ss
+                    <<"label"<<new_label()<<":#end if"<<endl;
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+
+
+
+
             }
             void visitForLoop(ForLoop * p)
             {

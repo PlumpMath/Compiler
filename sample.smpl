@@ -14,8 +14,11 @@ function Main() :int
 {
     var b :int;
     b=2;
-    if(false){
+    if(1<2){
     b = 5;
+    }
+    else{
+        b=6;
     }
 
 
