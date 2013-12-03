@@ -1,13 +1,12 @@
-function aain(a: int) :int 
+function aain(a: int, b:int) :int 
 {
-    return a;
+    return a+b;
 }
 
 function Main() :int 
 {
     var c,e,d: int;
-    e=aain(1);
-    c= 2;
+    e=aain(15,2);
     return e; 
 }
 

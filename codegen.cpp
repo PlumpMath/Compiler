@@ -118,6 +118,20 @@ class Codegen : public Visitor
           <<"\t"<<"pushl \%ebp"<<" #Save Original EBP"<<endl
           <<"\t"<<"movl \%esp,\%ebp"<<" #Point EBP to top of stack"<<endl
           <<"\t"<<"subl $"<<total_size<<",\%esp"<<" #make room for local variables"<<endl;
+      
+      int param_off=0;
+      int local_off=0;
+      for (int i =0; i< num_args;i++)
+      {
+#if 1
+          param_off = (1+num_args-i)*WORDSIZE;
+          local_off = -(4*i+4); 
+          ss
+              <<"\t"<<"movl "<<param_off<<"(\%ebp),\%ebx"<<endl
+              <<"\t"<<"movl \%ebx,"<<local_off<<"(\%ebp)"<<endl;
+#endif 
+
+      }
       fprintf( m_outputfile, "%s", ss.str().c_str());
 
   }
@@ -251,21 +265,31 @@ public:
   }
   void visitCall(Call * p)
   {
-      p->visit_children(this);
+     // p->visit_children(this);
+     //visit(p->m_symname_1);
+     //visit(p->m_symname_2);
       stringstream ss;
       list<Expr_ptr>::iterator m_expr_list_iter;
       int param_size = p->m_expr_list->size();
       int i =0;
-      for(m_expr_list_iter = p->m_expr_list->begin();
-              m_expr_list_iter != p->m_expr_list->end();
-              ++m_expr_list_iter){
+#if 1
+    
+     // for(m_expr_list_iter = p->m_expr_list->end() - 1;
+     //         m_expr_list_iter != p->m_expr_list->begin();
+     //         --m_expr_list_iter){
+      list<Expr_ptr> * ab  =  new list<Expr_ptr>(*p->m_expr_list);
+     for(int i=0;i<param_size;i++){
+        visit(ab->back());
+        ab->pop_back();
+    
          ss
               <<"\t"<<"popl \%ebx"<<"#start visit call"<<endl
               //<<"\t"<<"movl \%ebx,"<<(param_size-i-1)*WORDSIZE<<"(\%esp)"
               <<"\t"<<"pushl \%ebx"<<endl;
-          (*m_expr_list_iter)->m_attribute.m_place = (param_size-i-1)*WORDSIZE;
+    //      (*m_expr_list_iter)->m_attribute.m_place = (param_size-i-1)*WORDSIZE;
           i++;
       }
+#endif
 
 
 #if 0
