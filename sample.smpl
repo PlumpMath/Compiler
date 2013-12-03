@@ -12,10 +12,14 @@ function aain(a: int, b:int) :int
 
 function Main() :int 
 {
-    var b :bool;
-    b=true||false;
+    var b :int;
+    b=2;
+    if(false){
+    b = 5;
+    }
 
-    return 0 ; 
+
+    return b ; 
 }
 
 

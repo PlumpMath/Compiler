@@ -56,7 +56,7 @@ CURLY_O	parser.hpp	/^     CURLY_O = 261,$/;"	e	enum:yytokentype
 Call	ast.cpp	/^ Call::Call(SymName *p1, SymName *p2, list<Expr_ptr> *p3)  {$/;"	f	class:Call
 Call	ast.cpp	/^ Call::Call(const Call & other) {$/;"	f	class:Call
 Call	ast.hpp	/^class Call : public Stat$/;"	c
-Codegen	codegen.cpp	/^  Codegen(FILE * outputfile, SymTab * st)$/;"	f	class:Codegen
+Codegen	codegen.cpp	/^        Codegen(FILE * outputfile, SymTab * st)$/;"	f	class:Codegen
 Codegen	codegen.cpp	/^class Codegen : public Visitor$/;"	c	file:
 Compare	ast.cpp	/^ Compare::Compare(Expr *p1, Expr *p2)  {$/;"	f	class:Compare
 Compare	ast.cpp	/^ Compare::Compare(const Compare & other) {$/;"	f	class:Compare
@@ -69,15 +69,16 @@ Decl	ast.cpp	/^ Decl::Decl(Type *p1, list<SymName_ptr> *p2)  {$/;"	f	class:Decl
 Decl	ast.cpp	/^ Decl::Decl(const Decl & other) {$/;"	f	class:Decl
 Decl	ast.hpp	/^class Decl : public Visitable$/;"	c
 Decl_ptr	ast.hpp	/^typedef Decl* Decl_ptr;$/;"	t
+Disassembly	shit.asm	/^Disassembly of section .text:$/;"	l
 Div	ast.cpp	/^ Div::Div(Expr *p1, Expr *p2)  {$/;"	f	class:Div
 Div	ast.cpp	/^ Div::Div(const Div & other) {$/;"	f	class:Div
 Div	ast.hpp	/^class Div : public Expr$/;"	c
-ECHO	lexer.cpp	669;"	d	file:
-EOB_ACT_CONTINUE_SCAN	lexer.cpp	169;"	d	file:
-EOB_ACT_END_OF_FILE	lexer.cpp	170;"	d	file:
-EOB_ACT_LAST_MATCH	lexer.cpp	171;"	d	file:
-EXIT_SUCCESS	parser.cpp	279;"	d	file:
-EXIT_SUCCESS	parser.cpp	307;"	d	file:
+ECHO	lexer.cpp	656;"	d	file:
+EOB_ACT_CONTINUE_SCAN	lexer.cpp	166;"	d	file:
+EOB_ACT_END_OF_FILE	lexer.cpp	167;"	d	file:
+EOB_ACT_LAST_MATCH	lexer.cpp	168;"	d	file:
+EXIT_SUCCESS	parser.cpp	300;"	d	file:
+EXIT_SUCCESS	parser.cpp	328;"	d	file:
 Expr	ast.hpp	/^class Expr : public Visitable {$/;"	c
 Expr_ptr	ast.hpp	/^typedef Expr* Expr_ptr;$/;"	t
 FALSE	parser.cpp	/^     FALSE = 284,$/;"	e	enum:yytokentype	file:
@@ -107,7 +108,7 @@ IDENT	parser.cpp	/^     IDENT = 281,$/;"	e	enum:yytokentype	file:
 IDENT	parser.hpp	/^     IDENT = 281,$/;"	e	enum:yytokentype
 ILLEGAL	parser.cpp	/^     ILLEGAL = 282,$/;"	e	enum:yytokentype	file:
 ILLEGAL	parser.hpp	/^     ILLEGAL = 282,$/;"	e	enum:yytokentype
-INITIAL	lexer.cpp	577;"	d	file:
+INITIAL	lexer.cpp	569;"	d	file:
 INT	parser.cpp	/^     INT = 277,$/;"	e	enum:yytokentype	file:
 INT	parser.hpp	/^     INT = 277,$/;"	e	enum:yytokentype
 INT16_MAX	lexer.cpp	72;"	d	file:
@@ -181,6 +182,7 @@ Noteq	ast.cpp	/^ Noteq::Noteq(const Noteq & other) {$/;"	f	class:Noteq
 Noteq	ast.hpp	/^class Noteq : public Expr$/;"	c
 OCT	parser.cpp	/^     OCT = 278,$/;"	e	enum:yytokentype	file:
 OCT	parser.hpp	/^     OCT = 278,$/;"	e	enum:yytokentype
+OPTIMIZE	codegen.cpp	13;"	d	file:
 OP_AND	parser.cpp	/^     OP_AND = 292,$/;"	e	enum:yytokentype	file:
 OP_AND	parser.hpp	/^     OP_AND = 292,$/;"	e	enum:yytokentype
 OP_EQ	parser.cpp	/^     OP_EQ = 290,$/;"	e	enum:yytokentype	file:
@@ -223,7 +225,7 @@ Program	ast.cpp	/^ Program::Program(const Program & other) {$/;"	f	class:Program
 Program	ast.cpp	/^ Program::Program(list<Func_ptr> *p1)  {$/;"	f	class:Program
 Program	ast.hpp	/^class Program : public Visitable$/;"	c
 Program_ptr	ast.hpp	/^typedef Program* Program_ptr;$/;"	t
-REJECT	lexer.cpp	552;"	d	file:
+REJECT	lexer.cpp	544;"	d	file:
 RMFILES	Makefile	/^RMFILES = core.* lexer.cpp parser.cpp parser.hpp parser.output ast.hpp ast.cpp $(TARGET) $(OBJS)$/;"	m
 Return	ast.cpp	/^ Return::Return(Expr *p1)  {$/;"	f	class:Return
 Return	ast.cpp	/^ Return::Return(const Return & other) {$/;"	f	class:Return
@@ -272,144 +274,149 @@ Uminus	ast.cpp	/^ Uminus::Uminus(const Uminus & other) {$/;"	f	class:Uminus
 Uminus	ast.hpp	/^class Uminus : public Expr$/;"	c
 Visitable	ast.hpp	/^class Visitable$/;"	c
 Visitor	ast.hpp	/^class Visitor {$/;"	c
+WORDSIZE	codegen.cpp	12;"	d	file:
 YACC	Makefile	/^YACC    = bison -d -v$/;"	m
-YYABORT	parser.cpp	730;"	d	file:
-YYACCEPT	parser.cpp	729;"	d	file:
-YYBACKUP	parser.cpp	751;"	d	file:
+YYABORT	parser.cpp	751;"	d	file:
+YYACCEPT	parser.cpp	750;"	d	file:
+YYBACKUP	parser.cpp	772;"	d	file:
 YYBISON	parser.cpp	44;"	d	file:
 YYBISON_VERSION	parser.cpp	47;"	d	file:
-YYCASE_	parser.cpp	1183;"	d	file:
-YYCASE_	parser.cpp	1193;"	d	file:
-YYCOPY	parser.cpp	373;"	d	file:
-YYCOPY	parser.cpp	376;"	d	file:
-YYCOPY_NEEDED	parser.cpp	348;"	d	file:
-YYDEBUG	parser.cpp	78;"	d	file:
-YYDEBUG	parser.cpp	91;"	d	file:
-YYDPRINTF	parser.cpp	821;"	d	file:
-YYDPRINTF	parser.cpp	970;"	d	file:
-YYEMPTY	parser.cpp	726;"	d	file:
-YYEOF	parser.cpp	727;"	d	file:
-YYERRCODE	parser.cpp	769;"	d	file:
-YYERROR	parser.cpp	731;"	d	file:
+YYCASE_	parser.cpp	1208;"	d	file:
+YYCASE_	parser.cpp	1218;"	d	file:
+YYCOPY	parser.cpp	394;"	d	file:
+YYCOPY	parser.cpp	397;"	d	file:
+YYCOPY_NEEDED	parser.cpp	369;"	d	file:
+YYDEBUG	parser.cpp	107;"	d	file:
+YYDEBUG	parser.cpp	75;"	d	file:
+YYDEBUG	parser.hpp	37;"	d
+YYDPRINTF	parser.cpp	844;"	d	file:
+YYDPRINTF	parser.cpp	995;"	d	file:
+YYEMPTY	parser.cpp	747;"	d	file:
+YYEOF	parser.cpp	748;"	d	file:
+YYERRCODE	parser.cpp	791;"	d	file:
+YYERROR	parser.cpp	752;"	d	file:
+YYERROR_VERBOSE	parser.cpp	95;"	d	file:
 YYERROR_VERBOSE	parser.cpp	96;"	d	file:
-YYERROR_VERBOSE	parser.cpp	97;"	d	file:
-YYERROR_VERBOSE	parser.cpp	99;"	d	file:
-YYFAIL	parser.cpp	741;"	d	file:
-YYFINAL	parser.cpp	389;"	d	file:
-YYFPRINTF	parser.cpp	818;"	d	file:
-YYFREE	parser.cpp	318;"	d	file:
+YYERROR_VERBOSE	parser.cpp	98;"	d	file:
+YYFAIL	parser.cpp	762;"	d	file:
+YYFINAL	parser.cpp	410;"	d	file:
+YYFPRINTF	parser.cpp	841;"	d	file:
+YYFREE	parser.cpp	339;"	d	file:
 YYID	parser.cpp	/^YYID (int yyi)$/;"	f	file:
-YYID	parser.cpp	242;"	d	file:
-YYINITDEPTH	parser.cpp	979;"	d	file:
-YYLAST	parser.cpp	391;"	d	file:
-YYLEX	parser.cpp	808;"	d	file:
-YYLEX	parser.cpp	810;"	d	file:
-YYLLOC_DEFAULT	parser.cpp	778;"	d	file:
-YYLSP_NEEDED	parser.cpp	62;"	d	file:
-YYMALLOC	parser.cpp	311;"	d	file:
-YYMAXDEPTH	parser.cpp	990;"	d	file:
-YYMAXUTOK	parser.cpp	404;"	d	file:
-YYNNTS	parser.cpp	396;"	d	file:
-YYNRULES	parser.cpp	398;"	d	file:
-YYNSTATES	parser.cpp	400;"	d	file:
-YYNTOKENS	parser.cpp	394;"	d	file:
-YYPACT_NINF	parser.cpp	589;"	d	file:
-YYPOPSTACK	parser.cpp	1354;"	d	file:
+YYID	parser.cpp	262;"	d	file:
+YYINITDEPTH	parser.cpp	1004;"	d	file:
+YYLAST	parser.cpp	412;"	d	file:
+YYLEX	parser.cpp	831;"	d	file:
+YYLEX	parser.cpp	833;"	d	file:
+YYLLOC_DEFAULT	parser.cpp	798;"	d	file:
+YYMALLOC	parser.cpp	332;"	d	file:
+YYMAXDEPTH	parser.cpp	1015;"	d	file:
+YYMAXUTOK	parser.cpp	425;"	d	file:
+YYNNTS	parser.cpp	417;"	d	file:
+YYNRULES	parser.cpp	419;"	d	file:
+YYNSTATES	parser.cpp	421;"	d	file:
+YYNTOKENS	parser.cpp	415;"	d	file:
+YYPACT_NINF	parser.cpp	610;"	d	file:
+YYPOPSTACK	parser.cpp	1365;"	d	file:
 YYPULL	parser.cpp	59;"	d	file:
 YYPURE	parser.cpp	53;"	d	file:
 YYPUSH	parser.cpp	56;"	d	file:
-YYRECOVERING	parser.cpp	749;"	d	file:
-YYRHSLOC	parser.cpp	776;"	d	file:
-YYSIZE_MAXIMUM	parser.cpp	219;"	d	file:
-YYSIZE_T	parser.cpp	207;"	d	file:
-YYSIZE_T	parser.cpp	209;"	d	file:
-YYSIZE_T	parser.cpp	213;"	d	file:
-YYSIZE_T	parser.cpp	215;"	d	file:
+YYRECOVERING	parser.cpp	770;"	d	file:
+YYRHSLOC	parser.cpp	817;"	d	file:
+YYSIZE_MAXIMUM	parser.cpp	239;"	d	file:
+YYSIZE_T	parser.cpp	227;"	d	file:
+YYSIZE_T	parser.cpp	229;"	d	file:
+YYSIZE_T	parser.cpp	233;"	d	file:
+YYSIZE_T	parser.cpp	235;"	d	file:
 YYSKELETON_NAME	parser.cpp	50;"	d	file:
-YYSTACK_ALLOC	parser.cpp	265;"	d	file:
-YYSTACK_ALLOC	parser.cpp	269;"	d	file:
-YYSTACK_ALLOC	parser.cpp	274;"	d	file:
-YYSTACK_ALLOC	parser.cpp	297;"	d	file:
-YYSTACK_ALLOC_MAXIMUM	parser.cpp	294;"	d	file:
-YYSTACK_ALLOC_MAXIMUM	parser.cpp	300;"	d	file:
-YYSTACK_BYTES	parser.cpp	344;"	d	file:
-YYSTACK_FREE	parser.cpp	288;"	d	file:
-YYSTACK_FREE	parser.cpp	298;"	d	file:
-YYSTACK_GAP_MAXIMUM	parser.cpp	340;"	d	file:
-YYSTACK_RELOCATE	parser.cpp	355;"	d	file:
+YYSTACK_ALLOC	parser.cpp	285;"	d	file:
+YYSTACK_ALLOC	parser.cpp	289;"	d	file:
+YYSTACK_ALLOC	parser.cpp	294;"	d	file:
+YYSTACK_ALLOC	parser.cpp	318;"	d	file:
+YYSTACK_ALLOC_MAXIMUM	parser.cpp	315;"	d	file:
+YYSTACK_ALLOC_MAXIMUM	parser.cpp	321;"	d	file:
+YYSTACK_BYTES	parser.cpp	365;"	d	file:
+YYSTACK_FREE	parser.cpp	309;"	d	file:
+YYSTACK_FREE	parser.cpp	319;"	d	file:
+YYSTACK_GAP_MAXIMUM	parser.cpp	361;"	d	file:
+YYSTACK_RELOCATE	parser.cpp	376;"	d	file:
 YYSTATE	lexer.cpp	133;"	d	file:
 YYSTYPE	ast.hpp	100;"	d
 YYSTYPE	parser.cpp	/^typedef int YYSTYPE;$/;"	t	file:
 YYSTYPE	parser.hpp	/^typedef int YYSTYPE;$/;"	t
-YYSTYPE_IS_DECLARED	parser.cpp	164;"	d	file:
-YYSTYPE_IS_DECLARED	parser.hpp	90;"	d
-YYSTYPE_IS_TRIVIAL	parser.cpp	162;"	d	file:
-YYSTYPE_IS_TRIVIAL	parser.hpp	88;"	d
-YYTABLES_NAME	lexer.cpp	2088;"	d	file:
-YYTABLE_NINF	parser.cpp	620;"	d	file:
-YYTERROR	parser.cpp	768;"	d	file:
-YYTOKENTYPE	parser.cpp	110;"	d	file:
-YYTOKENTYPE	parser.hpp	36;"	d
-YYTOKEN_TABLE	parser.cpp	104;"	d	file:
-YYTRANSLATE	parser.cpp	406;"	d	file:
-YYUNDEFTOK	parser.cpp	403;"	d	file:
-YYUSE	parser.cpp	235;"	d	file:
-YYUSE	parser.cpp	237;"	d	file:
-YY_	parser.cpp	225;"	d	file:
-YY_	parser.cpp	229;"	d	file:
-YY_AT_BOL	lexer.cpp	353;"	d	file:
-YY_BREAK	lexer.cpp	748;"	d	file:
-YY_BUFFER_EOF_PENDING	lexer.cpp	269;"	d	file:
-YY_BUFFER_NEW	lexer.cpp	257;"	d	file:
-YY_BUFFER_NORMAL	lexer.cpp	258;"	d	file:
+YYSTYPE_IS_DECLARED	parser.cpp	168;"	d	file:
+YYSTYPE_IS_DECLARED	parser.hpp	98;"	d
+YYSTYPE_IS_TRIVIAL	parser.cpp	166;"	d	file:
+YYSTYPE_IS_TRIVIAL	parser.hpp	96;"	d
+YYTABLES_NAME	lexer.cpp	2071;"	d	file:
+YYTABLE_NINF	parser.cpp	641;"	d	file:
+YYTERROR	parser.cpp	790;"	d	file:
+YYTOKENTYPE	parser.cpp	115;"	d	file:
+YYTOKENTYPE	parser.hpp	45;"	d
+YYTRANSLATE	parser.cpp	427;"	d	file:
+YYUNDEFTOK	parser.cpp	424;"	d	file:
+YYUSE	parser.cpp	255;"	d	file:
+YYUSE	parser.cpp	257;"	d	file:
+YY_	parser.cpp	245;"	d	file:
+YY_	parser.cpp	249;"	d	file:
+YY_AT_BOL	lexer.cpp	345;"	d	file:
+YY_BREAK	lexer.cpp	735;"	d	file:
+YY_BUFFER_EOF_PENDING	lexer.cpp	261;"	d	file:
+YY_BUFFER_NEW	lexer.cpp	249;"	d	file:
+YY_BUFFER_NORMAL	lexer.cpp	250;"	d	file:
 YY_BUFFER_STATE	lexer.cpp	/^typedef struct yy_buffer_state *YY_BUFFER_STATE;$/;"	t	typeref:struct:yy_buffer_state	file:
-YY_BUF_SIZE	lexer.cpp	150;"	d	file:
-YY_BUF_SIZE	lexer.cpp	152;"	d	file:
+YY_BUF_SIZE	lexer.cpp	145;"	d	file:
 YY_CHAR	lexer.cpp	/^typedef unsigned char YY_CHAR;$/;"	t	file:
-YY_CURRENT_BUFFER	lexer.cpp	285;"	d	file:
-YY_CURRENT_BUFFER_LVALUE	lexer.cpp	292;"	d	file:
-YY_DECL	lexer.cpp	736;"	d	file:
-YY_DECL_IS_OURS	lexer.cpp	732;"	d	file:
-YY_DO_BEFORE_ACTION	lexer.cpp	378;"	d	file:
-YY_END_OF_BUFFER	lexer.cpp	386;"	d	file:
+YY_CURRENT_BUFFER	lexer.cpp	277;"	d	file:
+YY_CURRENT_BUFFER_LVALUE	lexer.cpp	284;"	d	file:
+YY_DECL	lexer.cpp	723;"	d	file:
+YY_DECL_IS_OURS	lexer.cpp	719;"	d	file:
+YY_DO_BEFORE_ACTION	lexer.cpp	370;"	d	file:
+YY_END_OF_BUFFER	lexer.cpp	378;"	d	file:
 YY_END_OF_BUFFER_CHAR	lexer.cpp	141;"	d	file:
-YY_EXIT_FAILURE	lexer.cpp	1883;"	d	file:
-YY_EXTRA_TYPE	lexer.cpp	588;"	d	file:
-YY_FATAL_ERROR	lexer.cpp	723;"	d	file:
+YY_EXIT_FAILURE	lexer.cpp	1866;"	d	file:
+YY_EXTRA_TYPE	lexer.cpp	580;"	d	file:
+YY_FATAL_ERROR	lexer.cpp	710;"	d	file:
 YY_FLEX_MAJOR_VERSION	lexer.cpp	10;"	d	file:
 YY_FLEX_MINOR_VERSION	lexer.cpp	11;"	d	file:
 YY_FLEX_SUBMINOR_VERSION	lexer.cpp	12;"	d	file:
-YY_FLUSH_BUFFER	lexer.cpp	321;"	d	file:
-YY_INPUT	lexer.cpp	676;"	d	file:
+YY_FLUSH_BUFFER	lexer.cpp	313;"	d	file:
+YY_INPUT	lexer.cpp	663;"	d	file:
 YY_INT_ALIGNED	lexer.cpp	5;"	d	file:
-YY_LESS_LINENO	lexer.cpp	180;"	d	file:
-YY_LOCATION_PRINT	parser.cpp	801;"	d	file:
-YY_MORE_ADJ	lexer.cpp	554;"	d	file:
+YY_LESS_LINENO	lexer.cpp	177;"	d	file:
+YY_LOCATION_PRINT	parser.cpp	824;"	d	file:
+YY_MORE_ADJ	lexer.cpp	546;"	d	file:
 YY_NEW_FILE	lexer.cpp	139;"	d	file:
 YY_NULL	lexer.cpp	113;"	d	file:
-YY_NUM_RULES	lexer.cpp	385;"	d	file:
-YY_READ_BUF_SIZE	lexer.cpp	658;"	d	file:
-YY_READ_BUF_SIZE	lexer.cpp	660;"	d	file:
-YY_REDUCE_PRINT	parser.cpp	960;"	d	file:
-YY_REDUCE_PRINT	parser.cpp	973;"	d	file:
-YY_RESTORE_YY_MORE_OFFSET	lexer.cpp	555;"	d	file:
-YY_RULE_SETUP	lexer.cpp	751;"	d	file:
+YY_NULL	parser.cpp	87;"	d	file:
+YY_NULL	parser.cpp	89;"	d	file:
+YY_NUM_RULES	lexer.cpp	377;"	d	file:
+YY_PARSER_HPP	parser.cpp	104;"	d	file:
+YY_PARSER_HPP	parser.hpp	34;"	d
+YY_READ_BUF_SIZE	lexer.cpp	648;"	d	file:
+YY_REDUCE_PRINT	parser.cpp	985;"	d	file:
+YY_REDUCE_PRINT	parser.cpp	998;"	d	file:
+YY_RESTORE_YY_MORE_OFFSET	lexer.cpp	547;"	d	file:
+YY_RULE_SETUP	lexer.cpp	738;"	d	file:
 YY_SC_TO_UI	lexer.cpp	120;"	d	file:
-YY_STACK_PRINT	parser.cpp	922;"	d	file:
-YY_STACK_PRINT	parser.cpp	972;"	d	file:
+YY_STACK_PRINT	parser.cpp	947;"	d	file:
+YY_STACK_PRINT	parser.cpp	997;"	d	file:
 YY_START	lexer.cpp	132;"	d	file:
-YY_START_STACK_INCR	lexer.cpp	718;"	d	file:
-YY_STATE_BUF_SIZE	lexer.cpp	158;"	d	file:
+YY_START_STACK_INCR	lexer.cpp	705;"	d	file:
+YY_STATE_BUF_SIZE	lexer.cpp	150;"	d	file:
 YY_STATE_EOF	lexer.cpp	136;"	d	file:
-YY_STRUCT_YY_BUFFER_STATE	lexer.cpp	210;"	d	file:
-YY_SYMBOL_PRINT	parser.cpp	827;"	d	file:
-YY_SYMBOL_PRINT	parser.cpp	971;"	d	file:
-YY_TYPEDEF_YY_BUFFER_STATE	lexer.cpp	161;"	d	file:
-YY_TYPEDEF_YY_SIZE_T	lexer.cpp	205;"	d	file:
-YY_USER_ACTION	lexer.cpp	743;"	d	file:
+YY_STRUCT_YY_BUFFER_STATE	lexer.cpp	202;"	d	file:
+YY_SYMBOL_PRINT	parser.cpp	850;"	d	file:
+YY_SYMBOL_PRINT	parser.cpp	996;"	d	file:
+YY_TYPEDEF_YY_BUFFER_STATE	lexer.cpp	153;"	d	file:
+YY_TYPEDEF_YY_SIZE_T	lexer.cpp	158;"	d	file:
+YY_USER_ACTION	lexer.cpp	730;"	d	file:
 YY_USE_CONST	lexer.cpp	101;"	d	file:
 YY_USE_CONST	lexer.cpp	94;"	d	file:
+_Main	sample.s	/^_Main:$/;"	l
 __STDC_LIMIT_MACROS	lexer.cpp	40;"	d	file:
+_aain	sample.s	/^_aain:$/;"	l
+_ain	sample.s	/^_ain:$/;"	l
 accept	ast.cpp	/^ LatticeElemMap* And::accept(CFVisitor *v, LatticeElemMap *in) { return v->visitAnd(this, in); }$/;"	f	class:And
 accept	ast.cpp	/^ LatticeElemMap* ArrayAccess::accept(CFVisitor *v, LatticeElemMap *in) { return v->visitArrayAccess(this, in); }$/;"	f	class:ArrayAccess
 accept	ast.cpp	/^ LatticeElemMap* ArrayAssignment::accept(CFVisitor *v, LatticeElemMap *in) { return v->visitArrayAssignment(this, in); }$/;"	f	class:ArrayAssignment
@@ -493,16 +500,18 @@ add_decl_symbol	typecheck.cpp	/^  void add_decl_symbol(Decl *p)$/;"	f	class:Type
 add_decl_symbol	typecheck.cpp	/^  void add_decl_symbol(Param *p)$/;"	f	class:Typecheck	file:
 add_edge	ast2dot.cpp	/^ void add_edge( int p, int c )$/;"	f	class:Ast2dot
 add_node	ast2dot.cpp	/^ void add_node( int c, const char* n )$/;"	f	class:Ast2dot
-alloca	parser.cpp	272;"	d	file:
+alloca	parser.cpp	292;"	d	file:
 arr_length	symtab.hpp	/^  int arr_length;$/;"	m	class:Symbol
 array_index_error	typecheck.cpp	/^	array_index_error$/;"	e	enum:Typecheck::errortype	file:
 ast	main.cpp	/^Program_ptr ast; \/* make sure to set this to the final syntax tree in parser.ypp*\/$/;"	v
+b	shit.asm	/^   b:	5d                   	pop    %ebp$/;"	l
 bt_boolean	attribute.hpp	/^	bt_boolean = 0x04,$/;"	e	enum:Basetype
 bt_function	attribute.hpp	/^	bt_function = 0x08,$/;"	e	enum:Basetype
 bt_intarray	attribute.hpp	/^	bt_intarray = 0x10$/;"	e	enum:Basetype
 bt_integer	attribute.hpp	/^	bt_integer = 0x02,$/;"	e	enum:Basetype
 bt_to_string	typecheck.cpp	/^  const char * bt_to_string(Basetype bt) {$/;"	f	class:Typecheck	file:
 bt_undef	attribute.hpp	/^	bt_undef = 0x01,$/;"	e	enum:Basetype
+c	shit.asm	/^   c:	c3                   	ret    $/;"	l
 call_args_mismatch	typecheck.cpp	/^	call_args_mismatch,$/;"	e	enum:Typecheck::errortype	file:
 call_narg_mismatch	typecheck.cpp	/^	call_narg_mismatch,$/;"	e	enum:Typecheck::errortype	file:
 check_call	typecheck.cpp	/^  void check_call(Stat* t, SymName* symname, list<Expr_ptr>* exprList, Basetype return_type)$/;"	f	class:Typecheck
@@ -550,6 +559,7 @@ clone	symtab.cpp	/^SymName* SymName::clone() const$/;"	f	class:SymName
 close_scope	symtab.cpp	/^SymScope* SymScope::close_scope()$/;"	f	class:SymScope
 close_scope	symtab.cpp	/^void SymTab::close_scope()$/;"	f	class:SymTab
 count	ast2dot.cpp	/^ int count; \/\/used to give each node a uniq id$/;"	m	class:Ast2dot	file:
+d	shit.asm	/^   d:	55                   	push   %ebp$/;"	l
 dopass_ast2dot	ast2dot.cpp	/^void dopass_ast2dot(Program_ptr ast) {$/;"	f
 dopass_codegen	main.cpp	/^void dopass_codegen(Program_ptr ast, SymTab * st)$/;"	f
 dopass_constantfolding	main.cpp	/^void dopass_constantfolding(Program_ptr ast, SymTab* st) {$/;"	f
@@ -560,14 +570,18 @@ draw_symname	ast2dot.cpp	/^ void draw_symname(const char* n, SymName* p) {$/;"	f
 dump	symtab.cpp	/^void SymScope::dump(FILE* f, int nest_level)$/;"	f	class:SymScope
 dump	symtab.cpp	/^void SymTab::dump( FILE* f )$/;"	f	class:SymTab
 dup_ident_name	typecheck.cpp	/^	dup_ident_name,$/;"	e	enum:Typecheck::errortype	file:
-emit_epilogue	codegen.cpp	/^  void emit_epilogue()$/;"	f	class:Codegen	file:
-emit_prologue	codegen.cpp	/^  void emit_prologue(SymName *name, unsigned int size_locals, unsigned int num_args)$/;"	f	class:Codegen	file:
+e	shit.asm	/^   e:	89 e5                	mov    %esp,%ebp$/;"	l
+emit_arith	codegen.cpp	/^        void emit_arith(string op){$/;"	f	class:Codegen	file:
+emit_epilogue	codegen.cpp	/^        void emit_epilogue()$/;"	f	class:Codegen	file:
+emit_logic	codegen.cpp	/^        void emit_logic(string op){$/;"	f	class:Codegen	file:
+emit_optimize	codegen.cpp	/^        bool emit_optimize(LatticeElem e){$/;"	f	class:Codegen	file:
+emit_prologue	codegen.cpp	/^        void emit_prologue(SymName *name, unsigned int size_locals, unsigned int num_args)$/;"	f	class:Codegen	file:
 eqstr	symtab.cpp	/^struct eqstr { $/;"	s	file:
 errortype	typecheck.cpp	/^  enum errortype $/;"	g	class:Typecheck	file:
 exist	symtab.cpp	/^bool SymScope::exist( char* name )$/;"	f	class:SymScope
 exist	symtab.cpp	/^bool SymTab::exist( char* name )$/;"	f	class:SymTab
 expr_type_err	typecheck.cpp	/^	expr_type_err,$/;"	e	enum:Typecheck::errortype	file:
-f	shit.c	/^int f(int a, int b, int c, int d, int e, int f, int g){$/;"	f
+f	shit.c	/^int f(int a,int b){$/;"	f
 finish	ast2dot.cpp	/^ void finish() { $/;"	f	class:Ast2dot
 flex_int16_t	lexer.cpp	/^typedef int16_t flex_int16_t;$/;"	t	file:
 flex_int16_t	lexer.cpp	/^typedef short int flex_int16_t;$/;"	t	file:
@@ -598,7 +612,7 @@ is_dup_string	symtab.cpp	/^bool SymScope::is_dup_string(char* name)$/;"	f	class:
 is_dup_string	symtab.cpp	/^bool SymTab::is_dup_string(char* name)$/;"	f	class:SymTab
 join	attribute.hpp	/^    void join (const LatticeElem &other)$/;"	f	class:LatticeElem
 join_lattice_elem_maps	attribute.hpp	/^inline void join_lattice_elem_maps (LatticeElemMap *map1, LatticeElemMap *map2) {$/;"	f
-label_count	codegen.cpp	/^	int label_count; \/\/access with new_label$/;"	m	class:Codegen	file:
+label_count	codegen.cpp	/^        int label_count; \/\/access with new_label$/;"	m	class:Codegen	file:
 lattice_maps_equal	attribute.hpp	/^inline bool lattice_maps_equal (LatticeElemMap *map1, LatticeElemMap *map2) {$/;"	f
 lexical_distance	symtab.cpp	/^int SymTab::lexical_distance( SymScope* higher_scope, SymScope* deeper_scope )$/;"	f	class:SymTab
 lineno	attribute.hpp	/^  int lineno; \/\/line number on which that ast node resides$/;"	m	class:Attribute
@@ -674,7 +688,7 @@ m_nested_block_1	ast.hpp	/^  Nested_block *m_nested_block_1;$/;"	m	class:IfWithE
 m_nested_block_2	ast.hpp	/^  Nested_block *m_nested_block_2;$/;"	m	class:IfWithElse
 m_offset	symtab.hpp	/^  int m_offset;$/;"	m	class:Symbol
 m_out	ast2dot.cpp	/^ FILE *m_out; \/\/file for writting output$/;"	m	class:Ast2dot	file:
-m_outputfile	codegen.cpp	/^	FILE * m_outputfile;$/;"	m	class:Codegen	file:
+m_outputfile	codegen.cpp	/^        FILE * m_outputfile;$/;"	m	class:Codegen	file:
 m_param_list	ast.hpp	/^  list<Param_ptr> *m_param_list;$/;"	m	class:Func
 m_parent	symtab.cpp	/^  SymScope* m_parent;$/;"	m	class:SymScope	file:
 m_parent_attribute	ast.hpp	/^   Attribute* m_parent_attribute;$/;"	m	class:Decl
@@ -697,7 +711,7 @@ m_scope	attribute.hpp	/^  SymScope* m_scope; \/\/the scope of the current symbol
 m_scopesize	symtab.cpp	/^  int m_scopesize; $/;"	m	class:SymScope	file:
 m_scopetable	symtab.cpp	/^  ScopeTableType m_scopetable;$/;"	m	class:SymScope	file:
 m_spelling	symtab.hpp	/^  char* m_spelling; \/\/ "name" of the symbol$/;"	m	class:SymName
-m_st	codegen.cpp	/^	SymTab *m_st;$/;"	m	class:Codegen	file:
+m_st	codegen.cpp	/^        SymTab *m_st;$/;"	m	class:Codegen	file:
 m_st	constantfolding.cpp	/^        SymTab* m_st;$/;"	m	class:ConstantFolding	file:
 m_st	typecheck.cpp	/^  SymTab* m_st;$/;"	m	class:Typecheck	file:
 m_stat_1	ast.hpp	/^  Stat *m_stat_1;$/;"	m	class:ForLoop
@@ -725,7 +739,7 @@ main	shit.c	/^int main(){$/;"	f
 main	start.c	/^int main() {$/;"	f
 main_args_err	typecheck.cpp	/^	main_args_err,$/;"	e	enum:Typecheck::errortype	file:
 mangled_spelling	symtab.cpp	/^const char* SymName::mangled_spelling()$/;"	f	class:SymName
-new_label	codegen.cpp	/^	int new_label() { return label_count++; }$/;"	f	class:Codegen	file:
+new_label	codegen.cpp	/^        int new_label() { return label_count++; }$/;"	f	class:Codegen	file:
 no_main	typecheck.cpp	/^	no_main,$/;"	e	enum:Typecheck::errortype	file:
 open_scope	symtab.cpp	/^SymScope* SymScope::open_scope() $/;"	f	class:SymScope
 open_scope	symtab.cpp	/^void SymTab::open_scope()$/;"	f	class:SymTab
@@ -782,8 +796,8 @@ s	ast2dot.cpp	/^ stack<int> s; \/\/stack for tracking parent\/child pairs$/;"	m	
 scopesize	symtab.cpp	/^int SymTab::scopesize( SymScope* targetscope )$/;"	f	class:SymTab
 set_scope_and_descend_into_children	typecheck.cpp	21;"	d	file:
 set_symbol	symtab.cpp	/^void SymName::set_symbol(Symbol* s)$/;"	f	class:SymName
-set_text_mode	codegen.cpp	/^	void set_text_mode() { fprintf( m_outputfile, ".text\\n\\n"); }$/;"	f	class:Codegen	file:
-short	parser.cpp	175;"	d	file:
+set_text_mode	codegen.cpp	/^        void set_text_mode() { fprintf( m_outputfile, ".text\\n\\n"); }$/;"	f	class:Codegen	file:
+short	parser.cpp	195;"	d	file:
 spelling	symtab.cpp	/^const char* SymName::spelling()$/;"	f	class:SymName
 swap	ast.cpp	/^ void And::swap(And & other) {$/;"	f	class:And
 swap	ast.cpp	/^ void ArrayAccess::swap(ArrayAccess & other) {$/;"	f	class:ArrayAccess
@@ -849,164 +863,164 @@ u_stat_list	ast.hpp	/^list<Stat_ptr>* u_stat_list;$/;"	m	union:__anon1
 u_symname	ast.hpp	/^SymName* u_symname;$/;"	m	union:__anon1
 u_symname_list	ast.hpp	/^list<SymName_ptr>* u_symname_list;$/;"	m	union:__anon1
 u_type	ast.hpp	/^Type* u_type;$/;"	m	union:__anon1
-unput	lexer.cpp	202;"	d	file:
+unput	lexer.cpp	199;"	d	file:
 value	attribute.hpp	/^    int value;$/;"	m	class:LatticeElem
 visit	ast.hpp	/^  LatticeElemMap* visit(Visitable *p, LatticeElemMap *in) {$/;"	f	class:CFVisitor
 visit	ast.hpp	/^  void visit(Visitable *p) {$/;"	f	class:Visitor
 visitAnd	ast2dot.cpp	/^ void visitAnd(And *p) { draw("And", p); }$/;"	f	class:Ast2dot
-visitAnd	codegen.cpp	/^  void visitAnd(And * p)$/;"	f	class:Codegen
+visitAnd	codegen.cpp	/^            void visitAnd(And * p)$/;"	f	class:Codegen
 visitAnd	constantfolding.cpp	/^        LatticeElemMap* visitAnd(And *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitAnd	typecheck.cpp	/^  void visitAnd(And * p)$/;"	f	class:Typecheck
 visitArrayAccess	ast2dot.cpp	/^ void visitArrayAccess(ArrayAccess *p) { draw("ArrayAccess", p); }$/;"	f	class:Ast2dot
-visitArrayAccess	codegen.cpp	/^  void visitArrayAccess(ArrayAccess * p)$/;"	f	class:Codegen
+visitArrayAccess	codegen.cpp	/^            void visitArrayAccess(ArrayAccess * p)$/;"	f	class:Codegen
 visitArrayAccess	constantfolding.cpp	/^        LatticeElemMap* visitArrayAccess(ArrayAccess *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitArrayAccess	typecheck.cpp	/^  void visitArrayAccess(ArrayAccess * p)$/;"	f	class:Typecheck
 visitArrayAssignment	ast2dot.cpp	/^ void visitArrayAssignment(ArrayAssignment *p) { draw("ArrayAssignment", p); }$/;"	f	class:Ast2dot
-visitArrayAssignment	codegen.cpp	/^  void visitArrayAssignment(ArrayAssignment * p)$/;"	f	class:Codegen
+visitArrayAssignment	codegen.cpp	/^            void visitArrayAssignment(ArrayAssignment * p)$/;"	f	class:Codegen
 visitArrayAssignment	constantfolding.cpp	/^        LatticeElemMap* visitArrayAssignment(ArrayAssignment *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitArrayAssignment	typecheck.cpp	/^  void visitArrayAssignment(ArrayAssignment * p)$/;"	f	class:Typecheck
 visitArrayCall	ast2dot.cpp	/^ void visitArrayCall(ArrayCall *p) { draw("ArrayCall", p); }$/;"	f	class:Ast2dot
-visitArrayCall	codegen.cpp	/^  void visitArrayCall(ArrayCall *p)$/;"	f	class:Codegen
+visitArrayCall	codegen.cpp	/^            void visitArrayCall(ArrayCall *p)$/;"	f	class:Codegen
 visitArrayCall	constantfolding.cpp	/^        LatticeElemMap* visitArrayCall(ArrayCall *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitArrayCall	typecheck.cpp	/^  void visitArrayCall(ArrayCall * p)$/;"	f	class:Typecheck
 visitAssignment	ast2dot.cpp	/^ void visitAssignment(Assignment *p) { draw("Assignment", p); }$/;"	f	class:Ast2dot
-visitAssignment	codegen.cpp	/^  void visitAssignment(Assignment * p)$/;"	f	class:Codegen
+visitAssignment	codegen.cpp	/^            void visitAssignment(Assignment * p)$/;"	f	class:Codegen
 visitAssignment	constantfolding.cpp	/^        LatticeElemMap* visitAssignment(Assignment *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitAssignment	typecheck.cpp	/^  void visitAssignment(Assignment * p)$/;"	f	class:Typecheck
 visitBoolLit	ast2dot.cpp	/^ void visitBoolLit(BoolLit *p) { draw("BoolLit", p); }$/;"	f	class:Ast2dot
-visitBoolLit	codegen.cpp	/^  void visitBoolLit(BoolLit * p)$/;"	f	class:Codegen
+visitBoolLit	codegen.cpp	/^            void visitBoolLit(BoolLit * p)$/;"	f	class:Codegen
 visitBoolLit	constantfolding.cpp	/^        LatticeElemMap* visitBoolLit(BoolLit *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitBoolLit	typecheck.cpp	/^  void visitBoolLit(BoolLit * p)$/;"	f	class:Typecheck
 visitCall	ast2dot.cpp	/^ void visitCall(Call *p) { draw("Call", p); }$/;"	f	class:Ast2dot
-visitCall	codegen.cpp	/^  void visitCall(Call * p)$/;"	f	class:Codegen
+visitCall	codegen.cpp	/^            void visitCall(Call * p)$/;"	f	class:Codegen
 visitCall	constantfolding.cpp	/^        LatticeElemMap* visitCall(Call *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitCall	typecheck.cpp	/^  void visitCall(Call * p)$/;"	f	class:Typecheck
 visitCompare	ast2dot.cpp	/^ void visitCompare(Compare *p) { draw("Compare", p); }$/;"	f	class:Ast2dot
-visitCompare	codegen.cpp	/^  void visitCompare(Compare * p)$/;"	f	class:Codegen
+visitCompare	codegen.cpp	/^            void visitCompare(Compare * p)$/;"	f	class:Codegen
 visitCompare	constantfolding.cpp	/^        LatticeElemMap* visitCompare(Compare *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitCompare	typecheck.cpp	/^  void visitCompare(Compare * p)$/;"	f	class:Typecheck
 visitDecl	ast2dot.cpp	/^ void visitDecl(Decl *p) { draw("Decl", p); }$/;"	f	class:Ast2dot
-visitDecl	codegen.cpp	/^  void visitDecl(Decl * p)$/;"	f	class:Codegen
+visitDecl	codegen.cpp	/^            void visitDecl(Decl * p)$/;"	f	class:Codegen
 visitDecl	constantfolding.cpp	/^        LatticeElemMap* visitDecl(Decl *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitDecl	typecheck.cpp	/^  void visitDecl(Decl * p)$/;"	f	class:Typecheck
 visitDiv	ast2dot.cpp	/^ void visitDiv(Div *p) { draw("Div", p); }$/;"	f	class:Ast2dot
-visitDiv	codegen.cpp	/^  void visitDiv(Div * p)$/;"	f	class:Codegen
+visitDiv	codegen.cpp	/^            void visitDiv(Div * p)$/;"	f	class:Codegen
 visitDiv	constantfolding.cpp	/^        LatticeElemMap* visitDiv(Div *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitDiv	typecheck.cpp	/^  void visitDiv(Div * p)$/;"	f	class:Typecheck
 visitForLoop	ast2dot.cpp	/^ void visitForLoop(ForLoop *p) { draw("ForLoop", p); }$/;"	f	class:Ast2dot
-visitForLoop	codegen.cpp	/^  void visitForLoop(ForLoop * p)$/;"	f	class:Codegen
+visitForLoop	codegen.cpp	/^            void visitForLoop(ForLoop * p)$/;"	f	class:Codegen
 visitForLoop	constantfolding.cpp	/^        LatticeElemMap* visitForLoop(ForLoop *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitForLoop	typecheck.cpp	/^  void visitForLoop(ForLoop * p)$/;"	f	class:Typecheck
 visitFunc	ast2dot.cpp	/^ void visitFunc(Func *p) { draw("Func", p); }$/;"	f	class:Ast2dot
-visitFunc	codegen.cpp	/^  void visitFunc(Func * p)$/;"	f	class:Codegen
+visitFunc	codegen.cpp	/^        void visitFunc(Func * p)$/;"	f	class:Codegen
 visitFunc	constantfolding.cpp	/^        LatticeElemMap* visitFunc(Func *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitFunc	typecheck.cpp	/^  void visitFunc(Func * p)$/;"	f	class:Typecheck
 visitFunction_block	ast2dot.cpp	/^ void visitFunction_block(Function_block *p) { draw("FunctionBlock", p); }$/;"	f	class:Ast2dot
-visitFunction_block	codegen.cpp	/^  void visitFunction_block(Function_block * p)$/;"	f	class:Codegen
+visitFunction_block	codegen.cpp	/^        void visitFunction_block(Function_block * p)$/;"	f	class:Codegen
 visitFunction_block	constantfolding.cpp	/^        LatticeElemMap* visitFunction_block(Function_block *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitFunction_block	typecheck.cpp	/^  void visitFunction_block(Function_block * p)$/;"	f	class:Typecheck
 visitGt	ast2dot.cpp	/^ void visitGt(Gt *p) { draw("Gt", p); }$/;"	f	class:Ast2dot
-visitGt	codegen.cpp	/^  void visitGt(Gt * p)$/;"	f	class:Codegen
+visitGt	codegen.cpp	/^            void visitGt(Gt * p)$/;"	f	class:Codegen
 visitGt	constantfolding.cpp	/^        LatticeElemMap* visitGt(Gt *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitGt	typecheck.cpp	/^  void visitGt(Gt * p)$/;"	f	class:Typecheck
 visitGteq	ast2dot.cpp	/^ void visitGteq(Gteq *p) { draw("Gteq", p); }$/;"	f	class:Ast2dot
-visitGteq	codegen.cpp	/^  void visitGteq(Gteq * p)$/;"	f	class:Codegen
+visitGteq	codegen.cpp	/^            void visitGteq(Gteq * p)$/;"	f	class:Codegen
 visitGteq	constantfolding.cpp	/^        LatticeElemMap* visitGteq(Gteq *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitGteq	typecheck.cpp	/^  void visitGteq(Gteq * p)$/;"	f	class:Typecheck
 visitIdent	ast2dot.cpp	/^ void visitIdent(Ident *p) { draw("Ident", p); }$/;"	f	class:Ast2dot
-visitIdent	codegen.cpp	/^  void visitIdent(Ident * p)$/;"	f	class:Codegen
+visitIdent	codegen.cpp	/^            void visitIdent(Ident * p)$/;"	f	class:Codegen
 visitIdent	constantfolding.cpp	/^        LatticeElemMap* visitIdent(Ident *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitIdent	typecheck.cpp	/^  void visitIdent(Ident * p)$/;"	f	class:Typecheck
 visitIfNoElse	ast2dot.cpp	/^ void visitIfNoElse(IfNoElse *p) { draw("IfNoElse", p); }$/;"	f	class:Ast2dot
-visitIfNoElse	codegen.cpp	/^  void visitIfNoElse(IfNoElse * p)$/;"	f	class:Codegen
+visitIfNoElse	codegen.cpp	/^            void visitIfNoElse(IfNoElse * p)$/;"	f	class:Codegen
 visitIfNoElse	constantfolding.cpp	/^        LatticeElemMap* visitIfNoElse(IfNoElse *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitIfNoElse	typecheck.cpp	/^  void visitIfNoElse(IfNoElse * p)$/;"	f	class:Typecheck
 visitIfWithElse	ast2dot.cpp	/^ void visitIfWithElse(IfWithElse *p) { draw("IfWithElse", p); }$/;"	f	class:Ast2dot
-visitIfWithElse	codegen.cpp	/^  void visitIfWithElse(IfWithElse * p)$/;"	f	class:Codegen
+visitIfWithElse	codegen.cpp	/^            void visitIfWithElse(IfWithElse * p)$/;"	f	class:Codegen
 visitIfWithElse	constantfolding.cpp	/^        LatticeElemMap* visitIfWithElse(IfWithElse *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitIfWithElse	typecheck.cpp	/^  void visitIfWithElse(IfWithElse * p)$/;"	f	class:Typecheck
 visitIntLit	ast2dot.cpp	/^ void visitIntLit(IntLit *p) { draw("IntLit", p); }$/;"	f	class:Ast2dot
-visitIntLit	codegen.cpp	/^  void visitIntLit(IntLit * p)$/;"	f	class:Codegen
+visitIntLit	codegen.cpp	/^            void visitIntLit(IntLit * p)$/;"	f	class:Codegen
 visitIntLit	constantfolding.cpp	/^        LatticeElemMap* visitIntLit(IntLit *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitIntLit	typecheck.cpp	/^  void visitIntLit(IntLit * p)$/;"	f	class:Typecheck
 visitLt	ast2dot.cpp	/^ void visitLt(Lt *p) { draw("Lt", p); }$/;"	f	class:Ast2dot
-visitLt	codegen.cpp	/^  void visitLt(Lt * p)$/;"	f	class:Codegen
+visitLt	codegen.cpp	/^            void visitLt(Lt * p)$/;"	f	class:Codegen
 visitLt	constantfolding.cpp	/^        LatticeElemMap* visitLt(Lt *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitLt	typecheck.cpp	/^  void visitLt(Lt * p)$/;"	f	class:Typecheck
 visitLteq	ast2dot.cpp	/^ void visitLteq(Lteq *p) { draw("Lteq", p); }$/;"	f	class:Ast2dot
-visitLteq	codegen.cpp	/^  void visitLteq(Lteq * p)$/;"	f	class:Codegen
+visitLteq	codegen.cpp	/^            void visitLteq(Lteq * p)$/;"	f	class:Codegen
 visitLteq	constantfolding.cpp	/^        LatticeElemMap* visitLteq(Lteq *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitLteq	typecheck.cpp	/^  void visitLteq(Lteq * p)$/;"	f	class:Typecheck
 visitMagnitude	ast2dot.cpp	/^ void visitMagnitude(Magnitude *p) { draw("Magnitude", p); }$/;"	f	class:Ast2dot
-visitMagnitude	codegen.cpp	/^  void visitMagnitude(Magnitude * p)$/;"	f	class:Codegen
+visitMagnitude	codegen.cpp	/^            void visitMagnitude(Magnitude * p)$/;"	f	class:Codegen
 visitMagnitude	constantfolding.cpp	/^        LatticeElemMap* visitMagnitude(Magnitude *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitMagnitude	typecheck.cpp	/^  void visitMagnitude(Magnitude * p)$/;"	f	class:Typecheck
 visitMinus	ast2dot.cpp	/^ void visitMinus(Minus *p) { draw("Minus", p); }$/;"	f	class:Ast2dot
-visitMinus	codegen.cpp	/^  void visitMinus(Minus * p)$/;"	f	class:Codegen
+visitMinus	codegen.cpp	/^            void visitMinus(Minus * p)$/;"	f	class:Codegen
 visitMinus	constantfolding.cpp	/^        LatticeElemMap* visitMinus(Minus *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitMinus	typecheck.cpp	/^  void visitMinus(Minus * p)$/;"	f	class:Typecheck
 visitNested_block	ast2dot.cpp	/^ void visitNested_block(Nested_block *p) { draw("NestedBlock", p); } $/;"	f	class:Ast2dot
-visitNested_block	codegen.cpp	/^  void visitNested_block(Nested_block * p)$/;"	f	class:Codegen
+visitNested_block	codegen.cpp	/^            void visitNested_block(Nested_block * p)$/;"	f	class:Codegen
 visitNested_block	constantfolding.cpp	/^        LatticeElemMap* visitNested_block(Nested_block *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitNested_block	typecheck.cpp	/^  void visitNested_block(Nested_block * p)$/;"	f	class:Typecheck
 visitNone	ast2dot.cpp	/^ void visitNone(None *p) { draw("None", p); }$/;"	f	class:Ast2dot
-visitNone	codegen.cpp	/^  void visitNone(None *p)$/;"	f	class:Codegen
+visitNone	codegen.cpp	/^            void visitNone(None *p)$/;"	f	class:Codegen
 visitNone	constantfolding.cpp	/^        LatticeElemMap* visitNone(None *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitNone	typecheck.cpp	/^  void visitNone(None * p)$/;"	f	class:Typecheck
 visitNot	ast2dot.cpp	/^ void visitNot(Not *p) { draw("Not", p); }$/;"	f	class:Ast2dot
-visitNot	codegen.cpp	/^  void visitNot(Not * p)$/;"	f	class:Codegen
+visitNot	codegen.cpp	/^            void visitNot(Not * p)$/;"	f	class:Codegen
 visitNot	constantfolding.cpp	/^        LatticeElemMap* visitNot(Not *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitNot	typecheck.cpp	/^  void visitNot(Not * p)$/;"	f	class:Typecheck
 visitNoteq	ast2dot.cpp	/^ void visitNoteq(Noteq *p) { draw("Noteq", p); }$/;"	f	class:Ast2dot
-visitNoteq	codegen.cpp	/^  void visitNoteq(Noteq * p)$/;"	f	class:Codegen
+visitNoteq	codegen.cpp	/^            void visitNoteq(Noteq * p)$/;"	f	class:Codegen
 visitNoteq	constantfolding.cpp	/^        LatticeElemMap* visitNoteq(Noteq *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitNoteq	typecheck.cpp	/^  void visitNoteq(Noteq * p)$/;"	f	class:Typecheck
 visitOr	ast2dot.cpp	/^ void visitOr(Or *p) { draw("Or", p); }$/;"	f	class:Ast2dot
-visitOr	codegen.cpp	/^  void visitOr(Or * p)$/;"	f	class:Codegen
+visitOr	codegen.cpp	/^            void visitOr(Or * p)$/;"	f	class:Codegen
 visitOr	constantfolding.cpp	/^        LatticeElemMap* visitOr(Or *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitOr	typecheck.cpp	/^  void visitOr(Or * p)$/;"	f	class:Typecheck
 visitParam	ast2dot.cpp	/^ void visitParam(Param *p) { draw("Param", p); }$/;"	f	class:Ast2dot
-visitParam	codegen.cpp	/^  void visitParam(Param *p)$/;"	f	class:Codegen
+visitParam	codegen.cpp	/^            void visitParam(Param *p)$/;"	f	class:Codegen
 visitParam	constantfolding.cpp	/^        LatticeElemMap* visitParam(Param *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitParam	typecheck.cpp	/^  void visitParam(Param * p)$/;"	f	class:Typecheck
 visitPlus	ast2dot.cpp	/^ void visitPlus(Plus *p) { draw("Plus", p); }$/;"	f	class:Ast2dot
-visitPlus	codegen.cpp	/^  void visitPlus(Plus * p)$/;"	f	class:Codegen
+visitPlus	codegen.cpp	/^            void visitPlus(Plus * p)$/;"	f	class:Codegen
 visitPlus	constantfolding.cpp	/^        LatticeElemMap* visitPlus(Plus *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitPlus	typecheck.cpp	/^  void visitPlus(Plus * p)$/;"	f	class:Typecheck
 visitPrimitive	ast2dot.cpp	/^ void visitPrimitive(Primitive *p) { draw_primitive("Primitive",p); }$/;"	f	class:Ast2dot
-visitPrimitive	codegen.cpp	/^  void visitPrimitive(Primitive * p)$/;"	f	class:Codegen
+visitPrimitive	codegen.cpp	/^            void visitPrimitive(Primitive * p)$/;"	f	class:Codegen
 visitPrimitive	constantfolding.cpp	/^        LatticeElemMap* visitPrimitive(Primitive *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitPrimitive	typecheck.cpp	/^  void visitPrimitive(Primitive * p) {}$/;"	f	class:Typecheck
 visitProgram	ast2dot.cpp	/^ void visitProgram(Program *p) { \/\/draw("Program", p); $/;"	f	class:Ast2dot
-visitProgram	codegen.cpp	/^  void visitProgram(Program * p)$/;"	f	class:Codegen
+visitProgram	codegen.cpp	/^        void visitProgram(Program * p)$/;"	f	class:Codegen
 visitProgram	constantfolding.cpp	/^        LatticeElemMap* visitProgram(Program *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitProgram	typecheck.cpp	/^  void visitProgram(Program * p)$/;"	f	class:Typecheck
 visitReturn	ast2dot.cpp	/^ void visitReturn(Return *p) { draw("Return", p); }$/;"	f	class:Ast2dot
-visitReturn	codegen.cpp	/^  void visitReturn(Return * p)$/;"	f	class:Codegen
+visitReturn	codegen.cpp	/^            void visitReturn(Return * p)$/;"	f	class:Codegen
 visitReturn	constantfolding.cpp	/^        LatticeElemMap* visitReturn(Return *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitReturn	typecheck.cpp	/^  void visitReturn(Return * p)$/;"	f	class:Typecheck
 visitSymName	ast2dot.cpp	/^ void visitSymName(SymName *p) { draw_symname("SymName",p); }$/;"	f	class:Ast2dot
-visitSymName	codegen.cpp	/^  void visitSymName(SymName * p)$/;"	f	class:Codegen
+visitSymName	codegen.cpp	/^            void visitSymName(SymName * p)$/;"	f	class:Codegen
 visitSymName	constantfolding.cpp	/^        LatticeElemMap* visitSymName(SymName *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitSymName	typecheck.cpp	/^  void visitSymName(SymName * p) {}$/;"	f	class:Typecheck
 visitTBoolean	ast2dot.cpp	/^ void visitTBoolean(TBoolean *p) { draw("TBoolean", p); }$/;"	f	class:Ast2dot
-visitTBoolean	codegen.cpp	/^  void visitTBoolean(TBoolean * p)$/;"	f	class:Codegen
+visitTBoolean	codegen.cpp	/^            void visitTBoolean(TBoolean * p)$/;"	f	class:Codegen
 visitTBoolean	constantfolding.cpp	/^        LatticeElemMap* visitTBoolean(TBoolean *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitTBoolean	typecheck.cpp	/^  void visitTBoolean(TBoolean * p)$/;"	f	class:Typecheck
 visitTIntArray	ast2dot.cpp	/^ void visitTIntArray(TIntArray *p) { draw("TIntArray", p); }$/;"	f	class:Ast2dot
-visitTIntArray	codegen.cpp	/^  void visitTIntArray(TIntArray * p)$/;"	f	class:Codegen
+visitTIntArray	codegen.cpp	/^            void visitTIntArray(TIntArray * p)$/;"	f	class:Codegen
 visitTIntArray	constantfolding.cpp	/^        LatticeElemMap* visitTIntArray(TIntArray *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitTIntArray	typecheck.cpp	/^  void visitTIntArray(TIntArray * p)$/;"	f	class:Typecheck
 visitTInteger	ast2dot.cpp	/^ void visitTInteger(TInteger *p) { draw("TInteger", p); }$/;"	f	class:Ast2dot
-visitTInteger	codegen.cpp	/^  void visitTInteger(TInteger * p)$/;"	f	class:Codegen
+visitTInteger	codegen.cpp	/^            void visitTInteger(TInteger * p)$/;"	f	class:Codegen
 visitTInteger	constantfolding.cpp	/^        LatticeElemMap* visitTInteger(TInteger *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitTInteger	typecheck.cpp	/^  void visitTInteger(TInteger * p)$/;"	f	class:Typecheck
 visitTimes	ast2dot.cpp	/^ void visitTimes(Times *p) { draw("Times", p); }$/;"	f	class:Ast2dot
-visitTimes	codegen.cpp	/^  void visitTimes(Times * p)$/;"	f	class:Codegen
+visitTimes	codegen.cpp	/^            void visitTimes(Times * p)$/;"	f	class:Codegen
 visitTimes	constantfolding.cpp	/^        LatticeElemMap* visitTimes(Times *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitTimes	typecheck.cpp	/^  void visitTimes(Times * p)$/;"	f	class:Typecheck
 visitUminus	ast2dot.cpp	/^ void visitUminus(Uminus *p) { draw("Uminus", p); }$/;"	f	class:Ast2dot
-visitUminus	codegen.cpp	/^  void visitUminus(Uminus * p)$/;"	f	class:Codegen
+visitUminus	codegen.cpp	/^            void visitUminus(Uminus * p)$/;"	f	class:Codegen
 visitUminus	constantfolding.cpp	/^        LatticeElemMap* visitUminus(Uminus *p, LatticeElemMap *in)$/;"	f	class:ConstantFolding
 visitUminus	typecheck.cpp	/^  void visitUminus(Uminus * p)$/;"	f	class:Typecheck
 visit_children	ast.cpp	/^ LatticeElemMap* And::visit_children( CFVisitor* v, LatticeElemMap *in ) {$/;"	f	class:And
@@ -1089,7 +1103,7 @@ visit_children_of	ast.hpp	/^  LatticeElemMap* visit_children_of(Visitable* p, La
 visit_children_of	ast.hpp	/^  void visit_children_of(Visitable* p) {$/;"	f	class:Visitor
 visit_list	ast.hpp	/^  LatticeElemMap* visit_list(list<T*> *v, LatticeElemMap *in) {$/;"	f	class:CFVisitor
 visit_list	ast.hpp	/^  void visit_list(list<T*> *v) {$/;"	f	class:Visitor
-wordsize	codegen.cpp	/^	static const int wordsize = 4;$/;"	m	class:Codegen	file:
+wordsize	codegen.cpp	/^        static const int wordsize = 1;$/;"	m	class:Codegen	file:
 yy_accept	lexer.cpp	/^static yyconst flex_int16_t yy_accept[100] =$/;"	v	file:
 yy_at_bol	lexer.cpp	/^	int yy_at_bol;$/;"	m	struct:yy_buffer_state	file:
 yy_base	lexer.cpp	/^static yyconst flex_int16_t yy_base[104] =$/;"	v	file:
@@ -1129,18 +1143,18 @@ yy_last_accepting_cpos	lexer.cpp	/^static char *yy_last_accepting_cpos;$/;"	v	fi
 yy_last_accepting_state	lexer.cpp	/^static yy_state_type yy_last_accepting_state;$/;"	v	file:
 yy_load_buffer_state	lexer.cpp	/^static void yy_load_buffer_state  (void)$/;"	f	file:
 yy_meta	lexer.cpp	/^static yyconst flex_int32_t yy_meta[46] =$/;"	v	file:
-yy_n_chars	lexer.cpp	/^	int yy_n_chars;$/;"	m	struct:yy_buffer_state	file:
-yy_n_chars	lexer.cpp	/^static int yy_n_chars;		\/* number of characters read into yy_ch_buf *\/$/;"	v	file:
-yy_new_buffer	lexer.cpp	331;"	d	file:
+yy_n_chars	lexer.cpp	/^	yy_size_t yy_n_chars;$/;"	m	struct:yy_buffer_state	file:
+yy_n_chars	lexer.cpp	/^static yy_size_t yy_n_chars;		\/* number of characters read into yy_ch_buf *\/$/;"	v	file:
+yy_new_buffer	lexer.cpp	323;"	d	file:
 yy_nxt	lexer.cpp	/^	flex_int32_t yy_nxt;$/;"	m	struct:yy_trans_info	file:
 yy_nxt	lexer.cpp	/^static yyconst flex_int16_t yy_nxt[203] =$/;"	v	file:
 yy_reduce_print	parser.cpp	/^yy_reduce_print (YYSTYPE *yyvsp, int yyrule)$/;"	f	file:
 yy_rule_can_match_eol	lexer.cpp	/^static yyconst flex_int32_t yy_rule_can_match_eol[45] =$/;"	v	file:
 yy_scan_buffer	lexer.cpp	/^YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )$/;"	f
-yy_scan_bytes	lexer.cpp	/^YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, int  _yybytes_len )$/;"	f
+yy_scan_bytes	lexer.cpp	/^YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len )$/;"	f
 yy_scan_string	lexer.cpp	/^YY_BUFFER_STATE yy_scan_string (yyconst char * yystr )$/;"	f
-yy_set_bol	lexer.cpp	343;"	d	file:
-yy_set_interactive	lexer.cpp	333;"	d	file:
+yy_set_bol	lexer.cpp	335;"	d	file:
+yy_set_interactive	lexer.cpp	325;"	d	file:
 yy_size_t	lexer.cpp	/^typedef size_t yy_size_t;$/;"	t	file:
 yy_stack_print	parser.cpp	/^yy_stack_print (yytype_int16 *yybottom, yytype_int16 *yytop)$/;"	f	file:
 yy_start	lexer.cpp	/^static int yy_start = 0;	\/* start state number *\/$/;"	v	file:
@@ -1155,7 +1169,7 @@ yyalloc	lexer.cpp	/^void *yyalloc (yy_size_t  size )$/;"	f
 yyalloc	parser.cpp	/^union yyalloc$/;"	u	file:
 yychar	parser.cpp	/^int yychar;$/;"	v
 yycheck	parser.cpp	/^static const yytype_int16 yycheck[] =$/;"	v	file:
-yyclearin	parser.cpp	725;"	d	file:
+yyclearin	parser.cpp	746;"	d	file:
 yyconst	lexer.cpp	107;"	d	file:
 yyconst	lexer.cpp	109;"	d	file:
 yydebug	parser.cpp	/^int yydebug;$/;"	v
@@ -1163,29 +1177,29 @@ yydefact	parser.cpp	/^static const yytype_uint8 yydefact[] =$/;"	v	file:
 yydefgoto	parser.cpp	/^static const yytype_int8 yydefgoto[] =$/;"	v	file:
 yydestruct	parser.cpp	/^yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep)$/;"	f	file:
 yyensure_buffer_stack	lexer.cpp	/^static void yyensure_buffer_stack (void)$/;"	f	file:
-yyerrok	parser.cpp	724;"	d	file:
+yyerrok	parser.cpp	745;"	d	file:
 yyerror	parser.cpp	/^void yyerror(const char *s) {$/;"	f
 yyfree	lexer.cpp	/^void yyfree (void * ptr )$/;"	f
 yyget_debug	lexer.cpp	/^int yyget_debug  (void)$/;"	f
 yyget_in	lexer.cpp	/^FILE *yyget_in  (void)$/;"	f
-yyget_leng	lexer.cpp	/^int yyget_leng  (void)$/;"	f
+yyget_leng	lexer.cpp	/^yy_size_t yyget_leng  (void)$/;"	f
 yyget_lineno	lexer.cpp	/^int yyget_lineno  (void)$/;"	f
 yyget_out	lexer.cpp	/^FILE *yyget_out  (void)$/;"	f
 yyget_text	lexer.cpp	/^char *yyget_text  (void)$/;"	f
 yyin	lexer.cpp	/^FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;$/;"	v
 yyinput	lexer.cpp	/^    static int yyinput (void)$/;"	f	file:
-yyleng	lexer.cpp	/^int yyleng;$/;"	v
-yyless	lexer.cpp	1894;"	d	file:
-yyless	lexer.cpp	1895;"	d	file:
-yyless	lexer.cpp	189;"	d	file:
+yyleng	lexer.cpp	/^yy_size_t yyleng;$/;"	v
+yyless	lexer.cpp	186;"	d	file:
+yyless	lexer.cpp	1877;"	d	file:
+yyless	lexer.cpp	1878;"	d	file:
 yylex_destroy	lexer.cpp	/^int yylex_destroy  (void)$/;"	f
 yylineno	lexer.cpp	/^int yylineno = 1;$/;"	v
 yylval	parser.cpp	/^YYSTYPE yylval;$/;"	v
-yymore	lexer.cpp	553;"	d	file:
+yymore	lexer.cpp	545;"	d	file:
 yynerrs	parser.cpp	/^int yynerrs;$/;"	v
 yyout	lexer.cpp	/^FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;$/;"	v
 yypact	parser.cpp	/^static const yytype_int16 yypact[] =$/;"	v	file:
-yypact_value_is_default	parser.cpp	659;"	d	file:
+yypact_value_is_default	parser.cpp	680;"	d	file:
 yyparse	parser.cpp	/^yyparse (void *YYPARSE_PARAM)$/;"	f
 yypgoto	parser.cpp	/^static const yytype_int16 yypgoto[] =$/;"	v	file:
 yypop_buffer_state	lexer.cpp	/^void yypop_buffer_state (void)$/;"	f
@@ -1204,17 +1218,17 @@ yyset_out	lexer.cpp	/^void yyset_out (FILE *  out_str )$/;"	f
 yyss_alloc	parser.cpp	/^  yytype_int16 yyss_alloc;$/;"	m	union:yyalloc	file:
 yystos	parser.cpp	/^static const yytype_uint8 yystos[] =$/;"	v	file:
 yystpcpy	parser.cpp	/^yystpcpy (char *yydest, const char *yysrc)$/;"	f	file:
-yystpcpy	parser.cpp	1021;"	d	file:
+yystpcpy	parser.cpp	1046;"	d	file:
 yystrlen	parser.cpp	/^yystrlen (const char *yystr)$/;"	f	file:
-yystrlen	parser.cpp	998;"	d	file:
-yystype	parser.cpp	163;"	d	file:
-yystype	parser.hpp	89;"	d
+yystrlen	parser.cpp	1023;"	d	file:
+yystype	parser.cpp	167;"	d	file:
+yystype	parser.hpp	97;"	d
 yysyntax_error	parser.cpp	/^yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,$/;"	f	file:
 yytable	parser.cpp	/^static const yytype_int16 yytable[] =$/;"	v	file:
-yytable_value_is_error	parser.cpp	662;"	d	file:
-yyterminate	lexer.cpp	713;"	d	file:
+yytable_value_is_error	parser.cpp	683;"	d	file:
+yyterminate	lexer.cpp	700;"	d	file:
 yytext	lexer.cpp	/^char *yytext;$/;"	v
-yytext_ptr	lexer.cpp	368;"	d	file:
+yytext_ptr	lexer.cpp	360;"	d	file:
 yytname	parser.cpp	/^static const char *const yytname[] =$/;"	v	file:
 yytnamerr	parser.cpp	/^yytnamerr (char *yyres, const char *yystr)$/;"	f	file:
 yytokentype	parser.cpp	/^   enum yytokentype {$/;"	g	file:
