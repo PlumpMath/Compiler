@@ -1,6 +1,14 @@
+function ain() :int 
+{
+    return 1;
+}
+
+
 function aain(a: int, b:int) :int 
 {
-    return a+b;
+    var c:int;
+    c=ain();
+    return a+b+c+4;
 }
 
 function Main() :int 

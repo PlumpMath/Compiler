@@ -271,7 +271,7 @@ public:
       stringstream ss;
       list<Expr_ptr>::iterator m_expr_list_iter;
       int param_size = p->m_expr_list->size();
-      int i =0;
+      int i =1;
 #if 1
     
      // for(m_expr_list_iter = p->m_expr_list->end() - 1;
@@ -279,6 +279,7 @@ public:
      //         --m_expr_list_iter){
       list<Expr_ptr> * ab  =  new list<Expr_ptr>(*p->m_expr_list);
      for(int i=0;i<param_size;i++){
+
         visit(ab->back());
         ab->pop_back();
     
@@ -287,7 +288,6 @@ public:
               //<<"\t"<<"movl \%ebx,"<<(param_size-i-1)*WORDSIZE<<"(\%esp)"
               <<"\t"<<"pushl \%ebx"<<endl;
     //      (*m_expr_list_iter)->m_attribute.m_place = (param_size-i-1)*WORDSIZE;
-          i++;
       }
 #endif
 
