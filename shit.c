@@ -4,14 +4,10 @@ int f(int a,int b){
     return a+b;
 }
 int main(){
+    int a[9];
+    a[0] =1;
+    a[1] =2;
 
-    int c;
-    int i =0;
-    for (i= 0 ; i<10;i++)
-    {
-        c=1;
-
-    }
-    return c;
+    return 1;
 }
 

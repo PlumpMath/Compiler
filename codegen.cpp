@@ -112,7 +112,8 @@ class Codegen : public Visitor
 
         void emit_prologue(SymName *name, unsigned int size_locals, unsigned int num_args)
         {
-            int total_size = (size_locals +num_args+1)*WORDSIZE;
+            //int total_size = (size_locals +num_args+1)*WORDSIZE;
+            int total_size = size_locals;
             stringstream ss;
             ss
                 <<"_"<<name->spelling()<<":"<<endl
@@ -227,7 +228,8 @@ class Codegen : public Visitor
         }
         void visitFunc(Func * p)
         {
-            emit_prologue(p->m_symname, p->m_function_block->m_decl_list->size(),
+            int size_locals = m_st->scopesize(p->m_function_block->m_attribute.m_scope) +4;
+            emit_prologue(p->m_symname, size_locals,
                     p->m_param_list->size());
             visit_children_of(p);
 
@@ -291,13 +293,36 @@ class Codegen : public Visitor
             }
             void visitArrayAssignment(ArrayAssignment * p)
             {
-                // WRITEME
+                stringstream ss;
+
+                visit(p->m_symname);
+                const char * name = p->m_symname->spelling();
+                int off= m_st->lookup( p->m_attribute.m_scope,name)->get_offset();
+                off = -(off+4);
+                p->m_symname->m_attribute.m_place = off;
+                visit(p->m_expr_1);
+
+
+                ss
+                    <<"\t"<<"pushl $4"<<endl;
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+                ss.str("");
+                emit_arith("imull");
+                visit(p->m_expr_2);
+                ss
+                    <<"\t"<<"popl \%eax"<<endl
+                    <<"\t"<<"popl \%ebx"<<endl
+                    <<"\t"<<"movl \%eax,"<<off<<"(\%ebp, \%ebx,4)"<<endl;
+
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+
+
             }
             void visitCall(Call * p)
             {
-                // p->visit_children(this);
-                //visit(p->m_symname_1);
-                //visit(p->m_symname_2);
+
+                visit(p->m_symname_1);
+                visit(p->m_symname_2);
                 stringstream ss;
                 list<Expr_ptr>::iterator m_expr_list_iter;
                 int param_size = p->m_expr_list->size();
@@ -358,9 +383,97 @@ class Codegen : public Visitor
                 fprintf( m_outputfile, "%s", ss.str().c_str());
 
                 // WRITEME
+        // p->visit_children(this);
             }
             void visitArrayCall(ArrayCall *p)
             {
+                visit(p->m_symname_1);
+                visit(p->m_symname_2);
+                stringstream ss;
+                list<Expr_ptr>::iterator m_expr_list_iter;
+                int param_size = p->m_expr_list_2->size();
+                int i =1;
+#if 1
+
+                // for(m_expr_list_iter = p->m_expr_list->end() - 1;
+                //         m_expr_list_iter != p->m_expr_list->begin();
+                //         --m_expr_list_iter){
+                list<Expr_ptr> * ab  =  new list<Expr_ptr>(*p->m_expr_list_2);
+                for(int i=0;i<param_size;i++){
+
+                    visit(ab->back());
+                    ab->pop_back();
+
+                    ss
+                        <<"\t"<<"popl \%ebx"<<"#start visit call"<<endl
+                        //<<"\t"<<"movl \%ebx,"<<(param_size-i-1)*WORDSIZE<<"(\%esp)"
+                        <<"\t"<<"pushl \%ebx"<<endl;
+                    //      (*m_expr_list_iter)->m_attribute.m_place = (param_size-i-1)*WORDSIZE;
+                }
+#endif
+
+
+#if 0
+                int param_size = p->m_expr_list->size();
+                for (int i=0;i<param_size;i++)
+                {
+                    ss
+                        <<"\t"<<"popl \%ebx"<<"#start visit call"<<endl
+                        <<"\t"<<"movl \%ebx,"<<(param_size-i-1)*WORDSIZE<<"(\%esp)"
+                        <<endl;
+                    *(p->m_expr_list[i])m_place=(param_size-i-1)*WORDSIZE;
+
+                }
+
+#endif
+
+                const char * name = p->m_symname_2->spelling();
+                ss
+                    <<"\t"<<"call _"<< p->m_symname_2->spelling()<<endl;
+                int off= m_st->lookup( p->m_attribute.m_scope,name)->get_offset();
+                off = -(off+4);
+                p->m_symname_2->m_attribute.m_place = off;
+
+
+                
+#if 1                
+                for(m_expr_list_iter = p->m_expr_list_2->begin();
+                        m_expr_list_iter != p->m_expr_list_2->end();
+                        ++m_expr_list_iter){
+                    ss
+                        <<"\t"<<"popl \%ebx"<<endl;
+                }
+                    ss
+                        <<"\t"<<"push \%eax"<<endl;
+
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+                ss.str("");
+                visit(p->m_expr_1);
+
+                ss
+                    <<"\t"<<"pushl $4"<<endl;
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+                ss.str("");
+                emit_arith("imull");
+                ss
+                    <<"\t"<<"popl \%eax"<<endl
+                    <<"\t"<<"popl \%ebx"<<endl
+                    <<"\t"<<"movl \%ebx,"<<off<<"(\%ebp, \%eax,4)"<<endl;
+
+
+
+                //   cout<<p->m_symname->spelling()<<endl;
+
+#endif
+
+
+
+
+
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+
+                // WRITEME
+     
                 // WRITEME
             }
             void visitReturn(Return * p)
@@ -430,6 +543,7 @@ class Codegen : public Visitor
 
                 fprintf( m_outputfile, "%s", ss.str().c_str());
                 visit(p->m_expr);
+                visit(p->m_stat_2);
                 ss.str("");
                 ss
                    <<"\t"<<"popl \%eax#start IfwithNoElse"<<endl
@@ -649,7 +763,24 @@ class Codegen : public Visitor
             }
             void visitArrayAccess(ArrayAccess * p)
             {
-                // WRITEME
+                stringstream ss;
+                p->visit_children(this);
+#if 1
+                //   cout<<p->m_symname->spelling()<<endl;
+                int off = -(m_st->lookup( p->m_attribute.m_scope,p->m_symname->spelling())->get_offset())-4;
+                ss<<"pushl $4"<<endl;
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+                ss.str("");
+                emit_arith("imull");
+                ss
+                    <<"\tpopl \%eax "<<endl
+                    <<"\tmovl "<<off<<"(\%ebp, \%eax, 4),"<<"\%ebx"<<endl
+                    <<"\t"<<"pushl \%ebx"<<endl;
+
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+#endif
+
+
             }
 
             // special cases

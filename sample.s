@@ -28,6 +28,9 @@ _aain:
 	movl 8(%ebp),%ebx
 	movl %ebx,-8(%ebp)
 	pushl %ebx#Save Used Registor
+	pushl $1
+	popl %ebx
+	movl %ebx,-12(%ebp)
 	movl -4(%ebp),%ebx
 	pushl %ebx
 	movl -8(%ebp),%ebx
@@ -55,51 +58,35 @@ _aain:
 _Main:
 	pushl %ebp #Save Original EBP
 	movl %esp,%ebp #Point EBP to top of stack
-	subl $8,%esp #make room for local variables
+	subl $48,%esp #make room for local variables
 	pushl %ebx#Save Used Registor
-	pushl $0
-	popl %ebx
-	movl %ebx,-8(%ebp)
 	pushl $2
-	popl %ebx
-	movl %ebx,-4(%ebp)
 	pushl $1
-	popl %ebx
-	movl %ebx,-8(%ebp)
-label0:
-	movl -8(%ebp),%ebx
+	popl %ebx#start visit call
 	pushl %ebx
-	pushl $9
-	popl %ebx
-	popl %eax
-	cmpl %ebx,%eax
-	setl %al
-	movzbl %al,%eax
-	pushl %eax
-	popl %eax#start IfwithNoElse
-	cmpl $1,%eax
-	jne label1
-	movl -4(%ebp),%ebx
+	popl %ebx#start visit call
 	pushl %ebx
-	pushl $1
+	call _aain
+	popl %ebx
+	popl %ebx
+	push %eax
+	pushl $10
+	pushl $4
 	popl %ebx 
 	popl %eax
-	addl %ebx,%eax
+	imull %ebx,%eax
 	pushl %eax
+	popl %eax
 	popl %ebx
-	movl %ebx,-4(%ebp)
-	movl -8(%ebp),%ebx
-	pushl %ebx
-	pushl $1
+	movl %ebx,-4(%ebp, %eax,4)
+	pushl $10
+pushl $4
 	popl %ebx 
 	popl %eax
-	addl %ebx,%eax
+	imull %ebx,%eax
 	pushl %eax
-	popl %ebx
-	movl %ebx,-8(%ebp)
-jmp label0
-label1:#end if
-	movl -4(%ebp),%ebx
+	popl %eax 
+	movl -4(%ebp, %eax, 4),%ebx
 	pushl %ebx
 	popl %eax
 	popl %ebx#save store register

@@ -7,22 +7,20 @@ function ain() :bool
 function aain(a: int, b:int) :int 
 {
     var c:int;
+    c=1;
     return a+b+c+4;
 }
 
 function Main() :int 
 {
-    var b , i :int;
-    i = 0;
-    b=2;
-    for ( i=1;(i < 9)) 
-    {
-        b=b+1;
-        i = i+1;
-    }
+    var o : intarray[10];
+    var x : int;
 
 
-    return b ; 
+    o[10]=aain(1,2);
+    
+
+    return o[10]; 
 }
 
 
