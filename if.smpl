@@ -32,15 +32,29 @@ function Main() :int
     if(1<2){
         o[0] = o[0] + 1;
     }
+    else{
+        o[0] = o[0]+2;
+    }
     if(2<2){
         o[0] = o[0] + 1;
     }
+    else{
+        o[0] = o[0]+2; 
+        }
 
     if(true){
 
         if(true){
 
             if(true){
+
+            if(true){
+                o[0] = o[0] + 1;
+
+            if(true){
+                o[0] = o[0] + 1;
+            }
+            }
                 o[0] = o[0] + 1;
             }
             o[0] = o[0] + 1;

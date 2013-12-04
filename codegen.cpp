@@ -511,23 +511,25 @@ class Codegen : public Visitor
             {
 
                 visit(p->m_expr);
+                int block1_lb = new_label();
+                int block2_lb = new_label();
                 stringstream ss;
                 ss
                    <<"\t"<<"popl \%eax#start IfwithElse"<<endl
                    <<"\t"<<"cmpl $1,\%eax"<<endl
-                   <<"\t"<<"jne label"<<label_count<<endl;
+                   <<"\t"<<"jne label"<<block1_lb<<endl;
                 fprintf( m_outputfile, "%s", ss.str().c_str());
                 visit(p->m_nested_block_1);
                 ss.str("");
                 ss
-                    <<"\t"<<"jmp label"<<label_count<<endl
-                    <<"label"<<new_label()<<":#end if"<<endl;
+                    <<"\t"<<"jmp label"<<block2_lb<<endl
+                    <<"label"<<block1_lb<<":#end if"<<endl;
                 fprintf( m_outputfile, "%s", ss.str().c_str());
                 ss.str("");
                 visit(p->m_nested_block_2);
                 ss.str("");
                 ss
-                    <<"label"<<new_label()<<":#end if"<<endl;
+                    <<"label"<<block2_lb<<":#end if"<<endl;
                 fprintf( m_outputfile, "%s", ss.str().c_str());
 
 
