@@ -10,7 +10,7 @@
 #include <sstream>
 #include <iomanip>
 #define WORDSIZE 4
-#define OPTIMIZE 1
+#define OPTIMIZE 0
 
 class Codegen : public Visitor
 {
@@ -422,7 +422,50 @@ class Codegen : public Visitor
             }
             void visitForLoop(ForLoop * p)
             {
-                // WRITEME
+                stringstream ss;
+                
+                visit(p->m_stat_1);
+                ss
+                   <<"label"<<label_count<<":"<<endl;
+
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+                visit(p->m_expr);
+                ss.str("");
+                ss
+                   <<"\t"<<"popl \%eax#start IfwithNoElse"<<endl
+                   <<"\t"<<"cmpl $1,\%eax"<<endl
+                   <<"\t"<<"jne label"<<label_count+1<<endl;
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+                visit(p->m_nested_block);
+                ss.str("");
+                ss
+                    <<"jmp label"<<label_count<<endl;
+                    new_label();
+                   ss <<"label"<<label_count<<":#end if"<<endl;
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+
+
+
+                
+                //visit(p->m_stat_1);
+                //ss<<"\t"<<"jmp label"<<label_count<<endl
+                //<<"label"<<new_label()<<":"<<endl;
+                //fprintf( m_outputfile, "%s", ss.str().c_str());
+                //visit(p->m_expr);
+                //ss.str("");
+                //ss
+                //   <<"label"<<label_count<<":"<<endl
+                //   <<"\t"<<"popl \%eax"<<endl
+                //   <<"\t"<<"cmpl $1,\%eax"<<endl
+                //   <<"\t"<<"jne label"<<label_count-1<<endl;
+                //fprintf( m_outputfile, "%s", ss.str().c_str());
+                //visit(p->m_stat_2);
+                //visit(p->m_nested_block);
+
+
+
+
+                
             }
 
 

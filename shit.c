@@ -5,10 +5,13 @@ int f(int a,int b){
 }
 int main(){
 
-    int a,b;
-    if (a>b){
-        a=1;
+    int c;
+    int i =0;
+    for (i= 0 ; i<10;i++)
+    {
+        c=1;
+
     }
-    return a;
+    return c;
 }
 
