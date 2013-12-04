@@ -9,7 +9,7 @@ _Main:
 	pushl $0
 	popl %ebx
 	movl %ebx,-4(%ebp)
-jmp label0
+label0:
 	movl -4(%ebp),%ebx
 	pushl %ebx
 	pushl $5
@@ -19,9 +19,6 @@ jmp label0
 	setl %al
 	movzbl %al,%eax
 	pushl %eax
-	popl %eax
-	cmpl $1,%eax
-	jne label0
 	movl -4(%ebp),%ebx
 	pushl %ebx
 	pushl $1
@@ -31,6 +28,9 @@ jmp label0
 	pushl %eax
 	popl %ebx
 	movl %ebx,-4(%ebp)
+	popl %eax#start IfwithNoElse
+	cmpl $1,%eax
+	jne label1
 	movl -4(%ebp),%ebx
 	pushl %ebx
 	pushl $1
@@ -40,6 +40,8 @@ jmp label0
 	pushl %eax
 	popl %ebx
 	movl %ebx,-4(%ebp)
+jmp label0
+label1:#end if
 	movl -4(%ebp),%ebx
 	pushl %ebx
 	popl %eax

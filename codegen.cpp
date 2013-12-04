@@ -492,15 +492,16 @@ class Codegen : public Visitor
             {
                 visit(p->m_expr);
                 stringstream ss;
+                int bottom = new_label();
                 ss
                    <<"\t"<<"popl \%eax#start IfwithNoElse"<<endl
                    <<"\t"<<"cmpl $1,\%eax"<<endl
-                   <<"\t"<<"jne label"<<label_count<<endl;
+                   <<"\t"<<"jne label"<<bottom<<endl;
                 fprintf( m_outputfile, "%s", ss.str().c_str());
                 visit(p->m_nested_block);
                 ss.str("");
                 ss
-                    <<"label"<<new_label()<<":#end if"<<endl;
+                    <<"label"<<bottom<<":#end if"<<endl;
                 fprintf( m_outputfile, "%s", ss.str().c_str());
 
  
@@ -536,10 +537,10 @@ class Codegen : public Visitor
             void visitForLoop(ForLoop * p)
             {
                 stringstream ss;
-                
                 visit(p->m_stat_1);
+#if 0
                 ss
-                   <<"label"<<label_count<<":"<<endl;
+                   <<"label"<<new_label()<<":"<<endl;
 
                 fprintf( m_outputfile, "%s", ss.str().c_str());
                 visit(p->m_expr);
@@ -552,12 +553,42 @@ class Codegen : public Visitor
                 fprintf( m_outputfile, "%s", ss.str().c_str());
                 visit(p->m_nested_block);
                 ss.str("");
+                    new_label();
                 ss
                     <<"jmp label"<<label_count<<endl;
-                    new_label();
                    ss <<"label"<<label_count<<":#end if"<<endl;
                 fprintf( m_outputfile, "%s", ss.str().c_str());
 
+                new_label();
+
+#endif
+
+                int top = new_label();
+                int bottom = new_label();
+                ss
+                    <<"label"<<top<<":#top"<<endl;
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+
+                ss.str("");
+                visit(p->m_expr);
+                visit(p->m_stat_2);
+  
+
+
+
+                
+
+                ss
+                   <<"\t"<<"popl \%eax#start IfwithNoElse"<<endl
+                   <<"\t"<<"cmpl $1,\%eax"<<endl
+                   <<"\t"<<"jne label"<<bottom<<endl;
+                fprintf( m_outputfile, "%s", ss.str().c_str());
+                visit(p->m_nested_block);
+                ss.str("");
+                ss
+                    <<"\t"<<"jmp label"<<top<<endl
+                    <<"label"<<bottom<<":#end if"<<endl;
+                fprintf( m_outputfile, "%s", ss.str().c_str());
 
 
                 
