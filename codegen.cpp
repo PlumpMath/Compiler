@@ -10,7 +10,7 @@
 #include <sstream>
 #include <iomanip>
 #define WORDSIZE 4
-#define OPTIMIZE 0
+#define OPTIMIZE 1
 
 class Codegen : public Visitor
 {
@@ -217,7 +217,6 @@ class Codegen : public Visitor
         void visitProgram(Program * p)
         {
             set_text_mode();
-            // WRITEME
             stringstream ss;
             ss
                 <<".globl _Main"<<endl;
@@ -234,7 +233,6 @@ class Codegen : public Visitor
             visit_children_of(p);
 
 
-            // WRITEME
         }
         void visitFunction_block(Function_block * p)
         {
@@ -271,7 +269,6 @@ class Codegen : public Visitor
                 
                 stringstream ss;
                 p->visit_children(this);
-                              // WRITEME
             }
             void visitAssignment(Assignment * p)
             {
@@ -289,7 +286,6 @@ class Codegen : public Visitor
 
                 fprintf( m_outputfile, "%s", ss.str().c_str());
 #endif
-                // WRITEME
             }
             void visitArrayAssignment(ArrayAssignment * p)
             {
@@ -462,7 +458,6 @@ class Codegen : public Visitor
 
 
 
-                //   cout<<p->m_symname->spelling()<<endl;
 
 #endif
 
@@ -472,9 +467,6 @@ class Codegen : public Visitor
 
                 fprintf( m_outputfile, "%s", ss.str().c_str());
 
-                // WRITEME
-     
-                // WRITEME
             }
             void visitReturn(Return * p)
             {
@@ -647,7 +639,6 @@ class Codegen : public Visitor
                     p->visit_children(this);
                     emit_logic("sete");
                 }
-                // WRITEME
             }
             void visitNoteq(Noteq * p)
             {
@@ -655,7 +646,6 @@ class Codegen : public Visitor
                     p->visit_children(this);
                     emit_logic("setne");
                 }
-                // WRITEME
             }
             void visitGt(Gt * p)
             {
@@ -663,7 +653,6 @@ class Codegen : public Visitor
                     p->visit_children(this);
                     emit_logic("setg");
                 }
-                // WRITEME
             }
             void visitGteq(Gteq * p)
             {
@@ -671,7 +660,6 @@ class Codegen : public Visitor
                     p->visit_children(this);
                     emit_logic("setge");
                 }
-                // WRITEME
             }
             void visitLt(Lt * p)
             {
@@ -679,7 +667,6 @@ class Codegen : public Visitor
                     p->visit_children(this);
                     emit_logic("setl");
                 }
-                // WRITEME
             }
             void visitLteq(Lteq * p)
             {
@@ -687,7 +674,6 @@ class Codegen : public Visitor
                     p->visit_children(this);
                     emit_logic("setle");
                 }
-                // WRITEME
             }
 
             // arithmetic and logic operations
@@ -706,15 +692,13 @@ class Codegen : public Visitor
                     p->visit_children(this);
                     emit_arith("orl");
                 }
-                // WRITEME
             }
             void visitMinus(Minus * p)
             {
-                // WRITEME
                 if (!emit_optimize(p->m_attribute.m_lattice_elem)){
                     p->visit_children(this);
+                    emit_arith("subl");
                 }
-                emit_arith("subl");
             }
             void visitPlus(Plus * p)
             {
@@ -722,7 +706,6 @@ class Codegen : public Visitor
                     p->visit_children(this);
                     emit_arith("addl");
                 }
-                // WRITEME
             }
             void visitTimes(Times * p)
             {
@@ -730,7 +713,6 @@ class Codegen : public Visitor
                     p->visit_children(this);
                     emit_arith("imull");
                 }
-                // WRITEME
             }
             void visitDiv(Div * p)
             {
@@ -739,12 +721,18 @@ class Codegen : public Visitor
                     p->visit_children(this);
                     emit_arith("idivl");
                 }
-
-                // WRITEME
             }
             void visitNot(Not * p)
             {
-                // WRITEME
+                stringstream ss;
+
+                if (!emit_optimize(p->m_attribute.m_lattice_elem)){
+                    ss
+                        <<"pushl $0"<<endl;
+                    fprintf( m_outputfile, "%s", ss.str().c_str());
+                    emit_arith("xorl");
+                }
+
             }
             void visitUminus(Uminus * p)
             {
@@ -755,11 +743,20 @@ class Codegen : public Visitor
                     fprintf( m_outputfile, "%s", ss.str().c_str());
                     emit_arith("imull");
                 }
-                // WRITEME
             }
             void visitMagnitude(Magnitude * p)
             {
-                // WRITEME
+                if (!emit_optimize(p->m_attribute.m_lattice_elem)){
+                    p->visit_children(this);
+                    stringstream ss;
+                    ss
+                        <<"\t"<<"popl \%ebx"<<endl
+                        <<"\t"<<"cdq"<<endl
+                        <<"\t"<<"xor \%ebx, \%eax"<<endl
+                        <<"\t"<<"sub \%ebx, \%eax"<<endl
+                        <<"\t"<<"pushl \%eax" <<endl;
+                    fprintf( m_outputfile, "%s", ss.str().c_str());
+                }
             }
 
             // variable and constant access

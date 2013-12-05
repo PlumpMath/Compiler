@@ -97,6 +97,29 @@ _Main:
 	call _fact
 	movl %eax,-4(%ebp)#end visit call
 	popl %ebx
+	pushl $1
+	popl %eax#start IfwithElse
+	cmpl $1,%eax
+	jne label2
+	pushl $2
+	popl %ebx
+	movl %ebx,-4(%ebp)
+	jmp label3
+label2:#end if
+	pushl $10
+pushl $-1
+	popl %ebx 
+	popl %eax
+	imull %ebx,%eax
+	pushl %eax
+	popl %ebx
+	cdq
+	xor %ebx, %eax
+	sub %ebx, %eax
+	pushl %eax
+	popl %ebx
+	movl %ebx,-4(%ebp)
+label3:#end if
 	movl -4(%ebp),%ebx
 	pushl %ebx
 	popl %eax
