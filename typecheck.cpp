@@ -306,7 +306,7 @@ class Typecheck : public Visitor {
 		this -> t_error(sym_name_undef, p -> m_attribute);
 	// ASSERT right hand side matches that type
     if(type!=p->m_expr->m_attribute.m_basetype)
-		this -> t_error(expr_type_err, p -> m_attribute);
+		this -> t_error(incompat_assign, p -> m_attribute);
 
 
   }
@@ -327,11 +327,11 @@ class Typecheck : public Visitor {
 	// ASSERT index is an integer
     type = bt_integer;
     if(type != p->m_expr_1->m_attribute.m_basetype)
-		this -> t_error(expr_type_err, p -> m_attribute);
+		this -> t_error(array_index_error, p -> m_attribute);
 	// ASSERT right hand side is an integer
     type = bt_integer;
     if(type != p->m_expr_2->m_attribute.m_basetype)
-        this -> t_error(expr_type_err, p -> m_attribute);
+        this -> t_error(incompat_assign, p -> m_attribute);
 
   }
 

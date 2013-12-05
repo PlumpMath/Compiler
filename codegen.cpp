@@ -129,6 +129,7 @@ class Codegen : public Visitor
                 param_off = (1+num_args-i)*WORDSIZE;
                 local_off = -(4*i+4); 
                 ss
+                
                     <<"\t"<<"movl "<<param_off<<"(\%ebp),\%ebx"<<endl
                     <<"\t"<<"movl \%ebx,"<<local_off<<"(\%ebp)"<<endl;
 #endif 
@@ -482,34 +483,44 @@ class Codegen : public Visitor
             // control flow
             void visitIfNoElse(IfNoElse * p)
             {
-                visit(p->m_expr);
                 stringstream ss;
-                int bottom = new_label();
-                ss
-                   <<"\t"<<"popl \%eax#start IfwithNoElse"<<endl
-                   <<"\t"<<"cmpl $1,\%eax"<<endl
-                   <<"\t"<<"jne label"<<bottom<<endl;
-                fprintf( m_outputfile, "%s", ss.str().c_str());
-                visit(p->m_nested_block);
-                ss.str("");
-                ss
-                    <<"label"<<bottom<<":#end if"<<endl;
-                fprintf( m_outputfile, "%s", ss.str().c_str());
+                
+                if (p->m_expr->m_attribute.m_lattice_elem == TOP || !OPTIMIZE){
+                    visit(p->m_expr);
+                    int bottom = new_label();
+                    ss
+                        <<"\t"<<"popl \%eax#start IfwithNoElse"<<endl
+                        <<"\t"<<"cmpl $1,\%eax"<<endl
+                        <<"\t"<<"jne label"<<bottom<<endl;
+                    fprintf( m_outputfile, "%s", ss.str().c_str());
+                    visit(p->m_nested_block);
+                    ss.str("");
+                    ss
+                        <<"label"<<bottom<<":#end if"<<endl;
+                    fprintf( m_outputfile, "%s", ss.str().c_str());
+                }
+                else if(p->m_expr->m_attribute.m_lattice_elem.value==1)
+                {
+                    visit(p->m_nested_block);
+                    
+                }
 
- 
+
+
 
             }
             void visitIfWithElse(IfWithElse * p)
             {
 
+            if (p->m_expr->m_attribute.m_lattice_elem == TOP || !OPTIMIZE){
                 visit(p->m_expr);
                 int block1_lb = new_label();
                 int block2_lb = new_label();
                 stringstream ss;
                 ss
-                   <<"\t"<<"popl \%eax#start IfwithElse"<<endl
-                   <<"\t"<<"cmpl $1,\%eax"<<endl
-                   <<"\t"<<"jne label"<<block1_lb<<endl;
+                    <<"\t"<<"popl \%eax#start IfwithElse"<<endl
+                    <<"\t"<<"cmpl $1,\%eax"<<endl
+                    <<"\t"<<"jne label"<<block1_lb<<endl;
                 fprintf( m_outputfile, "%s", ss.str().c_str());
                 visit(p->m_nested_block_1);
                 ss.str("");
@@ -523,6 +534,15 @@ class Codegen : public Visitor
                 ss
                     <<"label"<<block2_lb<<":#end if"<<endl;
                 fprintf( m_outputfile, "%s", ss.str().c_str());
+            }
+            else if(p->m_expr->m_attribute.m_lattice_elem.value==1){
+
+                    visit(p->m_nested_block_1);
+            }
+            else{
+                    visit(p->m_nested_block_2);
+                
+            }
 
 
 
@@ -531,31 +551,8 @@ class Codegen : public Visitor
             void visitForLoop(ForLoop * p)
             {
                 stringstream ss;
+            if (p->m_expr->m_attribute.m_lattice_elem == TOP || !OPTIMIZE){
                 visit(p->m_stat_1);
-#if 0
-                ss
-                   <<"label"<<new_label()<<":"<<endl;
-
-                fprintf( m_outputfile, "%s", ss.str().c_str());
-                visit(p->m_expr);
-                visit(p->m_stat_2);
-                ss.str("");
-                ss
-                   <<"\t"<<"popl \%eax#start IfwithNoElse"<<endl
-                   <<"\t"<<"cmpl $1,\%eax"<<endl
-                   <<"\t"<<"jne label"<<label_count+1<<endl;
-                fprintf( m_outputfile, "%s", ss.str().c_str());
-                visit(p->m_nested_block);
-                ss.str("");
-                    new_label();
-                ss
-                    <<"jmp label"<<label_count<<endl;
-                   ss <<"label"<<label_count<<":#end if"<<endl;
-                fprintf( m_outputfile, "%s", ss.str().c_str());
-
-                new_label();
-
-#endif
 
                 int top = new_label();
                 int bottom = new_label();
@@ -566,16 +563,11 @@ class Codegen : public Visitor
                 ss.str("");
                 visit(p->m_expr);
                 visit(p->m_stat_2);
-  
-
-
-
-                
 
                 ss
-                   <<"\t"<<"popl \%eax#start IfwithNoElse"<<endl
-                   <<"\t"<<"cmpl $1,\%eax"<<endl
-                   <<"\t"<<"jne label"<<bottom<<endl;
+                    <<"\t"<<"popl \%eax#start IfwithNoElse"<<endl
+                    <<"\t"<<"cmpl $1,\%eax"<<endl
+                    <<"\t"<<"jne label"<<bottom<<endl;
                 fprintf( m_outputfile, "%s", ss.str().c_str());
                 visit(p->m_nested_block);
                 ss.str("");
@@ -583,28 +575,12 @@ class Codegen : public Visitor
                     <<"\t"<<"jmp label"<<top<<endl
                     <<"label"<<bottom<<":#end if"<<endl;
                 fprintf( m_outputfile, "%s", ss.str().c_str());
-
-
-                
-                //visit(p->m_stat_1);
-                //ss<<"\t"<<"jmp label"<<label_count<<endl
-                //<<"label"<<new_label()<<":"<<endl;
-                //fprintf( m_outputfile, "%s", ss.str().c_str());
-                //visit(p->m_expr);
-                //ss.str("");
-                //ss
-                //   <<"label"<<label_count<<":"<<endl
-                //   <<"\t"<<"popl \%eax"<<endl
-                //   <<"\t"<<"cmpl $1,\%eax"<<endl
-                //   <<"\t"<<"jne label"<<label_count-1<<endl;
-                //fprintf( m_outputfile, "%s", ss.str().c_str());
-                //visit(p->m_stat_2);
-                //visit(p->m_nested_block);
+            }
 
 
 
 
-                
+
             }
 
 

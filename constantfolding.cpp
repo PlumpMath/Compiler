@@ -105,6 +105,13 @@ class ConstantFolding : public CFVisitor {
 
         LatticeElemMap* visitFunc(Func *p, LatticeElemMap *in)
         {
+           LatticeElemMap::iterator iter;
+           for (iter = in->begin(); iter != in->end(); iter++){
+                   (*in)[iter->first]=TOP;
+
+               }
+
+
             // Intraprocedural; so let's start a new analysis for each function with a blank LatticeElemMap
             LatticeElemMap* newMap = new LatticeElemMap();
             newMap = visit_children_of(p, newMap);
