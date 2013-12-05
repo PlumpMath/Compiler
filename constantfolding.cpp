@@ -434,8 +434,10 @@ class ConstantFolding : public CFVisitor {
 
             if (e1==TOP||e2 == TOP)
                 p->m_attribute.m_lattice_elem = TOP;
+                else{
                 // Otherwise, it contains the boolean opposite of the child's LatticeElem
-                p->m_attribute.m_lattice_elem = e1.value== e2.value;
+                    p->m_attribute.m_lattice_elem = e1.value== e2.value;
+                }
             in = visit_children_of(p, in);
             return in;
         }

@@ -4,26 +4,32 @@ function ain() :bool
 }
 
 
-function aain(a: int, b:int) :int 
+function fact(n: int) :int 
 {
-    var c:int;
-    c=1;
-    return a+b+c+4;
+    var x : int;
+    if((n==1)){
+        x = 1;
+    }
+    else{
+        x = fact(n-1);
+        x = n*x;
+    }
+
+    return x;
 }
 
 function Main() :int 
-{
-    var o : intarray[10];
-    var j,x,i : int;
-    for(j=0;(j<10) j =j+1 ;){
-        x=j+1;
-    }
+{    
+    var n, x : int;
+
+    x = fact(4);
 
 
+    return x;
 
-
-    return o[4]; 
 }
+
+
 
 
 

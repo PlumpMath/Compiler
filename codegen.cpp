@@ -144,9 +144,12 @@ class Codegen : public Visitor
 #if OPTIMIZE
             stringstream ss;
             if(e!=TOP){
-                ss<<"\t"<<"pushl $"<<e.value<<endl;
+                ss<<"\t"<<"pushl $"<<e.value<<"#OPT:"<<e.value<<endl;
                 fprintf( m_outputfile, "%s", ss.str().c_str());
                 return true;
+            }
+            if(e==BOTTOM){
+                fprintf( m_outputfile, "#SOMETHING IS BOTTOM O GAWD\n", ss.str().c_str());
             }
 #endif
             return false;
@@ -155,7 +158,7 @@ class Codegen : public Visitor
         void emit_logic(string op){
             stringstream ss;
             ss
-                <<"\t"<<"popl \%ebx"<<endl
+                <<"\t"<<"popl \%ebx"<<"#Starting:"<<op<<endl
                 <<"\t"<<"popl \%eax"<<endl
                 <<"\t"<<"cmpl \%ebx,\%eax"<<endl
                 <<"\t"<<op<<" \%al"<<endl
@@ -512,8 +515,8 @@ class Codegen : public Visitor
             void visitIfWithElse(IfWithElse * p)
             {
 
-            if (p->m_expr->m_attribute.m_lattice_elem == TOP || !OPTIMIZE){
                 visit(p->m_expr);
+            if (p->m_expr->m_attribute.m_lattice_elem == TOP || !OPTIMIZE){
                 int block1_lb = new_label();
                 int block2_lb = new_label();
                 stringstream ss;
@@ -540,6 +543,7 @@ class Codegen : public Visitor
                     visit(p->m_nested_block_1);
             }
             else{
+
                     visit(p->m_nested_block_2);
                 
             }
