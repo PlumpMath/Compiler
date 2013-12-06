@@ -116,7 +116,7 @@ class Codegen : public Visitor
             int total_size = size_locals;
             stringstream ss;
             ss
-                <<"_"<<name->spelling()<<":"<<endl
+                <<name->spelling()<<":"<<endl
                 <<"\t"<<"pushl \%ebp"<<" #Save Original EBP"<<endl
                 <<"\t"<<"movl \%esp,\%ebp"<<" #Point EBP to top of stack"<<endl
                 <<"\t"<<"subl $"<<total_size<<",\%esp"<<" #make room for local variables"<<endl;
@@ -126,7 +126,7 @@ class Codegen : public Visitor
             for (int i =0; i< num_args;i++)
             {
 #if 1
-                param_off = (1+num_args-i)*WORDSIZE;
+                param_off = (2+i)*WORDSIZE;
                 local_off = -(4*i+4); 
                 ss
                 
@@ -223,7 +223,7 @@ class Codegen : public Visitor
             set_text_mode();
             stringstream ss;
             ss
-                <<".globl _Main"<<endl;
+                <<".globl Main"<<endl;
             fprintf( m_outputfile, "%s", ss.str().c_str());
             visit_children_of(p);
 
@@ -338,10 +338,6 @@ class Codegen : public Visitor
                     visit(ab->back());
                     ab->pop_back();
 
-                    ss
-                        <<"\t"<<"popl \%ebx"<<"#start visit call"<<endl
-                        //<<"\t"<<"movl \%ebx,"<<(param_size-i-1)*WORDSIZE<<"(\%esp)"
-                        <<"\t"<<"pushl \%ebx"<<endl;
                     //      (*m_expr_list_iter)->m_attribute.m_place = (param_size-i-1)*WORDSIZE;
                 }
 #endif
@@ -361,7 +357,7 @@ class Codegen : public Visitor
 
 #endif
                 ss
-                    <<"\t"<<"call _"<< p->m_symname_2->spelling()<<endl;
+                    <<"\t"<<"call "<< p->m_symname_2->spelling()<<endl;
 #if 1
                 int off = -(m_st->lookup(p->m_attribute.m_scope,p->m_symname_1->spelling())->get_offset())-4; 
                 ss
@@ -429,7 +425,7 @@ class Codegen : public Visitor
 
                 const char * name = p->m_symname_2->spelling();
                 ss
-                    <<"\t"<<"call _"<< p->m_symname_2->spelling()<<endl;
+                    <<"\t"<<"call "<< p->m_symname_2->spelling()<<endl;
                 int off= m_st->lookup( p->m_attribute.m_scope,name)->get_offset();
                 off = -(off+4);
                 p->m_symname_2->m_attribute.m_place = off;

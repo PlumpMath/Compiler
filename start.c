@@ -21,6 +21,6 @@
 int _Main();
 
 int main() {
-    printf("Main returned: %d\n", _Main());
+    printf("Main returned: %d\n", Main());
 	return 0;
 }

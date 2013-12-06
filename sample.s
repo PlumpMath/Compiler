@@ -1,7 +1,7 @@
 .text
 
-.globl _Main
-_ain:
+.globl Main
+ain:
 	pushl %ebp #Save Original EBP
 	movl %esp,%ebp #Point EBP to top of stack
 	subl $4,%esp #make room for local variables
@@ -12,7 +12,7 @@ _ain:
 	movl %ebp,%esp
 	popl %ebp
 	ret
-_fact:
+fact:
 	pushl %ebp #Save Original EBP
 	movl %esp,%ebp #Point EBP to top of stack
 	subl $12,%esp #make room for local variables
@@ -21,12 +21,25 @@ _fact:
 	pushl %ebx#Save Used Registor
 	movl -4(%ebp),%ebx
 	pushl %ebx
+	pushl $0
+	popl %ebx#Starting:sete
+	popl %eax
+	cmpl %ebx,%eax
+	sete %al
+	movzbl %al,%eax
+	pushl %eax
+	movl -4(%ebp),%ebx
+	pushl %ebx
 	pushl $1
 	popl %ebx#Starting:sete
 	popl %eax
 	cmpl %ebx,%eax
 	sete %al
 	movzbl %al,%eax
+	pushl %eax
+	popl %ebx 
+	popl %eax
+	orl %ebx,%eax
 	pushl %eax
 	popl %eax#start IfwithElse
 	cmpl $1,%eax
@@ -43,9 +56,7 @@ label0:#end if
 	popl %eax
 	subl %ebx,%eax
 	pushl %eax
-	popl %ebx#start visit call
-	pushl %ebx
-	call _fact
+	call fact
 	movl %eax,-8(%ebp)#end visit call
 	popl %ebx
 	movl -4(%ebp),%ebx
@@ -66,18 +77,16 @@ label1:#end if
 	movl %ebp,%esp
 	popl %ebp
 	ret
-_Main:
+Main:
 	pushl %ebp #Save Original EBP
 	movl %esp,%ebp #Point EBP to top of stack
-	subl $12,%esp #make room for local variables
+	subl $8,%esp #make room for local variables
 	pushl %ebx#Save Used Registor
 	pushl $4
-	popl %ebx#start visit call
-	pushl %ebx
-	call _fact
-	movl %eax,-8(%ebp)#end visit call
+	call fact
+	movl %eax,-4(%ebp)#end visit call
 	popl %ebx
-	movl -8(%ebp),%ebx
+	movl -4(%ebp),%ebx
 	pushl %ebx
 	popl %eax
 	popl %ebx#save store register
