@@ -18,7 +18,7 @@
 
 #include <stdio.h>
 
-int _Main();
+int Main();
 
 int main() {
     printf("Main returned: %d\n", Main());

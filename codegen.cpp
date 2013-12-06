@@ -200,7 +200,7 @@ class Codegen : public Visitor
                 <<"\t"<<"popl \%ebx#save store register"<<endl
                 <<"\t"<<"movl \%ebp,\%esp"<<endl
                 <<"\t"<<"popl \%ebp"<<endl
-                <<"\t"<<"ret"<<endl;
+                <<"\t"<<"retl"<<endl;
             fprintf( m_outputfile, "%s", ss.str().c_str());
         }
 
