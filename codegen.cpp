@@ -562,7 +562,6 @@ class Codegen : public Visitor
 
                 ss.str("");
                 visit(p->m_expr);
-                visit(p->m_stat_2);
 
                 ss
                     <<"\t"<<"popl \%eax#start IfwithNoElse"<<endl
@@ -570,6 +569,7 @@ class Codegen : public Visitor
                     <<"\t"<<"jne label"<<bottom<<endl;
                 fprintf( m_outputfile, "%s", ss.str().c_str());
                 visit(p->m_nested_block);
+                visit(p->m_stat_2);
                 ss.str("");
                 ss
                     <<"\t"<<"jmp label"<<top<<endl

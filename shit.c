@@ -1,15 +1,12 @@
 
 #include  "stdbool.h"
-int f(int a,int b){
-
-    return a+b;
-}
+#include <iostream>
+using namespace std;
 int main(){
-    int a[9];
-    bool b, c;
-    a[0] =1;
-    a[1] =2;
-    c=!b;
+    int i=0;
+    for(i=0; i<10; i++){
+    }
+    cout<<i;
 
 
 
